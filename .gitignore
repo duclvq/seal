@@ -1,0 +1,13 @@
+__pycache__
+output*
+core
+core*
+*egg-info
+*.pth
+*.mp4
+
+# Track videos in test directories
+!**/tests/**/*.mp4
+results*
+slurm*
+ckpts/y_256b_img.jit 

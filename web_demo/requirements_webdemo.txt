@@ -1,0 +1,6 @@
+flask>=3.0.0
+werkzeug>=3.0.0
+reedsolo>=1.7.0
+bchlib>=0.14.0
+# The following are already in the main videoseal requirements:
+# torch, torchvision, av (PyAV), Pillow, numpy

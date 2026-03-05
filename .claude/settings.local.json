@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs ls -lh)",
+      "Bash(pip install bchlib)",
+      "Bash(python -c \":*)",
+      "Bash(python -c \"import audioseal; print\\(audioseal.__version__\\)\")"
+    ]
+  }
+}

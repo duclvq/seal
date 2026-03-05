@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thủy Vân</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>Nhúng thủy vân vô hình</h1>
+  </div>
+  <!-- Detail mode toggle -->
+  <div class="detail-toggle-wrap">
+    <button id="detail-toggle" class="detail-toggle" title="Chế độ chi tiết">🔒</button>
+    <div id="detail-pw-form" class="detail-pw-form hidden">
+      <input type="password" id="detail-pw-input" placeholder="Mật khẩu..." maxlength="20">
+      <button id="detail-pw-submit" class="detail-pw-btn">OK</button>
+      <span id="detail-pw-error" class="detail-pw-error hidden">Sai mật khẩu</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── Tab Bar ────────────────────────────────────────────────────────────── -->
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="video">📹 Video</button>
+  <button class="tab-btn"        data-tab="audio">🔊 Audio</button>
+  <button class="tab-btn"        data-tab="analyze">🔍 Phân tích</button>
+</div>
+
+<main>
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- VIDEO TAB                                                               -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-video" class="tab-content">
+
+  <!-- ── STEP 1: Upload & Embed ─────────────────────────────────────────── -->
+  <section class="card" id="step-upload">
+    <h2><span class="step-num">1</span> Upload &amp; Embed Watermark</h2>
+
+    <div id="drop-zone">
+      <div id="drop-label">
+        <svg viewBox="0 0 24 24" width="40" height="40"><path d="M19 13v5H5v-5H3v5a2 2 0 002 2h14a2 2 0 002-2v-5h-2zm-7-9l-5 5h3v8h4V9h3l-5-5z"/></svg>
+        <p>Kéo thả video vào đây hoặc <label for="file-input" class="browse-link">chọn file</label></p>
+        <p id="file-name" class="file-name"></p>
+      </div>
+      <input type="file" id="file-input" accept="video/mp4,video/avi,video/mov,video/mkv">
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="wm-text">Văn bản watermark</label>
+        <input type="text" id="wm-text" value="Demo" maxlength="28" placeholder="Nhập text cần nhúng...">
+        <div class="hint" id="text-byte-hint"></div>
+      </div>
+
+      <!-- BCH config (hidden, always active) -->
+      <div class="form-group hidden" id="bch-config">
+        <div class="bch-fixed-badge">Tối đa 4 ký tự · sửa ≤ 28 bit lỗi</div>
+      </div>
+    </div>
+
+    <button id="btn-embed" class="btn-primary">
+      <span id="btn-embed-text">Embed Watermark</span>
+      <span id="btn-embed-spinner" class="spinner hidden"></span>
+    </button>
+
+    <div id="embed-status"></div>
+  </section>
+
+  <!-- ── STEP 2: Original vs Watermarked ───────────────────────────────── -->
+  <section class="card hidden" id="step-videos">
+    <h2><span class="step-num">2</span> So sánh Video</h2>
+    <div class="video-pair">
+      <div class="video-box">
+        <h3>Original</h3>
+        <video id="vid-original" controls loop muted playsinline></video>
+      </div>
+      <div class="video-box">
+        <h3>Watermarked</h3>
+        <video id="vid-watermarked" controls loop muted playsinline></video>
+      </div>
+    </div>
+    <div class="video-meta" id="video-meta"></div>
+  </section>
+
+  <!-- ── STEP 3: Bits Visualization (detail-only) ───────────────────────── -->
+  <section class="card hidden detail-only" id="step-bits">
+    <h2><span class="step-num">3</span> Watermark Key (chi tiết)</h2>
+
+    <div class="bits-header">
+      <div>
+        <strong>Key gốc (embedded)</strong>
+        <div class="legend">
+          <span class="legend-bit1">■ bit=1</span>
+          <span class="legend-bit0">□ bit=0</span>
+        </div>
+      </div>
+      <div id="bits-meta" class="bits-meta"></div>
+    </div>
+    <canvas id="bits-canvas-embed" class="bits-canvas"></canvas>
+    <div id="bits-hex" class="bits-hex"></div>
+  </section>
+
+  <!-- ── STEP 4: Attacks ────────────────────────────────────────────────── -->
+  <section class="card hidden" id="step-attacks">
+    <h2><span class="step-num">4</span> Kiểm tra khả năng chống tấn công</h2>
+
+    <div id="attack-checkboxes" class="attack-grid"></div>
+
+    <!-- Upload a real screen recording for analysis -->
+    <div class="upload-attack-section">
+      <div class="upload-attack-label">
+        <span>📹</span>
+        <span>Hoặc upload video quay màn hình thực tế để phân tích</span>
+      </div>
+      <label class="upload-attack-btn" for="upload-attack-input">
+        <span id="upload-attack-btn-text">Chọn file video...</span>
+        <span id="upload-attack-spinner" class="spinner hidden"></span>
+      </label>
+      <input type="file" id="upload-attack-input" accept="video/mp4,video/avi,video/mov,video/mkv,.mp4,.avi,.mov,.mkv" style="display:none">
+      <div id="upload-attack-status" class="upload-attack-status hidden"></div>
+    </div>
+
+    <div class="btn-row">
+      <button id="btn-run-selected" class="btn-secondary">
+        <span id="btn-sel-text">Chạy đã chọn</span>
+        <span id="btn-sel-spinner" class="spinner hidden"></span>
+      </button>
+      <button id="btn-run-all" class="btn-primary">
+        <span id="btn-all-text">Chạy tất cả</span>
+        <span id="btn-all-spinner" class="spinner hidden"></span>
+      </button>
+    </div>
+
+    <!-- Results table -->
+    <div id="results-wrap" class="hidden">
+      <h3>Kết quả</h3>
+      <table id="results-table">
+        <thead>
+          <tr>
+            <th>Tấn công</th>
+            <th class="detail-only">Bit Accuracy</th>
+            <th>Phát hiện</th>
+            <th>Nội dung</th>
+            <th class="detail-only">Sửa lỗi</th>
+            <th>Thời gian</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+      <p class="hint">Click vào hàng để xem video bị tấn công.</p>
+    </div>
+
+    <!-- Inline attack preview -->
+    <div id="attack-preview" class="hidden">
+      <h3 id="preview-title"></h3>
+      <div class="video-pair">
+        <div class="video-box">
+          <h4>Sau khi bị tấn công</h4>
+          <video id="vid-attacked" controls loop muted playsinline></video>
+        </div>
+        <div class="video-box detail-only">
+          <h4>So sánh Watermark Key</h4>
+          <div class="bits-pair">
+            <div>
+              <div class="bits-col-label">Key gốc</div>
+              <canvas id="bits-canvas-orig-preview" class="bits-canvas"></canvas>
+            </div>
+            <div>
+              <div class="bits-col-label">Key decode <span id="decode-correct-badge"></span></div>
+              <canvas id="bits-canvas-attacked" class="bits-canvas"></canvas>
+            </div>
+          </div>
+          <div class="legend" style="margin-top:6px">
+            <span class="legend-bit1">■ bit=1</span>
+            <span class="legend-bit0">□ bit=0</span>
+            <span class="legend-err">■ lỗi</span>
+          </div>
+        </div>
+      </div>
+      <div id="preview-stats" class="preview-stats"></div>
+    </div>
+  </section>
+
+  <!-- ── STEP 5: Temporal Analysis ──────────────────────────────────────── -->
+  <section class="card hidden" id="step-temporal">
+    <h2><span class="step-num">5</span> Phân tích thời gian watermark</h2>
+    <p class="hint" style="margin-bottom:12px">Xác định khoảng thời gian nào trong video có chứa watermark (mỗi cửa sổ 1 giây).</p>
+
+    <div class="btn-row">
+      <button id="btn-temporal-session" class="btn-primary">
+        <span>Phân tích video đã nhúng</span>
+        <span id="btn-temporal-spinner" class="spinner hidden"></span>
+      </button>
+    </div>
+    <div id="temporal-status" style="margin-top:8px; font-size:.9rem;"></div>
+    <div id="temporal-result" class="hidden">
+      <div id="temporal-timeline" class="timeline-bar"></div>
+      <div class="timeline-legend">
+        <span class="tl-green">■ Phát hiện</span>
+        <span class="tl-yellow">■ Một phần</span>
+        <span class="tl-red">■ Không</span>
+      </div>
+      <table id="temporal-table" class="temporal-table">
+        <thead>
+          <tr>
+            <th>Thời gian</th>
+            <th>Trạng thái</th>
+            <th>Nội dung</th>
+            <th class="detail-only">Độ chính xác</th>
+          </tr>
+        </thead>
+        <tbody id="temporal-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+</div><!-- /tab-video -->
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- AUDIO TAB                                                               -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-audio" class="tab-content hidden">
+
+  <!-- ── A1: Upload & Embed ─────────────────────────────────────────────── -->
+  <section class="card" id="a-step-upload">
+    <h2><span class="step-num">1</span> Upload &amp; Embed Audio Watermark</h2>
+
+    <div id="a-drop-zone" class="drop-zone">
+      <div id="a-drop-label">
+        <svg viewBox="0 0 24 24" width="40" height="40"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/></svg>
+        <p>Kéo thả audio vào đây hoặc <label for="a-file-input" class="browse-link">chọn file</label></p>
+        <p id="a-file-name" class="file-name"></p>
+      </div>
+      <input type="file" id="a-file-input" accept="audio/wav,audio/mp3,audio/flac,audio/ogg,audio/mpeg,.wav,.mp3,.flac,.ogg">
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="a-wm-text">Ký tự watermark (tối đa 2 ký tự)</label>
+        <input type="text" id="a-wm-text" value="VS" maxlength="2" placeholder="Tối đa 2 ký tự...">
+        <div class="hint">Hỗ trợ tối đa 2 ký tự ASCII</div>
+      </div>
+    </div>
+
+    <button id="a-btn-embed" class="btn-primary">
+      <span id="a-btn-embed-text">Embed Audio Watermark</span>
+      <span id="a-btn-embed-spinner" class="spinner hidden"></span>
+    </button>
+
+    <div id="a-embed-status"></div>
+  </section>
+
+  <!-- ── A2: Compare Audio ──────────────────────────────────────────────── -->
+  <section class="card hidden" id="a-step-compare">
+    <h2><span class="step-num">2</span> So sánh Audio</h2>
+
+    <div class="audio-pair">
+      <div class="audio-box">
+        <h3>Original</h3>
+        <audio id="a-aud-original" controls></audio>
+      </div>
+      <div class="audio-box">
+        <h3>Watermarked</h3>
+        <audio id="a-aud-watermarked" controls></audio>
+      </div>
+    </div>
+
+    <div class="audio-meta" id="a-audio-meta"></div>
+
+    <!-- 16-bit key display (detail-only) -->
+    <div class="audio-key-section detail-only">
+      <strong>Watermark Key (16 bits)</strong>
+      <div class="audio-key-display">
+        <div>
+          <div class="bits-col-label">Key nhúng</div>
+          <div id="a-bits-embed" class="audio-bits-bar"></div>
+        </div>
+      </div>
+      <div class="legend" style="margin-top:4px">
+        <span class="legend-bit1">■ bit=1</span>
+        <span class="legend-bit0">□ bit=0</span>
+        <span class="legend-err">■ lỗi</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── A3: Attacks ────────────────────────────────────────────────────── -->
+  <section class="card hidden" id="a-step-attacks">
+    <h2><span class="step-num">3</span> Kiểm tra khả năng chống tấn công</h2>
+
+    <div id="a-attack-checkboxes" class="attack-grid"></div>
+
+    <div class="btn-row">
+      <button id="a-btn-run-selected" class="btn-secondary">
+        <span id="a-btn-sel-text">Chạy đã chọn</span>
+        <span id="a-btn-sel-spinner" class="spinner hidden"></span>
+      </button>
+      <button id="a-btn-run-all" class="btn-primary">
+        <span id="a-btn-all-text">Chạy tất cả</span>
+        <span id="a-btn-all-spinner" class="spinner hidden"></span>
+      </button>
+    </div>
+
+    <!-- Results table -->
+    <div id="a-results-wrap" class="hidden">
+      <h3>Kết quả</h3>
+      <table id="a-results-table">
+        <thead>
+          <tr>
+            <th>Tấn công</th>
+            <th>Phát hiện</th>
+            <th class="detail-only">Độ chính xác</th>
+            <th>Nội dung</th>
+            <th>Thời gian</th>
+          </tr>
+        </thead>
+        <tbody id="a-results-body"></tbody>
+      </table>
+      <p class="hint">Click vào hàng để nghe audio bị tấn công.</p>
+    </div>
+
+    <!-- Inline attack preview -->
+    <div id="a-attack-preview" class="hidden">
+      <h3 id="a-preview-title"></h3>
+      <div class="audio-pair">
+        <div class="audio-box">
+          <h4>Sau khi bị tấn công</h4>
+          <audio id="a-aud-attacked" controls></audio>
+        </div>
+        <div class="audio-box detail-only">
+          <h4>So sánh Watermark Key (16 bits)</h4>
+          <div class="audio-key-display">
+            <div>
+              <div class="bits-col-label">Key gốc</div>
+              <div id="a-bits-orig-preview" class="audio-bits-bar"></div>
+            </div>
+            <div>
+              <div class="bits-col-label">Key decode <span id="a-decode-badge"></span></div>
+              <div id="a-bits-attacked" class="audio-bits-bar"></div>
+            </div>
+          </div>
+          <div class="legend" style="margin-top:4px">
+            <span class="legend-bit1">■ bit=1</span>
+            <span class="legend-bit0">□ bit=0</span>
+            <span class="legend-err">■ lỗi</span>
+          </div>
+        </div>
+      </div>
+      <div id="a-preview-stats" class="preview-stats"></div>
+    </div>
+  </section>
+
+</div><!-- /tab-audio -->
+
+
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<!-- ANALYZE TAB                                                             -->
+<!-- ════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-analyze" class="tab-content hidden">
+
+  <!-- Sub-tab bar -->
+  <div class="sub-tab-bar">
+    <button class="sub-tab-btn active" data-subtab="an-video">📹 Video</button>
+    <button class="sub-tab-btn"        data-subtab="an-audio">🔊 Audio</button>
+  </div>
+
+  <!-- ── VIDEO ANALYSIS ─────────────────────────────────────────────────── -->
+  <div id="an-video" class="sub-tab-content">
+
+    <section class="card" id="an-step-upload">
+      <h2>🔍 Phân tích video nghi ngờ</h2>
+      <p class="hint" style="margin-bottom:16px">Upload video (có thể đã bị cắt ghép). Hệ thống quét từng giây để xác định đoạn nào chứa watermark.</p>
+
+      <div id="an-drop-zone" class="drop-zone">
+        <div>
+          <svg viewBox="0 0 24 24" width="40" height="40"><path d="M19 13v5H5v-5H3v5a2 2 0 002 2h14a2 2 0 002-2v-5h-2zm-7-9l-5 5h3v8h4V9h3l-5-5z"/></svg>
+          <p>Kéo thả video vào đây hoặc <label for="an-file-input" class="browse-link">chọn file</label></p>
+          <p id="an-file-name" class="file-name"></p>
+        </div>
+        <input type="file" id="an-file-input" accept="video/mp4,video/avi,video/mov,video/mkv">
+      </div>
+
+      <div class="btn-row">
+        <button id="an-btn-analyze" class="btn-primary">
+          <span id="an-btn-text">Phân tích</span>
+          <span id="an-btn-spinner" class="spinner hidden"></span>
+        </button>
+      </div>
+      <div id="an-status" style="margin-top:8px; font-size:.9rem;"></div>
+    </section>
+
+    <section class="card hidden" id="an-step-result">
+      <h2>Kết quả phân tích</h2>
+      <video id="an-video-player" controls class="an-preview-video hidden"></video>
+      <div id="an-summary" class="an-summary"></div>
+      <div id="an-timeline" class="timeline-bar"></div>
+      <div class="timeline-legend">
+        <span class="tl-green">■ Phát hiện</span>
+        <span class="tl-yellow">■ Một phần</span>
+        <span class="tl-red">■ Không có</span>
+      </div>
+      <table id="an-table" class="temporal-table">
+        <thead>
+          <tr>
+            <th>Thời gian</th>
+            <th>Trạng thái</th>
+            <th>Nội dung</th>
+            <th class="detail-only">Độ chính xác</th>
+          </tr>
+        </thead>
+        <tbody id="an-body"></tbody>
+      </table>
+      <p class="hint" style="margin-top:8px">Click vào hàng để tua video đến vị trí đó.</p>
+    </section>
+
+  </div><!-- /an-video -->
+
+  <!-- ── AUDIO ANALYSIS ─────────────────────────────────────────────────── -->
+  <div id="an-audio" class="sub-tab-content hidden">
+
+    <section class="card" id="an-audio-step-upload">
+      <h2>🔊 Phân tích audio nghi ngờ</h2>
+      <p class="hint" style="margin-bottom:16px">Upload file audio. Hệ thống quét từng giây để xác định đoạn nào chứa watermark.</p>
+
+      <div id="an-audio-drop-zone" class="drop-zone">
+        <div>
+          <svg viewBox="0 0 24 24" width="40" height="40"><path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z"/></svg>
+          <p>Kéo thả audio vào đây hoặc <label for="an-audio-file-input" class="browse-link">chọn file</label></p>
+          <p id="an-audio-file-name" class="file-name"></p>
+        </div>
+        <input type="file" id="an-audio-file-input" accept="audio/wav,audio/mp3,audio/flac,audio/ogg,audio/mpeg,.wav,.mp3,.flac,.ogg">
+      </div>
+
+      <div class="btn-row">
+        <button id="an-audio-btn-analyze" class="btn-primary">
+          <span>Phân tích</span>
+          <span id="an-audio-btn-spinner" class="spinner hidden"></span>
+        </button>
+      </div>
+      <div id="an-audio-status" style="margin-top:8px; font-size:.9rem;"></div>
+    </section>
+
+    <section class="card hidden" id="an-audio-step-result">
+      <h2>Kết quả phân tích</h2>
+      <audio id="an-audio-player" controls class="an-preview-audio hidden"></audio>
+      <div id="an-audio-summary" class="an-summary"></div>
+      <div id="an-audio-timeline" class="timeline-bar"></div>
+      <div class="timeline-legend">
+        <span class="tl-green">■ Phát hiện</span>
+        <span class="tl-yellow">■ Một phần</span>
+        <span class="tl-red">■ Không có</span>
+      </div>
+      <table id="an-audio-table" class="temporal-table">
+        <thead>
+          <tr>
+            <th>Thời gian</th>
+            <th>Trạng thái</th>
+            <th>Nội dung</th>
+            <th class="detail-only">Xác suất</th>
+          </tr>
+        </thead>
+        <tbody id="an-audio-body"></tbody>
+      </table>
+      <p class="hint" style="margin-top:8px">Click vào hàng để tua audio đến vị trí đó.</p>
+    </section>
+
+  </div><!-- /an-audio -->
+
+</div><!-- /tab-analyze -->
+
+</main>
+
+<script src="/static/js/bits_viz.js"></script>
+<script src="/static/js/api.js"></script>
+<script src="/static/js/main.js"></script>
+<script src="/static/js/audio.js"></script>
+<script src="/static/js/analyze.js"></script>
+</body>
+</html>
