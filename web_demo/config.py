@@ -4,7 +4,16 @@ import torch
 BASE_DIR       = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER  = os.path.join(BASE_DIR, "uploads")
 SESSION_FOLDER = os.path.join(BASE_DIR, "sessions")
-ALLOWED_EXT    = {"mp4", "avi", "mov", "mkv"}
+ALLOWED_VIDEO_EXT = {
+    "mp4", "avi", "mov", "mkv",          # common
+    "mxf", "webm", "flv", "ts", "m2ts",  # broadcast / streaming
+    "m4v", "wmv", "3gp", "f4v", "vob",   # misc
+}
+ALLOWED_AUDIO_EXT = {
+    "wav", "mp3", "flac", "ogg",
+    "aac", "m4a", "wma", "opus",
+}
+ALLOWED_EXT = ALLOWED_VIDEO_EXT  # backward compat
 MAX_CONTENT_MB = 500
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")

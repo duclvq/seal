@@ -34,6 +34,7 @@ let _anVideoObjectUrl = null;
 function wireVideoDropZone() {
   const zone  = $an("an-drop-zone");
   const input = $an("an-file-input");
+  input.addEventListener("click", (e) => e.stopPropagation());
   zone.addEventListener("click", (e) => { if (!e.target.closest("label")) input.click(); });
   zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("dragover"); });
   zone.addEventListener("dragleave", () => zone.classList.remove("dragover"));
@@ -166,6 +167,7 @@ let _anAudioObjectUrl = null;
 function wireAnAudioDropZone() {
   const zone  = $an("an-audio-drop-zone");
   const input = $an("an-audio-file-input");
+  input.addEventListener("click", (e) => e.stopPropagation());
   zone.addEventListener("click", (e) => { if (!e.target.closest("label")) input.click(); });
   zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("dragover"); });
   zone.addEventListener("dragleave", () => zone.classList.remove("dragover"));

@@ -61,7 +61,6 @@ function setLoading(btnTextId, spinnerId, isLoading) {
 
 // ── Initialization ────────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-  buildRsKSelector();
   buildAttackCheckboxes();
   wireDropZone();
   wireTextLengthHint();
@@ -79,51 +78,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Enter") submitDetailPassword();
     if (e.key === "Escape") hide("detail-pw-form");
   });
-
-  $("rs-k").addEventListener("change", () => {
-    rsK = parseInt($("rs-k").value);
-    updateEccInfo();
-    wireTextLengthHint();
-  });
-
-  updateEccInfo();
 });
 
 
-// ── RS k Selector ─────────────────────────────────────────────────────────
-function buildRsKSelector() {
-  const sel = $("rs-k");
-  const kValues = [4, 5, 6, 7, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
-  kValues.forEach((k) => {
-    const opt       = document.createElement("option");
-    opt.value       = k;
-    opt.textContent = `${k} ký tự tối đa`;
-    if (k === 20) opt.selected = true;
-    sel.appendChild(opt);
-  });
-  rsK = 20;
-}
-
-// ── ECC Info Hint ─────────────────────────────────────────────────────────
-const BCH_DATA_BYTES  = 4;    // fixed: 4 data bytes + 28 ECC bytes
-const LDPC_DATA_BYTES = 12;   // rate-3/8 RA-LDPC: 96 info bits = 12 bytes
-
-function updateEccInfo() {
-  if (eccType === "rs") {
-    const ecc    = RS_TOTAL - rsK;
-    const maxErr = Math.floor(ecc / 2);
-    $("ecc-info").textContent =
-      `Sửa được ≤ ${maxErr} lỗi · tối đa ${rsK} ký tự`;
-  }
-  // BCH and LDPC info is static HTML in their badges — no update needed
-}
+// ── Text length hint ───────────────────────────────────────────────────────
+const BCH_DATA_BYTES = 4;   // fixed BCH: 4 data bytes
 
 function wireTextLengthHint() {
   const input    = $("wm-text");
-  let maxBytes;
-  if (eccType === "bch")       maxBytes = BCH_DATA_BYTES;
-  else if (eccType === "ldpc") maxBytes = LDPC_DATA_BYTES;
-  else                         maxBytes = rsK;
+  const maxBytes = BCH_DATA_BYTES;
 
   const update = () => {
     const bytes = new TextEncoder().encode(input.value).length;
@@ -148,7 +111,7 @@ function wireDropZone() {
   const zone  = $("drop-zone");
   const input = $("file-input");
 
-  zone.addEventListener("click", () => input.click());
+  zone.addEventListener("click", (e) => { if (!e.target.closest("label")) input.click(); });
   zone.addEventListener("dragover", (e) => {
     e.preventDefault();
     zone.classList.add("dragover");

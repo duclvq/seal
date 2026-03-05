@@ -68,6 +68,7 @@ function wireAudioDropZone() {
   const zone  = $a("a-drop-zone");
   const input = $a("a-file-input");
 
+  input.addEventListener("click", (e) => e.stopPropagation());
   zone.addEventListener("click", (e) => {
     if (!e.target.closest("label")) input.click();
   });

@@ -24,6 +24,7 @@ sys.path.insert(0, _PROJECT_ROOT)
 
 from config import (
     UPLOAD_FOLDER, SESSION_FOLDER, ALLOWED_EXT,
+    ALLOWED_AUDIO_EXT,
     MAX_CONTENT_MB, DEVICE, DEFAULT_K, RS_TOTAL_BYTES, MSG_BITS,
 )
 from core.model_manager import get_model
@@ -60,6 +61,9 @@ init_db()
 def _allowed(filename: str) -> bool:
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT
 
+def _allowed_audio(filename: str) -> bool:
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_AUDIO_EXT
+
 def _whitelist_video_name(name: str) -> bool:
     """Prevent path traversal by whitelisting allowed video names."""
     if name in ("original", "watermarked", "attacked_upload"):
@@ -94,7 +98,7 @@ def api_encode():
 
     f = request.files["video"]
     if not f.filename or not _allowed(f.filename):
-        return jsonify({"error": "Unsupported file type. Use MP4, AVI, MOV, or MKV."}), 400
+        return jsonify({"error": f"Unsupported video format. Supported: {', '.join(sorted(ALLOWED_EXT)).upper()}"}), 400
 
     text     = request.form.get("text", "VideoSeal Demo")
     ecc_type = request.form.get("ecc_type", "rs").strip().lower()
@@ -343,7 +347,7 @@ def api_attacks_upload_video():
         return jsonify({"error": "No video file provided"}), 400
     f = request.files["video"]
     if not f.filename or not _allowed(f.filename):
-        return jsonify({"error": "Unsupported file type. Use MP4, AVI, MOV, or MKV."}), 400
+        return jsonify({"error": f"Unsupported video format. Supported: {', '.join(sorted(ALLOWED_EXT)).upper()}"}), 400
 
     wm_path = session_video_path(session_id, "watermarked")
     if not os.path.exists(wm_path):
@@ -506,6 +510,8 @@ def api_audio_detect_temporal():
     f = request.files.get("audio")
     if f is None or not f.filename:
         return jsonify({"error": "No audio file provided"}), 400
+    if not _allowed_audio(f.filename):
+        return jsonify({"error": f"Unsupported audio format. Supported: {', '.join(sorted(ALLOWED_AUDIO_EXT)).upper()}"}), 400
 
     safe_name = secure_filename(f.filename)
     tmp_path  = os.path.join(UPLOAD_FOLDER, f"tmp_audio_temporal_{safe_name}")
@@ -588,6 +594,9 @@ def api_audio_encode():
 
     if not f.filename:
         return jsonify({"error": "No selected file"}), 400
+
+    if not _allowed_audio(f.filename):
+        return jsonify({"error": f"Unsupported audio format. Supported: {', '.join(sorted(ALLOWED_AUDIO_EXT)).upper()}"}), 400
 
     session_id = request.form.get("session_id") or new_session_id()
     sess_dir   = os.path.join(SESSION_FOLDER, session_id)

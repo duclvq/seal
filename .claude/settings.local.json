@@ -4,7 +4,12 @@
       "Bash(xargs ls -lh)",
       "Bash(pip install bchlib)",
       "Bash(python -c \":*)",
-      "Bash(python -c \"import audioseal; print\\(audioseal.__version__\\)\")"
+      "Bash(python -c \"import audioseal; print\\(audioseal.__version__\\)\")",
+      "Bash(ffmpeg -y -i \"input_video/[142MB_19s]_DJI_20260104091736_0149_D_compressed.mp4\" -t 3 -c:v mpeg2video -f mxf -an /tmp/test.mxf)",
+      "Bash(python -m pytest test_formats.py::test_video_format_encode -v -s --no-header)",
+      "Bash(ffprobe -v quiet -show_streams -select_streams a \"/d/py_source/videoseal/input_video/[142MB_19s]_DJI_20260104091736_0149_D_compressed.mp4\")",
+      "Bash(python -m pytest test_formats.py -k \"audio_format\" -v --no-header)",
+      "Bash(python -m pytest test_formats.py -k \"audio_format or unsupported_audio\" -v --no-header)"
     ]
   }
 }
