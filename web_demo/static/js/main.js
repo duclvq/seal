@@ -217,8 +217,30 @@ async function handleEmbed() {
     originalText = text;
 
     // Step 2: videos
-    $("vid-original").src    = result.original_url;
-    $("vid-watermarked").src = result.watermarked_url;
+    const BROWSER_VIDEO_EXTS = new Set(["mp4", "m4v", "webm", "mov", "mkv", "3gp"]);
+    const canPreview = BROWSER_VIDEO_EXTS.has(result.out_ext || "mp4");
+
+    if (canPreview) {
+      $("vid-original").src    = result.original_url;
+      $("vid-watermarked").src = result.watermarked_url;
+      $("vid-original").classList.remove("hidden");
+      $("vid-watermarked").classList.remove("hidden");
+      $("vid-original-noprev").classList.add("hidden");
+      $("vid-watermarked-noprev").classList.add("hidden");
+    } else {
+      $("vid-original").classList.add("hidden");
+      $("vid-watermarked").classList.add("hidden");
+      $("vid-original-noprev").classList.remove("hidden");
+      $("vid-watermarked-noprev").classList.remove("hidden");
+      $("vid-original-noprev").querySelectorAll(".no-preview-ext").forEach(
+        el => el.textContent = `.${result.out_ext}`);
+      $("vid-watermarked-noprev").querySelectorAll(".no-preview-ext").forEach(
+        el => el.textContent = `.${result.out_ext}`);
+    }
+    const _origBasename = $("file-input").files[0]?.name.replace(/\.[^.]+$/, "") || "video";
+    const _dlName = `watermarked_${_origBasename}.${result.out_ext}`;
+    $("btn-dl-watermarked").href     = `${result.watermarked_url}?dl=1&filename=${encodeURIComponent(_dlName)}`;
+    $("btn-dl-watermarked").download = _dlName;
     $("video-meta").textContent =
       `${result.num_frames} frames · ${result.fps.toFixed(1)} fps · embed time: ${result.embed_time_s}s`;
     show("step-videos");
@@ -302,6 +324,20 @@ async function handleAttacks(runAll) {
   }
 }
 
+// ── DB-aware decoded text helper ──────────────────────────────────────────
+/**
+ * Render the "Nội dung" cell for a result row.
+ * Priority: DB match (≥75% bit acc) > ECC decode > raw.
+ */
+function _decodedCell(r) {
+  if (r.error) return `<em style="color:var(--text-muted)">—</em>`;
+  if (r.db_match) return `"${escapeHtml(r.db_match.original_text)}"`;
+  if (!r.correctable) {
+    return `"${escapeHtml(r.decoded_text)}" <span style="color:var(--warn);font-size:.78rem">(raw)</span>`;
+  }
+  return `"${escapeHtml(r.decoded_text)}"`;
+}
+
 // ── Results Table ─────────────────────────────────────────────────────────
 function renderResultsTable(results) {
   const tbody = $("results-body");
@@ -329,15 +365,7 @@ function renderResultsTable(results) {
       eccText = `<span style="color:var(--danger)">Không thể sửa</span>`;
     }
 
-    // Decoded text — always show something; mark as raw when ECC failed
-    let decoded;
-    if (r.error) {
-      decoded = `<em style="color:var(--text-muted)">—</em>`;
-    } else if (!r.correctable) {
-      decoded = `"${escapeHtml(r.decoded_text)}" <span style="color:var(--warn);font-size:.78rem">(raw)</span>`;
-    } else {
-      decoded = `"${escapeHtml(r.decoded_text)}"`;
-    }
+    const decoded = _decodedCell(r);
 
     // Accuracy bar
     const fillClass = r.pass ? "pass" : "fail";
@@ -394,15 +422,7 @@ function appendResultRow(r) {
     eccText = `<span style="color:var(--danger)">Không thể sửa</span>`;
   }
 
-  let decoded;
-  if (r.error) {
-    decoded = `<em style="color:var(--text-muted)">—</em>`;
-  } else if (!r.correctable) {
-    decoded = `"${escapeHtml(r.decoded_text)}" <span style="color:var(--warn);font-size:.78rem">(raw)</span>`;
-  } else {
-    decoded = `"${escapeHtml(r.decoded_text)}"`;
-  }
-
+  const decoded   = _decodedCell(r);
   const fillClass = r.pass ? "pass" : "fail";
   tr.innerHTML = `
     <td>${escapeHtml(r.display_name)}</td>
@@ -496,9 +516,11 @@ function previewAttack(r) {
     initAndRender(canvas, r.bits_list, originalBits);
   }
 
-  // Correct/incorrect badge next to "Key decode" label
-  const badge   = $("decode-correct-badge");
-  const isMatch = r.decoded_text !== null && r.decoded_text === originalText;
+  // Correct/incorrect badge — prefer DB match if available
+  const badge     = $("decode-correct-badge");
+  const dbText    = r.db_match ? r.db_match.original_text : null;
+  const effText   = dbText ?? r.decoded_text;
+  const isMatch   = effText !== null && effText === originalText;
   if (r.error) {
     badge.innerHTML = `<span class="key-badge key-badge--error">✗ Lỗi</span>`;
   } else if (isMatch) {
@@ -514,7 +536,6 @@ function previewAttack(r) {
     ? originalBits.filter((b, i) => b !== r.bits_list[i]).length
     : "?";
 
-  // Text comparison rows
   const origTextHtml = originalText !== null
     ? `"${escapeHtml(originalText)}"`
     : `<em style="color:var(--text-muted)">—</em>`;
@@ -523,24 +544,25 @@ function previewAttack(r) {
   if (r.error) {
     decodedTextHtml = `<span style="color:var(--danger)">Lỗi xử lý</span>`;
   } else if (!r.correctable) {
-    // ECC failed — show raw decoded bytes with warning label
     decodedTextHtml = `"${escapeHtml(r.decoded_text)}" <span style="color:var(--warn);font-size:.78rem">(không khôi phục được)</span>`;
   } else {
     decodedTextHtml = `"${escapeHtml(r.decoded_text)}"`;
   }
 
-  const textMatchIcon = (r.decoded_text !== null && r.decoded_text === originalText)
+  const textMatchIcon = isMatch
     ? `<span style="color:var(--success)">✓</span>`
     : `<span style="color:var(--danger)">✗</span>`;
+
+  const displayedText = r.db_match
+    ? `"${escapeHtml(r.db_match.original_text)}"`
+    : decodedTextHtml;
 
   $("preview-stats").innerHTML =
     `<table class="key-compare-table">` +
     `<tr class="detail-only"><td class="kc-label">Bit accuracy</td>` +
         `<td><strong>${pct}%</strong> &nbsp;(${errBits} bit lỗi / 256)</td></tr>` +
-    `<tr><td class="kc-label">Text gốc</td>` +
-        `<td>${origTextHtml}</td></tr>` +
-    `<tr><td class="kc-label">Text decode</td>` +
-        `<td>${decodedTextHtml} &nbsp;${textMatchIcon}</td></tr>` +
+    `<tr><td class="kc-label">Text gốc</td><td>${origTextHtml}</td></tr>` +
+    `<tr><td class="kc-label">Text decode</td><td>${displayedText} &nbsp;${textMatchIcon}</td></tr>` +
     `</table>`;
 
   show("attack-preview");
@@ -551,8 +573,9 @@ function previewAttack(r) {
 function mergeSegments(segments) {
   if (!segments.length) return [];
 
-  // A segment is "decodable" if correctable (video) or detected (audio)
+  // A segment is "decodable" if db_match, correctable (video), or detected (audio)
   const getKey = (s) => {
+    if (s.db_match) return s.db_match.original_text;
     const ok = (s.correctable !== false) && (s.detected !== false);
     return (ok && s.decoded_text) ? s.decoded_text : null;
   };
@@ -565,6 +588,7 @@ function mergeSegments(segments) {
     if (getKey(cur) === getKey(s)) {
       cur.end_s = s.end_s;
       if (s.detected) cur.detected = true;
+      if (s.db_match && !cur.db_match) cur.db_match = s.db_match;
       if (s.bit_accuracy != null &&
           (cur.bit_accuracy == null || s.bit_accuracy > cur.bit_accuracy))
         cur.bit_accuracy = s.bit_accuracy;

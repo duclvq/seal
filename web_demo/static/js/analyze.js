@@ -95,7 +95,7 @@ async function handleVideoAnalyze() {
     renderVideoTable(merged);
     $an("an-step-result").classList.remove("hidden");
 
-    const detected = data.segments.filter((s) => s.detected).length;
+    const detected = data.segments.filter((s) => s.detected || s.db_match).length;
     status.textContent =
       `Hoàn tất · ${data.total_duration_s}s · ${detected} / ${data.segments.length} phân đoạn có watermark`;
     status.className = "status-success";
@@ -109,13 +109,13 @@ async function handleVideoAnalyze() {
 }
 
 function renderVideoSummary(data) {
-  const detected = data.segments.filter((s) => s.detected).length;
+  const detected = data.segments.filter((s) => s.detected || s.db_match).length;
   $an("an-summary").textContent =
     `${data.total_duration_s}s · ${data.segments.length} phân đoạn · ${detected} phát hiện watermark`;
 }
 
 function getVideoSegColor(s) {
-  if (s.detected) return "tl-green";
+  if (s.detected || s.db_match) return "tl-green";
   if (s.bit_accuracy != null && s.bit_accuracy >= 0.5) return "tl-yellow";
   return "tl-red";
 }
@@ -128,24 +128,30 @@ function renderVideoTable(segments) {
   segments.forEach((s) => {
     const tr = document.createElement("tr");
 
-    const statusHtml = s.detected
+    const statusHtml = (s.detected || s.db_match)
       ? `<span style="color:var(--success);font-weight:700">✓ Phát hiện</span>`
       : (s.bit_accuracy != null && s.bit_accuracy >= 0.5)
           ? `<span style="color:var(--warn);font-weight:700">~ Một phần</span>`
           : `<span style="color:var(--danger)">✗ Không</span>`;
 
-    // Only show decoded text if ECC correctable
-    const decoded = (s.correctable && s.decoded_text)
-      ? `"${escAnHtml(s.decoded_text)}"`
+    // Prefer DB match text, fall back to ECC-correctable decoded text
+    const displayText = s.db_match ? s.db_match.original_text
+                      : (s.correctable ? s.decoded_text : null);
+    const decoded = displayText
+      ? `"${escAnHtml(displayText)}"`
       : `<span style="color:var(--text-muted)">—</span>`;
 
     const pct = s.bit_accuracy != null ? `${(s.bit_accuracy * 100).toFixed(1)}%` : "—";
+    const rawDecode = s.raw_decoded
+      ? `"${escAnHtml(s.raw_decoded)}"`
+      : `<span style="color:var(--text-muted)">—</span>`;
 
     tr.style.cursor = "pointer";
     tr.innerHTML = `
       <td>${s.start_s}s – ${s.end_s}s</td>
       <td>${statusHtml}</td>
       <td>${decoded}</td>
+      <td class="detail-only">${rawDecode}</td>
       <td class="detail-only">${pct}</td>
     `;
 
@@ -228,7 +234,7 @@ async function handleAudioAnalyze() {
     renderAudioTable(merged);
     $an("an-audio-step-result").classList.remove("hidden");
 
-    const detected = data.segments.filter((s) => s.detected).length;
+    const detected = data.segments.filter((s) => s.detected || s.db_match).length;
     status.textContent =
       `Hoàn tất · ${data.total_duration_s}s · ${detected} / ${data.segments.length} phân đoạn có watermark`;
     status.className = "status-success";
@@ -242,12 +248,13 @@ async function handleAudioAnalyze() {
 }
 
 function renderAudioSummary(data) {
-  const detected = data.segments.filter((s) => s.detected).length;
+  const detected = data.segments.filter((s) => s.detected || s.db_match).length;
   $an("an-audio-summary").textContent =
     `${data.total_duration_s}s · ${data.segments.length} phân đoạn · ${detected} phát hiện watermark`;
 }
 
 function getAudioSegColor(s) {
+  if (s.db_match) return "tl-green";
   const p = s.detection_prob || 0;
   if (p >= 0.7) return "tl-green";
   if (p >= 0.5) return "tl-yellow";
@@ -263,24 +270,30 @@ function renderAudioTable(segments) {
     const tr   = document.createElement("tr");
     const prob = s.detection_prob || 0;
 
-    const statusHtml = prob >= 0.7
+    const statusHtml = (prob >= 0.7 || s.db_match)
       ? `<span style="color:var(--success);font-weight:700">✓ Phát hiện</span>`
       : prob >= 0.5
           ? `<span style="color:var(--warn);font-weight:700">~ Một phần</span>`
           : `<span style="color:var(--danger)">✗ Không</span>`;
 
-    // Only show decoded text when actually detected
-    const decoded = (s.detected && s.decoded_text)
-      ? `"${escAnHtml(s.decoded_text)}"`
+    // Prefer DB match text, fall back to decoded text when detected
+    const displayText = s.db_match ? s.db_match.original_text
+                      : (s.detected ? s.decoded_text : null);
+    const decoded = displayText
+      ? `"${escAnHtml(displayText)}"`
       : `<span style="color:var(--text-muted)">—</span>`;
 
     const pct = `${(prob * 100).toFixed(1)}%`;
+    const rawDecode = s.raw_decoded
+      ? `"${escAnHtml(s.raw_decoded)}"`
+      : `<span style="color:var(--text-muted)">—</span>`;
 
     tr.style.cursor = "pointer";
     tr.innerHTML = `
       <td>${s.start_s}s – ${s.end_s}s</td>
       <td>${statusHtml}</td>
       <td>${decoded}</td>
+      <td class="detail-only">${rawDecode}</td>
       <td class="detail-only">${pct}</td>
     `;
 

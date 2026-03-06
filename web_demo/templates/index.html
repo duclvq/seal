@@ -78,13 +78,22 @@
       <div class="video-box">
         <h3>Original</h3>
         <video id="vid-original" controls loop muted playsinline></video>
+        <div id="vid-original-noprev" class="no-preview hidden">
+          Định dạng <span class="no-preview-ext"></span> không hỗ trợ preview trên trình duyệt
+        </div>
       </div>
       <div class="video-box">
         <h3>Watermarked</h3>
         <video id="vid-watermarked" controls loop muted playsinline></video>
+        <div id="vid-watermarked-noprev" class="no-preview hidden">
+          Định dạng <span class="no-preview-ext"></span> không hỗ trợ preview trên trình duyệt
+        </div>
       </div>
     </div>
     <div class="video-meta" id="video-meta"></div>
+    <div class="download-bar">
+      <a id="btn-dl-watermarked" class="btn-download" href="#" download>⬇ Tải video đã watermark</a>
+    </div>
   </section>
 
   <!-- ── STEP 3: Bits Visualization (detail-only) ───────────────────────── -->
@@ -272,6 +281,9 @@
     </div>
 
     <div class="audio-meta" id="a-audio-meta"></div>
+    <div class="download-bar">
+      <a id="a-btn-dl-watermarked" class="btn-download" href="#" download>⬇ Tải audio đã watermark</a>
+    </div>
 
     <!-- 16-bit key display (detail-only) -->
     <div class="audio-key-section detail-only">
@@ -411,6 +423,7 @@
             <th>Thời gian</th>
             <th>Trạng thái</th>
             <th>Nội dung</th>
+            <th class="detail-only">Key decode</th>
             <th class="detail-only">Độ chính xác</th>
           </tr>
         </thead>
@@ -462,6 +475,7 @@
             <th>Thời gian</th>
             <th>Trạng thái</th>
             <th>Nội dung</th>
+            <th class="detail-only">Key decode</th>
             <th class="detail-only">Xác suất</th>
           </tr>
         </thead>

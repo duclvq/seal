@@ -36,7 +36,9 @@ from core.ecc            import (
 from core.video_io       import (
     load_video_tensor, save_video_tensor,
     save_session_meta, load_session_meta,
-    session_video_path, new_session_id,
+    session_video_path, find_session_video, new_session_id,
+    extract_audio_track, embed_video_streaming, save_original_copy,
+    _EXT_TO_FORMAT, _EXT_MIME,
 )
 from core.attacks           import ATTACK_REGISTRY, ATTACK_DISPLAY_NAMES
 from core.audio_watermark   import (
@@ -149,40 +151,42 @@ def api_encode():
     tmp_path   = os.path.join(UPLOAD_FOLDER, f"{session_id}_{safe_name}")
     f.save(tmp_path)
 
+    # Determine output container format (match input extension)
+    input_ext = os.path.splitext(safe_name)[1].lstrip(".").lower() or "mp4"
+    out_ext   = input_ext if input_ext in _EXT_TO_FORMAT else "mp4"
+
+    audio_tmp = None
     try:
-        # Load video (CPU, frame-by-frame via PyAV)
-        video, fps = load_video_tensor(tmp_path)
-        num_frames = video.shape[0]
+        # Extract audio track from original before processing
+        audio_tmp = extract_audio_track(tmp_path)
 
-        # Embed watermark on GPU
-        model     = get_model()
-        video_gpu = video.to(DEVICE)
-        msg_gpu   = msg_tensor.to(DEVICE)
+        model = get_model()
 
+        # Save original (ffmpeg re-encode, no frame limit)
+        save_original_copy(tmp_path, session_id, "original",
+                           audio_src=audio_tmp, out_ext=out_ext)
+
+        # Embed watermark — chunk-based, full video length
         t0 = time.time()
-        with torch.no_grad():
-            outputs = model.embed(video_gpu, msgs=msg_gpu, is_video=True)
+        _, fps, num_frames = embed_video_streaming(
+            tmp_path, session_id, "watermarked",
+            model, msg_tensor, DEVICE,
+            audio_src=audio_tmp, out_ext=out_ext,
+        )
         embed_time = round(time.time() - t0, 2)
 
-        video_w_gpu = outputs["imgs_w"]
-
-        # Save to disk (CPU copies)
-        save_video_tensor(video,             fps, session_id, "original")
-        save_video_tensor(video_w_gpu.cpu(), fps, session_id, "watermarked")
-
         # Persist metadata for attack phase
-        save_session_meta(session_id, bits_list, k, fps, ecc_type=ecc_type)
+        save_session_meta(session_id, bits_list, k, fps, ecc_type=ecc_type, out_ext=out_ext)
 
         # Log to hidden watermark registry
         insert_watermark(session_id, bits_list, text, ecc_type, k, safe_name)
 
     finally:
-        for _v in ("video_gpu", "msg_gpu", "video_w_gpu", "outputs"):
-            if _v in dir():
-                del _v
         if DEVICE.type == "cuda":
             torch.cuda.empty_cache()
         os.remove(tmp_path)
+        if audio_tmp and os.path.exists(audio_tmp):
+            os.unlink(audio_tmp)
 
     return jsonify({
         "session_id":      session_id,
@@ -193,6 +197,7 @@ def api_encode():
         "num_frames":      num_frames,
         "original_url":    f"/api/video/{session_id}/original",
         "watermarked_url": f"/api/video/{session_id}/watermarked",
+        "out_ext":         out_ext,
         "embed_time_s":    embed_time,
         **extra,
     })
@@ -200,13 +205,22 @@ def api_encode():
 
 @app.route("/api/video/<session_id>/<name>")
 def serve_video(session_id, name):
-    """Stream an MP4 from the session folder (whitelisted names only)."""
+    """Stream a video from the session folder (whitelisted names only)."""
     if not _whitelist_video_name(name):
         abort(404)
-    path = session_video_path(session_id, name)
-    if not os.path.exists(path):
+    path = find_session_video(session_id, name)
+    if not path or not os.path.exists(path):
         abort(404)
-    return send_file(path, mimetype="video/mp4", conditional=True)
+    ext  = os.path.splitext(path)[1].lstrip(".").lower()
+    mime = _EXT_MIME.get(ext, "video/mp4")
+    dl   = request.args.get("dl") == "1"
+    dl_name = request.args.get("filename") or f"{name}.{ext}"
+    return send_file(
+        path, mimetype=mime,
+        as_attachment=dl,
+        download_name=dl_name if dl else None,
+        conditional=not dl,
+    )
 
 
 @app.route("/api/attacks/run", methods=["POST"])
@@ -234,8 +248,8 @@ def api_attacks_run():
         attacks = list(ATTACK_REGISTRY.keys())
 
     # Validate session
-    wm_path = session_video_path(session_id, "watermarked")
-    if not os.path.exists(wm_path):
+    wm_path = find_session_video(session_id, "watermarked")
+    if not wm_path or not os.path.exists(wm_path):
         return jsonify({"error": "Session not found or video not yet embedded."}), 404
 
     meta          = load_session_meta(session_id)
@@ -349,8 +363,8 @@ def api_attacks_upload_video():
     if not f.filename or not _allowed(f.filename):
         return jsonify({"error": f"Unsupported video format. Supported: {', '.join(sorted(ALLOWED_EXT)).upper()}"}), 400
 
-    wm_path = session_video_path(session_id, "watermarked")
-    if not os.path.exists(wm_path):
+    wm_path = find_session_video(session_id, "watermarked")
+    if not wm_path or not os.path.exists(wm_path):
         return jsonify({"error": "Session not found or video not yet embedded."}), 404
 
     meta          = load_session_meta(session_id)
@@ -453,8 +467,8 @@ def api_detect_temporal():
         # Session mode (JSON)
         data       = request.get_json(force=True) or {}
         session_id = data.get("session_id", "")
-        wm_path    = session_video_path(session_id, "watermarked")
-        if not os.path.exists(wm_path):
+        wm_path    = find_session_video(session_id, "watermarked")
+        if not wm_path or not os.path.exists(wm_path):
             return jsonify({"error": "Session not found."}), 404
         video_path = wm_path
 
@@ -545,15 +559,19 @@ def api_audio_detect_temporal():
                 det_prob_t, msg_t = detector.detect_watermark(chunk.unsqueeze(0))
 
             det_prob = float(det_prob_t[0])
-            detected = det_prob >= 0.5
-            decoded  = msg_to_text(msg_t.float()) if detected else None
+            decoded  = msg_to_text(msg_t.float()) if det_prob >= 0.5 else None
+            bits     = [int(b) for b in msg_t.float().squeeze(0).tolist()] if det_prob >= 0.5 else []
+            db_match = find_nearest(bits) if bits else None
+            detected = det_prob >= 0.5 or bool(db_match)
 
             segments.append({
                 "start_s":        round(start / SAMPLE_RATE, 3),
                 "end_s":          round(end   / SAMPLE_RATE, 3),
                 "detected":       detected,
                 "detection_prob": round(det_prob, 4),
-                "decoded_text":   decoded,
+                "decoded_text":   db_match["original_text"] if db_match else decoded,
+                "raw_decoded":    decoded,
+                "db_match":       db_match,
             })
             start = end
 
@@ -645,7 +663,9 @@ def api_audio_file(session_id, filename):
         path = os.path.join(SESSION_FOLDER, session_id, safe)
     if not os.path.isfile(path):
         abort(404)
-    return send_file(path)
+    dl = request.args.get("dl") == "1"
+    dl_name = request.args.get("filename") or safe
+    return send_file(path, as_attachment=dl, download_name=dl_name if dl else None)
 
 
 @app.route("/api/audio/attacks/run", methods=["POST"])
@@ -688,6 +708,7 @@ def api_audio_attacks_run():
         try:
             proc_time = run_audio_attack(wm_path, key, out_path)
             det       = detect_audio(out_path, orig_bits, DEVICE)
+            db_match  = find_nearest(det["bits_list"]) if det.get("bits_list") else None
             results.append({
                 "attack_key":    key,
                 "display_name":  display_name,
@@ -700,6 +721,7 @@ def api_audio_attacks_run():
                 "pass":          det["detection_prob"] >= 0.5,
                 "process_time_s": proc_time,
                 "error":         None,
+                "db_match":      db_match,
             })
         except Exception as e:
             results.append({

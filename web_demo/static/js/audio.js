@@ -162,6 +162,10 @@ async function handleAudioEmbed() {
     // Step A2: audio comparison
     $a("a-aud-original").src    = result.original_url;
     $a("a-aud-watermarked").src = result.watermarked_url;
+    const _origAudioBasename = $a("a-file-input").files[0]?.name.replace(/\.[^.]+$/, "") || "audio";
+    const _aDlName = `watermarked_${_origAudioBasename}.wav`;
+    $a("a-btn-dl-watermarked").href     = `${result.watermarked_url}?dl=1&filename=${encodeURIComponent(_aDlName)}`;
+    $a("a-btn-dl-watermarked").download = _aDlName;
     $a("a-audio-meta").textContent =
       `Thời lượng: ${result.duration_s}s · Tần số: ${result.sample_rate} Hz · Thời gian: ${result.embed_time_s}s`;
     renderAudioBits($a("a-bits-embed"), result.bits_list);
@@ -243,8 +247,9 @@ function renderAudioResultsTable(results) {
     if (r.error) {
       keyHtml = `<span style="color:var(--danger)">Lỗi</span>`;
     } else {
-      const match = r.decoded_text === aOrigText;
-      keyHtml = `<code>${escHtml(r.decoded_text || "—")}</code> ` +
+      const displayText = r.db_match ? r.db_match.original_text : r.decoded_text;
+      const match = displayText === aOrigText;
+      keyHtml = `<code>${escHtml(displayText || "—")}</code> ` +
         (match ? `<span style="color:var(--success)">✓</span>`
                : `<span style="color:var(--danger)">✗</span>`);
     }
@@ -282,8 +287,9 @@ function previewAudioAttack(r) {
   if (r.bits_list) renderAudioBits($a("a-bits-attacked"), r.bits_list, aOrigBits);
 
   // Badge
-  const badge   = $a("a-decode-badge");
-  const isMatch = r.decoded_text !== null && r.decoded_text === aOrigText;
+  const badge       = $a("a-decode-badge");
+  const displayText = r.db_match ? r.db_match.original_text : r.decoded_text;
+  const isMatch     = displayText !== null && displayText === aOrigText;
   if (r.error) {
     badge.innerHTML = `<span class="key-badge key-badge--error">✗ Lỗi</span>`;
   } else if (isMatch) {
@@ -305,7 +311,7 @@ function previewAudioAttack(r) {
         `<td><strong>${bitPct}</strong> &nbsp;(${errBits} bit lỗi / 16)</td></tr>` +
     `<tr><td class="kc-label">Text gốc</td><td>"${escHtml(aOrigText)}"</td></tr>` +
     `<tr><td class="kc-label">Text decode</td>` +
-        `<td>"${escHtml(r.decoded_text || "")}" &nbsp;` +
+        `<td>"${escHtml(displayText || "")}" &nbsp;` +
         (isMatch ? `<span style="color:var(--success)">✓</span>`
                  : `<span style="color:var(--danger)">✗</span>`) +
         `</td></tr>` +
