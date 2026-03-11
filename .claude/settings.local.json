@@ -9,7 +9,13 @@
       "Bash(python -m pytest test_formats.py::test_video_format_encode -v -s --no-header)",
       "Bash(ffprobe -v quiet -show_streams -select_streams a \"/d/py_source/videoseal/input_video/[142MB_19s]_DJI_20260104091736_0149_D_compressed.mp4\")",
       "Bash(python -m pytest test_formats.py -k \"audio_format\" -v --no-header)",
-      "Bash(python -m pytest test_formats.py -k \"audio_format or unsupported_audio\" -v --no-header)"
+      "Bash(python -m pytest test_formats.py -k \"audio_format or unsupported_audio\" -v --no-header)",
+      "Bash(python train.py --image_dataset none --video_dataset none --only_eval False --epochs 2 --iter_per_epoch 2 --batch_size 2 --batch_size_eval 2 --workers 0 --nbits 32 --output_dir output/test_win --eval_freq 1 --saveimg_freq 1 --lambda_d 0)",
+      "Bash(python train.py --image_dataset custom --video_dataset none --epochs 3 --iter_per_epoch 3 --batch_size 2 --batch_size_eval 2 --workers 0 --nbits 32 --output_dir output/test_win --eval_freq 1 --saveimg_freq 1 --saveckpt_freq 999 --lambda_d 0 --lambda_i 0)",
+      "Bash(python train.py --image_dataset custom --video_dataset none --embedder_model unet_small2_yuv_quant --extractor_model convnext_tiny --epochs 3 --iter_per_epoch 3 --batch_size 2 --batch_size_eval 2 --workers 0 --nbits 32 --output_dir output/test_win --eval_freq 1 --saveimg_freq 1 --saveckpt_freq 999 --lambda_d 0 --lambda_i 0)",
+      "Bash(ls d:/py_source/videoseal/output/run1_video/*.pth)",
+      "Bash(ls -la d:/py_source/videoseal/output/run2_video/*.pth)",
+      "Bash(ls d:/py_source/videoseal/output/run2_video/*.pth)"
     ]
   }
 }

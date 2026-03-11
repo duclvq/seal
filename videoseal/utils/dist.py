@@ -7,6 +7,7 @@ import logging
 import os
 import socket
 import subprocess
+import sys
 from typing import Dict
 
 import torch
@@ -207,9 +208,11 @@ def init_distributed_mode(params):
         # RANK - required; can be set either here, or in a call to init function
 
         print("Initializing PyTorch distributed ...")
+        # nccl is Linux-only; use gloo on Windows
+        backend = 'gloo' if sys.platform == 'win32' else 'nccl'
         torch.distributed.init_process_group(
             init_method='env://',
-            backend='nccl',
+            backend=backend,
         )
 
         # set GPU device

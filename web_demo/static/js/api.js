@@ -12,13 +12,15 @@
  * @param {string}   eccType    - "rs" | "bch"
  * @returns {Promise<object>}   - JSON response
  */
-function apiEncode(file, text, k, onProgress, eccType = "rs") {
+function apiEncode(file, text, k, onProgress, eccType = "rs", modelMode = "meta", centerMask = false) {
   return new Promise((resolve, reject) => {
     const form = new FormData();
     form.append("video", file);
     form.append("text", text);
     form.append("ecc_type", eccType);
     form.append("k", String(k));
+    form.append("model_mode", modelMode);
+    form.append("center_mask", centerMask ? "true" : "false");
 
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/encode");
@@ -141,4 +143,24 @@ function apiUploadAttackVideo(sessionId, file, attackLabel, onProgress) {
 async function apiBchInfo(t) {
   const resp = await fetch(`/api/bch_info?t=${t}`);
   return resp.json();
+}
+
+/**
+ * POST /api/attacks/meta_overwrite
+ *
+ * Re-watermark the session video with Meta's model using random bits,
+ * then extract with both custom and Meta models.
+ *
+ * @param {string} sessionId
+ * @returns {Promise<object>}
+ */
+async function apiMetaOverwrite(sessionId) {
+  const resp = await fetch("/api/attacks/meta_overwrite", {
+    method:  "POST",
+    headers: { "Content-Type": "application/json" },
+    body:    JSON.stringify({ session_id: sessionId }),
+  });
+  const data = await resp.json();
+  if (!resp.ok) throw data;
+  return data;
 }

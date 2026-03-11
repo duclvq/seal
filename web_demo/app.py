@@ -27,7 +27,7 @@ from config import (
     ALLOWED_AUDIO_EXT,
     MAX_CONTENT_MB, DEVICE, DEFAULT_K, RS_TOTAL_BYTES, MSG_BITS,
 )
-from core.model_manager import get_model
+from core.model_manager import get_model, get_embed_model, get_extract_model, model_mode_label
 from core.ecc            import (
     text_to_msg_tensor, msg_tensor_to_text, rs_info,
     text_to_msg_tensor_bch, msg_tensor_to_text_bch, bch_info, BCH_AVAILABLE,
@@ -38,6 +38,7 @@ from core.video_io       import (
     save_session_meta, load_session_meta,
     session_video_path, find_session_video, new_session_id,
     extract_audio_track, embed_video_streaming, save_original_copy,
+    crop_center_for_extract,
     _EXT_TO_FORMAT, _EXT_MIME,
 )
 from core.attacks           import ATTACK_REGISTRY, ATTACK_DISPLAY_NAMES
@@ -68,7 +69,7 @@ def _allowed_audio(filename: str) -> bool:
 
 def _whitelist_video_name(name: str) -> bool:
     """Prevent path traversal by whitelisting allowed video names."""
-    if name in ("original", "watermarked", "attacked_upload"):
+    if name in ("original", "watermarked", "attacked_upload", "attacked_meta_overwrite"):
         return True
     for key in ATTACK_REGISTRY:
         if name == f"attacked_{key}":
@@ -102,10 +103,14 @@ def api_encode():
     if not f.filename or not _allowed(f.filename):
         return jsonify({"error": f"Unsupported video format. Supported: {', '.join(sorted(ALLOWED_EXT)).upper()}"}), 400
 
-    text     = request.form.get("text", "VideoSeal Demo")
-    ecc_type = request.form.get("ecc_type", "rs").strip().lower()
+    text        = request.form.get("text", "VideoSeal Demo")
+    ecc_type    = request.form.get("ecc_type", "rs").strip().lower()
+    model_mode  = request.form.get("model_mode", "meta").strip().lower()
+    center_mask = request.form.get("center_mask", "false").strip().lower() == "true"
     if ecc_type not in ("rs", "bch", "ldpc"):
         ecc_type = "rs"
+    if model_mode not in ("meta", "custom", "hybrid"):
+        model_mode = "meta"
 
     # Parse params and encode text → MSG_BITS-bit tensor
     if ecc_type == "bch":
@@ -160,7 +165,7 @@ def api_encode():
         # Extract audio track from original before processing
         audio_tmp = extract_audio_track(tmp_path)
 
-        model = get_model()
+        embed_model = get_embed_model(model_mode)
 
         # Save original (ffmpeg re-encode, no frame limit)
         save_original_copy(tmp_path, session_id, "original",
@@ -170,13 +175,16 @@ def api_encode():
         t0 = time.time()
         _, fps, num_frames = embed_video_streaming(
             tmp_path, session_id, "watermarked",
-            model, msg_tensor, DEVICE,
+            embed_model, msg_tensor, DEVICE,
             audio_src=audio_tmp, out_ext=out_ext,
+            center_mask=center_mask,
         )
         embed_time = round(time.time() - t0, 2)
 
-        # Persist metadata for attack phase
-        save_session_meta(session_id, bits_list, k, fps, ecc_type=ecc_type, out_ext=out_ext)
+        # Persist metadata for attack phase (include model_mode + center_mask for extraction)
+        save_session_meta(session_id, bits_list, k, fps, ecc_type=ecc_type,
+                          out_ext=out_ext, model_mode=model_mode,
+                          center_mask=center_mask)
 
         # Log to hidden watermark registry
         insert_watermark(session_id, bits_list, text, ecc_type, k, safe_name)
@@ -199,6 +207,8 @@ def api_encode():
         "watermarked_url": f"/api/video/{session_id}/watermarked",
         "out_ext":         out_ext,
         "embed_time_s":    embed_time,
+        "model_mode":      model_mode,
+        "model_mode_label": model_mode_label(model_mode),
         **extra,
     })
 
@@ -256,14 +266,16 @@ def api_attacks_run():
     original_bits = meta.get("bits_list")
     fps           = meta.get("fps", 24.0)
     # Prefer ecc params from session meta (they were set at embed time)
-    ecc_type = meta.get("ecc_type", ecc_type)
-    k        = meta.get("k", k)
+    ecc_type    = meta.get("ecc_type", ecc_type)
+    k           = meta.get("k", k)
+    model_mode  = meta.get("model_mode", "meta")
+    center_mask = meta.get("center_mask", False)
 
     # Load watermarked video (CPU) → move to GPU
     video_w_cpu, _ = load_video_tensor(wm_path)
     video_w = video_w_cpu.to(DEVICE)
 
-    model   = get_model()
+    model = get_extract_model(model_mode)
     results = []
 
     for attack_name in attacks:
@@ -277,7 +289,8 @@ def api_attacks_run():
             with torch.no_grad():
                 attacked = attack_fn(video_w, fps=fps)
                 attacked_gpu = attacked.to(DEVICE)
-                extracted_msg = model.extract_message(attacked_gpu, aggregation="avg")
+                extract_input = crop_center_for_extract(attacked_gpu) if center_mask else attacked_gpu
+                extracted_msg = model.extract_message(extract_input, aggregation="avg")
                 extracted_msg_cpu = extracted_msg.cpu()
             del attacked_gpu, extracted_msg
         except Exception as e:
@@ -381,10 +394,13 @@ def api_attacks_upload_video():
         t0 = time.time()
         video_cpu, _ = load_video_tensor(tmp_path)
         video_gpu     = video_cpu.to(DEVICE)
-        model         = get_model()
+        model_mode    = meta.get("model_mode", "meta")
+        center_mask   = meta.get("center_mask", False)
+        model         = get_extract_model(model_mode)
 
         with torch.no_grad():
-            extracted_msg = model.extract_message(video_gpu, aggregation="avg")
+            extract_input = crop_center_for_extract(video_gpu) if center_mask else video_gpu
+            extracted_msg = model.extract_message(extract_input, aggregation="avg")
         extracted_msg_cpu = extracted_msg.cpu()
         del video_gpu, extracted_msg
 
@@ -425,6 +441,128 @@ def api_attacks_upload_video():
         "attacked_url":     f"/api/video/{session_id}/attacked_upload",
         "process_time_s":   process_time,
         "db_match":         db_match,
+    })
+
+
+@app.route("/api/attacks/meta_overwrite", methods=["POST"])
+def api_attacks_meta_overwrite():
+    """
+    Re-watermark attack simulation:
+      1. Take the session's custom-embedded watermarked video.
+      2. Re-embed a RANDOM message using Meta's public model (attacker simulation).
+      3. Extract with the custom model  → did original watermark survive?
+      4. Extract with Meta's model      → did the overwrite succeed?
+
+    JSON body: { "session_id": "..." }
+
+    Returns:
+      process_time_s, attacked_url,
+      custom_extract: { bit_accuracy, pass, decoded_text, correctable, bits_list } | { error }
+      meta_extract:   { bit_accuracy, pass, bits_list }
+      original_model_mode: the mode used at embed time
+    """
+    data       = request.get_json(force=True)
+    session_id = data.get("session_id", "")
+
+    wm_path = find_session_video(session_id, "watermarked")
+    if not wm_path or not os.path.exists(wm_path):
+        return jsonify({"error": "Session not found or video not yet embedded."}), 404
+
+    meta          = load_session_meta(session_id)
+    original_bits = meta.get("bits_list")
+    fps           = meta.get("fps", 24.0)
+    ecc_type      = meta.get("ecc_type", "rs")
+    k             = meta.get("k", DEFAULT_K)
+    model_mode    = meta.get("model_mode", "meta")
+    center_mask   = meta.get("center_mask", False)
+
+    # Random overwrite message (the "attacker" embeds random bits)
+    overwrite_msg  = torch.randint(0, 2, (1, MSG_BITS), dtype=torch.float32)
+    overwrite_bits = [int(b) for b in overwrite_msg.squeeze(0).tolist()]
+
+    custom_result    = None
+    bit_acc_meta     = 0.0
+    extracted_meta_bits = []
+    process_time     = 0.0
+
+    try:
+        video_cpu, _ = load_video_tensor(wm_path)
+        video_gpu    = video_cpu.to(DEVICE)
+
+        t0 = time.time()
+
+        # Step 1: Re-embed with Meta model (attacker overwrites)
+        meta_embed = get_embed_model("meta")
+        with torch.no_grad():
+            outputs    = meta_embed.embed(video_gpu, msgs=overwrite_msg.to(DEVICE), is_video=True)
+        rewater_gpu = outputs["imgs_w"]
+        del outputs, video_gpu
+
+        # Step 2: Extract with custom model → did our watermark survive?
+        try:
+            custom_extract_model = get_extract_model("custom")
+            with torch.no_grad():
+                extract_input_c = crop_center_for_extract(rewater_gpu) if center_mask else rewater_gpu
+                extracted_c     = custom_extract_model.extract_message(extract_input_c, aggregation="avg")
+            extracted_c_cpu = extracted_c.cpu()
+            del extracted_c
+
+            c_bits = [int(b) for b in extracted_c_cpu.squeeze(0).tolist()]
+            if original_bits and len(original_bits) == len(c_bits):
+                bit_acc_c = sum(a == b for a, b in zip(original_bits, c_bits)) / len(original_bits)
+            else:
+                bit_acc_c = 0.0
+
+            if ecc_type == "bch":
+                dec_c = msg_tensor_to_text_bch(extracted_c_cpu)
+            elif ecc_type == "ldpc":
+                dec_c = msg_tensor_to_text_ldpc(extracted_c_cpu)
+            else:
+                dec_c = msg_tensor_to_text(extracted_c_cpu, k, RS_TOTAL_BYTES)
+
+            custom_result = {
+                "bit_accuracy": round(bit_acc_c, 4),
+                "pass":         bit_acc_c >= 0.70,
+                "decoded_text": dec_c["decoded_text"],
+                "correctable":  dec_c["correctable"],
+                "bits_list":    c_bits,
+            }
+        except FileNotFoundError as e:
+            custom_result = {"error": str(e)}
+
+        # Step 3: Extract with Meta model → did the overwrite succeed?
+        meta_extract_model = get_extract_model("meta")
+        with torch.no_grad():
+            extracted_m     = meta_extract_model.extract_message(rewater_gpu, aggregation="avg")
+        extracted_m_cpu = extracted_m.cpu()
+        del extracted_m
+
+        extracted_meta_bits = [int(b) for b in extracted_m_cpu.squeeze(0).tolist()]
+        bit_acc_meta = (
+            sum(a == b for a, b in zip(overwrite_bits, extracted_meta_bits)) / len(overwrite_bits)
+        )
+
+        process_time = round(time.time() - t0, 2)
+
+        # Save overwritten video for playback
+        save_video_tensor(rewater_gpu.cpu(), fps, session_id, "attacked_meta_overwrite")
+        del rewater_gpu
+
+    finally:
+        if DEVICE.type == "cuda":
+            torch.cuda.empty_cache()
+
+    return jsonify({
+        "process_time_s":      process_time,
+        "attacked_url":        f"/api/video/{session_id}/attacked_meta_overwrite",
+        "custom_extract":      custom_result,
+        "meta_extract": {
+            "bit_accuracy": round(bit_acc_meta, 4),
+            "pass":         bit_acc_meta >= 0.70,
+            "bits_list":    extracted_meta_bits,
+        },
+        "overwrite_bits":      overwrite_bits,
+        "original_model_mode": model_mode,
     })
 
 
@@ -473,11 +611,13 @@ def api_detect_temporal():
         video_path = wm_path
 
     # Load reference bits from session if available
+    center_mask = False
     if session_id:
         meta = load_session_meta(session_id)
         reference_bits = meta.get("bits_list")
         ecc_type       = meta.get("ecc_type", "rs")
         k              = meta.get("k", DEFAULT_K)
+        center_mask    = meta.get("center_mask", False)
 
     # Build ECC decoder callable
     def _decode(msg_tensor):
@@ -497,6 +637,7 @@ def api_detect_temporal():
             ecc_decoder   = _decode,
             reference_bits= reference_bits,
             db_lookup     = find_nearest,
+            center_mask   = center_mask,
         )
     except Exception as e:
         return jsonify({"error": str(e)}), 500

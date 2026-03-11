@@ -5,9 +5,21 @@ core*
 *egg-info
 *.pth
 *.mp4
+*.mkv
+*.avi
+*.mov
+*.mxf
+*.flv
+*.ts
+*.m2ts
+*.wmv
+*.webm
+*.3gp
 
 # Track videos in test directories
 !**/tests/**/*.mp4
 results*
 slurm*
-ckpts/y_256b_img.jit 
+ckpts/y_256b_img.jit
+data/train/
+data/val/

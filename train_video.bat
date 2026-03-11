@@ -1,0 +1,37 @@
+@echo off
+python train.py ^
+  --image_dataset none ^
+  --video_dataset custom ^
+  --embedder_model unet_small2_yuv_quant ^
+  --extractor_model convnext_tiny ^
+  --hidden_size_multiplier 1 ^
+  --nbits 256 ^
+  --workers 0 ^
+  --frames_per_clip 16 ^
+  --batch_size_video 1 ^
+  --batch_size_video_eval 1 ^
+  --resume_from ckpts/videoseal_y_256b_img.pth ^
+  --resume_optimizer_state False ^
+  --resume_disc False ^
+  --videoseal_step_size 4 ^
+  --lowres_attenuation True ^
+  --img_size_proc 256 ^
+  --img_size_val 256 ^
+  --img_size 256 ^
+  --epochs 600 ^
+  --iter_per_epoch 90 ^
+  --optimizer AdamW,lr=1e-5 ^
+  --scheduler None ^
+  --lambda_dec 1.0 ^
+  --lambda_d 0.5 ^
+  --lambda_i 0.1 ^
+  --perceptual_loss yuv ^
+  --num_augs 2 ^
+  --augmentation_config configs/all_augs.yaml ^
+  --disc_in_channels 1 ^
+  --disc_start 50 ^
+  --scaling_w 0.2 ^
+  --scaling_i 1.0 ^
+  --scaling_w_schedule None ^
+  --attenuation jnd_1_1 ^
+  --output_dir output/run1_video

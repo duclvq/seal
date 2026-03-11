@@ -9,6 +9,7 @@ Test with:
 """
 
 import io
+import sys
 import av
 import numpy as np
 import torch
@@ -30,7 +31,8 @@ class VideoCompression(nn.Module):
         super(VideoCompression, self).__init__()
         self.codec = codec  # values [28, 34, 40, 46]
         self.pix_fmt = 'yuv420p' if codec != 'libx264rgb' else 'rgb24'
-        self.threads = 10  # limit the number of threads to avoid memory issues
+        # On Windows, high thread counts in PyAV can deadlock with CUDA; use 1 thread
+        self.threads = 1 if sys.platform == 'win32' else 10
         self.crf = crf
         self.fps = fps
 

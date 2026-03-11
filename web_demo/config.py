@@ -32,3 +32,8 @@ DEFAULT_K      = 100 if MODEL_CARD == "chunkyseal" else 20
 MAX_FRAMES = 90   # cap ~3s @ 30fps for demo
 # BCH is fixed: 4 data bytes + 28 ECC bytes = 32 bytes, corrects ≤28 bit errors
 # (BCH always uses first 256 bits; for chunkyseal the remaining bits are zero-padded)
+
+# ── Custom trained checkpoint ───────────────────────────────────────────────
+# Path to your trained checkpoint (relative to project root).
+# Used when model_mode = "custom" or "hybrid".
+CUSTOM_CKPT_PATH = "output/run2_video/checkpoint350.pth"

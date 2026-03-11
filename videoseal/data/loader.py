@@ -4,6 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import os
+import sys
 import warnings
 
 import torch
@@ -16,7 +17,7 @@ from .datasets import CocoImageIDWrapper, ImageFolder, VideoDataset
 from .transforms import default_transform
 
 
-def load_video(fname, num_workers=8):
+def load_video(fname, num_workers=None):
     """
     Load full video content using Decord.
     Args:
@@ -34,6 +35,9 @@ def load_video(fname, num_workers=8):
     if _fsize < 1 * 1024:  # avoid hanging issue
         warnings.warn(f'video too short {fname=}')
         return [], None
+    if num_workers is None:
+        # On Windows, decord internal threads can cause deadlocks between epochs
+        num_workers = 1 if sys.platform == 'win32' else 8
     try:
         vr = VideoReader(
             fname, num_threads=num_workers, ctx=cpu(0))
@@ -129,13 +133,14 @@ def get_dataloader_segmentation(
     else:
         dataset = ImageFolder(path=data_dir, transform=transform, mask_transform=mask_transform)
 
+    drop_last = len(dataset) >= batch_size
     if is_dist_avail_and_initialized():
         sampler = DistributedSampler(dataset, shuffle=shuffle)
         dataloader = DataLoader(dataset, batch_size=batch_size, sampler=sampler,
-                                num_workers=num_workers, pin_memory=True, drop_last=True, collate_fn=custom_collate)
+                                num_workers=num_workers, pin_memory=True, drop_last=drop_last, collate_fn=custom_collate)
     else:
         dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
-                                num_workers=num_workers, pin_memory=True, drop_last=True, collate_fn=custom_collate)
+                                num_workers=num_workers, pin_memory=True, drop_last=drop_last, collate_fn=custom_collate)
 
     return dataloader
 

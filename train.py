@@ -132,6 +132,10 @@ def get_parser():
        help="The blending method to use. Options include: additive, multiplicative ..etc see Blender Class for more")
     aa("--scaling_w", type=float, default=0.2,
        help="Scaling factor for the watermark in the embedder model")
+    aa("--rewm_prob", type=float, default=0.0,
+       help="Probability [0,1] of applying self-re-watermark augmentation per step. "
+            "Trains the extractor to recover original bits even after another watermark is layered on top. "
+            "E.g. 0.3 means 30%% of batches are re-watermarked before extraction.")
     aa("--scaling_w_schedule", type=str, default=None,
        help="Scaling factor for the watermark in the embedder model. Ex: 'Linear,scaling_min=0.025,epochs=100,start_epoch=0'")
     aa("--scaling_i", type=float, default=1.0,
@@ -317,7 +321,7 @@ def main(params):
     # print(f"discriminator: {sum(p.numel() for p in image_detection_loss.discriminator.parameters() if p.requires_grad) / 1e3:.1f}K parameters")
 
     # Build the scaling schedule. Default is none
-    if params.scaling_w_schedule is not None:
+    if params.scaling_w_schedule is not None and str(params.scaling_w_schedule).lower() != "none":
         scaling_w_schedule = uoptim.parse_params(params.scaling_w_schedule)
         scaling_scheduler = uoptim.ScalingScheduler(
             obj=wam.blender, attribute="scaling_w", scaling_o=params.scaling_w,
@@ -463,7 +467,7 @@ def main(params):
 
                 print(f"running eval on {modality} dataset.")
                 val_stats = eval_one_epoch(wam, val_loader, modality, image_detection_loss,
-                                           0, augs, validation_masks, params)
+                                           0, augs, validation_masks, params, tensorboard=tensorboard)
                 with open(os.path.join(params.output_dir, f'log_only_{modality}_eval.txt'), 'a') as f:
                     f.write(json.dumps(val_stats) + "\n")
         return
@@ -625,6 +629,45 @@ def train_one_epoch(
 
             # forward
             outputs = wam(imgs, masks, is_video=is_video)
+
+            # ── Re-watermark augmentation ────────────────────────────────
+            # With probability rewm_prob, layer another watermark on top of
+            # imgs_w using the SAME model but random bits, then re-extract.
+            # This trains the extractor to recover original bits even when
+            # an attacker re-embeds a competing watermark (e.g. Meta model).
+            if params.rewm_prob > 0 and torch.rand(1).item() < params.rewm_prob:
+                _wam = wam.module if params.distributed else wam
+                with torch.no_grad():
+                    rewm_bits = torch.randint(
+                        0, 2, outputs["msgs"].shape,
+                        dtype=outputs["msgs"].dtype, device=imgs.device)
+                    # Embed random bits on top of already-watermarked frame
+                    if _wam.embedder.yuv:
+                        preds_r = _wam.embedder(
+                            _wam.rgb2yuv(outputs["imgs_w"])[:, 0:1], rewm_bits)
+                    else:
+                        preds_r = _wam.embedder(outputs["imgs_w"], rewm_bits)
+                    imgs_rewm = _wam.blender(outputs["imgs_w"], preds_r)
+                    if _wam.attenuation is not None:
+                        imgs_rewm = _wam.attenuation(outputs["imgs_w"], imgs_rewm)
+                    imgs_rewm = torch.clamp(imgs_rewm, 0, 1)
+                # Re-augment (no_grad released) and re-extract (gradients
+                # flow through augmenter + extractor, not through re-embed)
+                imgs_aug_r, masks_r, sel_r = _wam.augmenter(
+                    imgs_rewm, imgs, outputs["masks"],
+                    is_video=False, do_resize=False)
+                if imgs_aug_r.shape[-2:] != (_wam.img_size, _wam.img_size):
+                    imgs_aug_r = nn.functional.interpolate(
+                        imgs_aug_r, size=(_wam.img_size, _wam.img_size),
+                        mode='bilinear', align_corners=False)
+                preds_r_out = _wam.detector(imgs_aug_r)
+                # Replace prediction targets; loss still compares vs original msgs
+                outputs["preds"]     = preds_r_out
+                outputs["masks"]     = masks_r
+                outputs["imgs_aug"]  = imgs_aug_r
+                outputs["selected_aug"] = f"rewm+{sel_r}"
+            # ────────────────────────────────────────────────────────────
+
             outputs["preds"] /= params.temperature
 
             # last layer is used for gradient scaling

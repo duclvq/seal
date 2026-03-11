@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  videoseal-watcher:
+    build:
+      context: ..               # project root (so COPY works for all sub-folders)
+      dockerfile: watcher_service/Dockerfile
+    image: videoseal-watcher:latest
+    container_name: videoseal-watcher
+
+    # GPU access
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    # .env file (copy .env.example → .env and fill values)
+    env_file:
+      - .env
+
+    # Override paths inside container (host paths from .env are only for volume mounts)
+    environment:
+      - INPUT_FOLDER=/data/input
+      - OUTPUT_FOLDER=/data/output
+
+    volumes:
+      # INPUT_FOLDER and OUTPUT_FOLDER are read from .env
+      # Docker substitutes ${INPUT_FOLDER} and ${OUTPUT_FOLDER} at runtime.
+      - ${INPUT_FOLDER}:/data/input
+
+      # Watermarked output videos
+      - ${OUTPUT_FOLDER}:/data/output
+
+      # Persistent DB + error.log (separate data dir)
+      - ${DATA_DIR:-./data/db}:/data
+
+      # Model checkpoints from host (read-only)
+      - ../output:/app/output:ro
+
+      # ── Source code mount (dev mode) ──────────────────────────────────────
+      # Uncomment các dòng dưới để sửa code mà KHÔNG cần rebuild image.
+      # Comment lại khi deploy production (dùng code đã baked vào image).
+      # - ../videoseal:/app/videoseal
+      # - ../web_demo:/app/web_demo
+      # - ../audioseal:/app/audioseal
+      # - ../configs:/app/configs
+      # - ./service.py:/app/watcher_service/service.py
+      # - ./worker.py:/app/watcher_service/worker.py
+      # - ./db.py:/app/watcher_service/db.py
+
+    restart: unless-stopped
+
+    # Healthcheck: just verify the process is alive
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os; open('/data/watermarks.db')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s

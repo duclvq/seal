@@ -1,0 +1,28 @@
+@echo off
+python train.py ^
+  --image_dataset custom ^
+  --video_dataset none ^
+  --embedder_model unet_small2_yuv_quant ^
+  --extractor_model convnext_tiny ^
+  --hidden_size_multiplier 1 ^
+  --nbits 256 ^
+  --batch_size 8 ^
+  --batch_size_eval 8 ^
+  --workers 0 ^
+  --epochs 600 ^
+  --iter_per_epoch 1000 ^
+  --optimizer AdamW,lr=5e-4 ^
+  --scheduler CosineLRScheduler,lr_min=1e-6,t_initial=600,warmup_lr_init=1e-8,warmup_t=20 ^
+  --lambda_dec 1.0 ^
+  --lambda_d 0.1 ^
+  --lambda_i 0.1 ^
+  --perceptual_loss yuv ^
+  --num_augs 2 ^
+  --augmentation_config configs/all_augs.yaml ^
+  --disc_in_channels 1 ^
+  --disc_start 50 ^
+  --scaling_w 1.0 ^
+  --scaling_i 1.0 ^
+  --scaling_w_schedule Cosine,scaling_min=0.2,start_epoch=200,epochs=200 ^
+  --attenuation jnd_1_1 ^
+  --output_dir output/run1

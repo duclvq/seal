@@ -63,6 +63,41 @@
       </div>
     </div>
 
+    <!-- Model Mode Selector -->
+    <div class="form-group model-mode-group">
+      <label>Model sử dụng</label>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="model_mode" value="meta" checked>
+          <span class="radio-label">
+            <strong>Meta (gốc)</strong>
+            <small>Embed + Extract bằng model Meta pretrained</small>
+          </span>
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="model_mode" value="custom">
+          <span class="radio-label">
+            <strong>Custom</strong>
+            <small>Embed + Extract bằng model bạn đã train</small>
+          </span>
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="model_mode" value="hybrid">
+          <span class="radio-label">
+            <strong>Hybrid</strong>
+            <small>Embed: model custom · Extract: model Meta</small>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-top:0.5rem;">
+      <label class="checkbox-option">
+        <input type="checkbox" id="chk-center-mask">
+        <span><strong>Center Mask</strong> — chỉ embed watermark vào vùng giữa (0.25–0.75) của frame</span>
+      </label>
+    </div>
+
     <button id="btn-embed" class="btn-primary">
       <span id="btn-embed-text">Embed Watermark</span>
       <span id="btn-embed-spinner" class="spinner hidden"></span>
@@ -192,6 +227,55 @@
         </div>
       </div>
       <div id="preview-stats" class="preview-stats"></div>
+    </div>
+  </section>
+
+  <!-- ── STEP 4.5: Meta Re-watermark Attack ────────────────────────────── -->
+  <section class="card hidden" id="step-rewater">
+    <h2><span class="step-num">4.5</span> Tấn công Ghi Đè Watermark (Meta Overwrite)</h2>
+    <p class="hint" style="margin-bottom:12px">
+      Mô phỏng kịch bản: kẻ tấn công dùng <strong>model Meta (public)</strong> để nhúng watermark ngẫu nhiên lên video đã nhúng của bạn, sau đó kiểm tra xem watermark gốc có còn tồn tại không.
+    </p>
+
+    <div class="btn-row">
+      <button id="btn-meta-overwrite" class="btn-primary">
+        <span>Chạy tấn công ghi đè</span>
+        <span id="btn-meta-overwrite-spinner" class="spinner hidden"></span>
+      </button>
+    </div>
+    <div id="rewater-status" style="margin-top:8px;font-size:.9rem;"></div>
+    <div id="rewater-error" class="hidden" style="color:var(--danger);margin-top:8px;font-size:.9rem;"></div>
+
+    <div id="rewater-result" class="hidden" style="margin-top:20px;">
+      <!-- Video after overwrite -->
+      <div class="video-box" style="max-width:480px;margin-bottom:20px;">
+        <h4 style="margin-bottom:8px;">Video sau khi bị ghi đè (Meta embed)</h4>
+        <video id="rewater-vid" controls loop muted playsinline style="width:100%;border-radius:8px;"></video>
+      </div>
+
+      <!-- Two-column comparison -->
+      <div class="rewater-compare">
+        <!-- Custom model extraction -->
+        <div class="rewater-card rewater-card--custom">
+          <div class="rewater-card-title">
+            Extract bằng model <strong>Custom (của bạn)</strong>
+            <span class="rewater-subtitle">Watermark gốc còn không?</span>
+          </div>
+          <div id="rewater-custom-result"></div>
+        </div>
+
+        <!-- Meta model extraction -->
+        <div class="rewater-card rewater-card--meta">
+          <div class="rewater-card-title">
+            Extract bằng model <strong>Meta (kẻ tấn công)</strong>
+            <span class="rewater-subtitle">Ghi đè có thành công không?</span>
+          </div>
+          <div id="rewater-meta-result"></div>
+        </div>
+      </div>
+
+      <!-- Verdict -->
+      <div id="rewater-verdict" class="rewater-verdict"></div>
     </div>
   </section>
 

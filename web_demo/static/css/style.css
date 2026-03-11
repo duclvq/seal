@@ -201,6 +201,27 @@ main {
 }
 .hint { font-size: .8rem; color: var(--text-muted); margin-top: 2px; }
 
+/* ── Model Mode Selector ─────────────────────────────────────────────────── */
+.model-mode-group { margin-bottom: 20px; }
+.model-mode-group > label { font-size: .85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; display: block; }
+.radio-group { display: flex; gap: 10px; flex-wrap: wrap; }
+.radio-option {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1; min-width: 140px;
+  transition: border-color .2s, background .2s;
+}
+.radio-option:hover { border-color: var(--primary); background: rgba(99,102,241,.05); }
+.radio-option input[type="radio"] { margin-top: 3px; accent-color: var(--primary); flex-shrink: 0; }
+.radio-option input[type="radio"]:checked + .radio-label strong { color: var(--primary); }
+.radio-option:has(input:checked) { border-color: var(--primary); background: rgba(99,102,241,.08); }
+.radio-label { display: flex; flex-direction: column; gap: 2px; }
+.radio-label strong { font-size: .9rem; }
+.radio-label small { font-size: .75rem; color: var(--text-muted); }
+
 /* ── Buttons ─────────────────────────────────────────────────────────────── */
 .btn-primary, .btn-secondary {
   display: inline-flex;
@@ -375,6 +396,8 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .attack-item:hover { background: #eef1f5; }
 .attack-item input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
 .attack-item label { font-size: .88rem; cursor: pointer; }
+.checkbox-option { display: flex; align-items: flex-start; gap: .5rem; cursor: pointer; font-size: .9rem; }
+.checkbox-option input[type="checkbox"] { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--primary); flex-shrink: 0; cursor: pointer; }
 
 /* ── Results Table ───────────────────────────────────────────────────────── */
 #results-wrap { margin-top: 24px; }
@@ -740,6 +763,52 @@ button:disabled { opacity: .55; cursor: not-allowed; }
   font-size: .9rem;
   min-height: 22px;
 }
+
+/* ── Meta Overwrite Attack ───────────────────────────────────────────────── */
+.rewater-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+@media (max-width: 640px) { .rewater-compare { grid-template-columns: 1fr; } }
+
+.rewater-card {
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+.rewater-card--custom { border-color: #1565c0; background: rgba(21,101,192,.04); }
+.rewater-card--meta   { border-color: #c62828; background: rgba(198,40,40,.04); }
+
+.rewater-card-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: .9rem;
+  margin-bottom: 12px;
+}
+.rewater-subtitle { font-size: .78rem; color: var(--text-muted); }
+
+.rewater-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+.rewater-label { font-size: .78rem; color: var(--text-muted); }
+.rewater-val   { font-size: .9rem; }
+
+.rewater-verdict {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: .95rem;
+  margin-top: 4px;
+}
+.rewater-verdict--ok   { background: rgba(46,125,50,.12);  color: var(--success); border: 1px solid var(--success); }
+.rewater-verdict--fail { background: rgba(198,40,40,.10);  color: var(--danger);  border: 1px solid var(--danger); }
+.rewater-verdict--warn { background: rgba(212,160,23,.10); color: var(--warn);    border: 1px solid var(--warn); }
 
 /* ── Timeline ─────────────────────────────────────────────────────────────── */
 .timeline-bar {

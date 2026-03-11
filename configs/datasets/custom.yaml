@@ -1,0 +1,4 @@
+train_dir: data/train/
+val_dir: data/val/
+train_annotation_file: null
+val_annotation_file: null

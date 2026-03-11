@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
   $("btn-run-all").addEventListener("click",      () => handleAttacks(true));
   $("upload-attack-input").addEventListener("change", handleUploadAttackVideo);
   $("btn-temporal-session").addEventListener("click", handleTemporalAnalysis);
+  $("btn-meta-overwrite").addEventListener("click", handleMetaOverwrite);
 
   $("detail-toggle").addEventListener("click", handleDetailToggle);
   $("detail-pw-submit").addEventListener("click", submitDetailPassword);
@@ -204,12 +205,16 @@ async function handleEmbed() {
   hide("attack-preview");
 
   try {
+    const modelMode  = document.querySelector('input[name="model_mode"]:checked')?.value ?? "meta";
+    const centerMask = document.getElementById("chk-center-mask")?.checked ?? false;
     const result = await apiEncode(
       fileInput.files[0],
       text,
       rsK,
       (pct) => setStatus(`Đang xử lý... ${pct}%`, "info"),
       eccType,
+      modelMode,
+      centerMask,
     );
 
     sessionId    = result.session_id;
@@ -242,7 +247,7 @@ async function handleEmbed() {
     $("btn-dl-watermarked").href     = `${result.watermarked_url}?dl=1&filename=${encodeURIComponent(_dlName)}`;
     $("btn-dl-watermarked").download = _dlName;
     $("video-meta").textContent =
-      `${result.num_frames} frames · ${result.fps.toFixed(1)} fps · embed time: ${result.embed_time_s}s`;
+      `${result.num_frames} frames · ${result.fps.toFixed(1)} fps · embed time: ${result.embed_time_s}s · model: ${result.model_mode_label}`;
     show("step-videos");
 
     // Step 3: bits
@@ -264,6 +269,12 @@ async function handleEmbed() {
 
     // Step 4: attacks
     show("step-attacks");
+
+    // Step 4.5: meta overwrite attack (reset state)
+    hide("rewater-result");
+    hide("rewater-error");
+    $("rewater-status").textContent = "";
+    show("step-rewater");
 
     // Step 5: temporal analysis
     show("step-temporal");
@@ -728,4 +739,107 @@ function renderTemporalTable(segments, tbodyId) {
     `;
     tbody.appendChild(tr);
   });
+}
+
+
+// ── Meta Overwrite Attack ──────────────────────────────────────────────────
+async function handleMetaOverwrite() {
+  if (!sessionId) {
+    alert("Vui lòng embed watermark trước.");
+    return;
+  }
+
+  const btn     = $("btn-meta-overwrite");
+  const spinner = $("btn-meta-overwrite-spinner");
+  const status  = $("rewater-status");
+
+  btn.disabled = true;
+  spinner.classList.remove("hidden");
+  hide("rewater-result");
+  hide("rewater-error");
+  status.textContent = "Đang chạy tấn công ghi đè...";
+  status.className = "status-info";
+
+  try {
+    const data = await apiMetaOverwrite(sessionId);
+
+    // Video preview
+    const vid = $("rewater-vid");
+    vid.src = data.attacked_url;
+    vid.load();
+
+    // Custom model result
+    const cust   = data.custom_extract;
+    const custEl = $("rewater-custom-result");
+    if (cust.error) {
+      custEl.innerHTML = `<span style="color:var(--danger)">Lỗi: ${escapeHtml(cust.error)}</span>`;
+    } else {
+      const pct      = (cust.bit_accuracy * 100).toFixed(1);
+      const survived = cust.pass;
+      const color    = survived ? "var(--success)" : "var(--danger)";
+      const icon     = survived ? "✓ Còn sống sót" : "✗ Bị ghi đè";
+      custEl.innerHTML = `
+        <div class="rewater-metric">
+          <span class="rewater-label">Bit accuracy (vs watermark gốc)</span>
+          <span class="rewater-val" style="color:${color}"><strong>${pct}%</strong> — ${icon}</span>
+        </div>
+        <div class="rewater-metric">
+          <span class="rewater-label">Nội dung decode</span>
+          <span class="rewater-val">"${escapeHtml(cust.decoded_text || "—")}"</span>
+        </div>
+        <div class="acc-bar" style="max-width:320px;margin-top:6px">
+          <div class="acc-track">
+            <div class="acc-fill ${survived ? "pass" : "fail"}" style="width:${pct}%"></div>
+          </div>
+          <span>${pct}%</span>
+        </div>`;
+    }
+
+    // Meta model result
+    const metaR  = data.meta_extract;
+    const metaEl = $("rewater-meta-result");
+    const pctM   = (metaR.bit_accuracy * 100).toFixed(1);
+    const overOk = metaR.pass;
+    const colorM = overOk ? "var(--danger)" : "var(--success)";
+    const iconM  = overOk ? "✓ Ghi đè thành công" : "✗ Ghi đè thất bại";
+    metaEl.innerHTML = `
+      <div class="rewater-metric">
+        <span class="rewater-label">Bit accuracy (vs bits của Meta)</span>
+        <span class="rewater-val" style="color:${colorM}"><strong>${pctM}%</strong> — ${iconM}</span>
+      </div>
+      <div class="acc-bar" style="max-width:320px;margin-top:6px">
+        <div class="acc-track">
+          <div class="acc-fill ${overOk ? "fail" : "pass"}" style="width:${pctM}%"></div>
+        </div>
+        <span>${pctM}%</span>
+      </div>`;
+
+    // Verdict
+    const verdictEl = $("rewater-verdict");
+    if (cust.error) {
+      verdictEl.textContent = "Không thể kết luận (custom model không khả dụng).";
+      verdictEl.className = "rewater-verdict rewater-verdict--warn";
+    } else if (cust.pass && !metaR.pass) {
+      verdictEl.textContent = "Watermark GỐC còn sống sót — tấn công ghi đè THẤT BẠI.";
+      verdictEl.className = "rewater-verdict rewater-verdict--ok";
+    } else if (!cust.pass && metaR.pass) {
+      verdictEl.textContent = "Watermark gốc bị GHI ĐÈ — tấn công thành công.";
+      verdictEl.className = "rewater-verdict rewater-verdict--fail";
+    } else {
+      verdictEl.textContent = `Kết quả trung gian: custom ${(cust.bit_accuracy*100).toFixed(1)}% / Meta ${pctM}%.`;
+      verdictEl.className = "rewater-verdict rewater-verdict--warn";
+    }
+
+    status.textContent = `Hoàn thành trong ${data.process_time_s}s`;
+    status.className = "status-success";
+    show("rewater-result");
+
+  } catch (err) {
+    $("rewater-error").textContent = `Lỗi: ${err.error || JSON.stringify(err)}`;
+    show("rewater-error");
+    status.textContent = "";
+  } finally {
+    btn.disabled = false;
+    spinner.classList.add("hidden");
+  }
 }
