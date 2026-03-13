@@ -56,7 +56,7 @@ GPU_MEMORY_FRACTION  = float(os.getenv("GPU_MEMORY_FRACTION", "0.9"))
 NUM_WORKERS          = int(os.getenv("NUM_WORKERS", "1"))
 STATS_CSV            = Path(os.getenv("STATS_CSV").strip()) if os.getenv("STATS_CSV", "").strip() else None
 
-ALLOWED_EXT = {".mp4", ".mov", ".avi", ".mkv", ".webm", ".m4v", ".3gp", ".ts", ".flv"}
+ALLOWED_EXT = {".mp4", ".mov", ".avi", ".mkv", ".webm", ".m4v", ".3gp", ".ts", ".flv", ".mxf"}
 
 # ── Logging ───────────────────────────────────────────────────────────────────
 def _setup_logging() -> logging.Logger:
@@ -340,9 +340,17 @@ def main() -> None:
             if p.is_file() and p.suffix.lower() in ALLOWED_EXT:
                 _enqueue(p)
 
-    # Watchdog observer
-    from watchdog.observers import Observer
-    from watchdog.events    import FileSystemEventHandler
+    # Watchdog observer — use PollingObserver for Docker/network mounts
+    try:
+        from watchdog.observers.polling import PollingObserver
+        observer = PollingObserver(timeout=10)
+        obs_type = "polling"
+    except ImportError:
+        from watchdog.observers import Observer
+        observer = Observer()
+        obs_type = "inotify"
+
+    from watchdog.events import FileSystemEventHandler
 
     class _Handler(FileSystemEventHandler):
         def on_created(self, event):
@@ -350,10 +358,28 @@ def main() -> None:
         def on_moved(self, event):
             _VideoHandler().dispatch(event)
 
-    observer = Observer()
     observer.schedule(_Handler(), str(INPUT_FOLDER), recursive=True)
     observer.start()
-    log.info(f"Watching: {INPUT_FOLDER}  →  OUTPUT: {OUTPUT_FOLDER}")
+    log.info(f"Watching ({obs_type}): {INPUT_FOLDER}  →  OUTPUT: {OUTPUT_FOLDER}")
+
+    # Periodic rescan — catches files watchdog might miss (Docker bind mounts, NFS)
+    POLL_INTERVAL = int(os.getenv("POLL_INTERVAL", "30"))  # seconds, 0 = disable
+
+    def _poll_loop():
+        while not _stop_event.is_set():
+            _stop_event.wait(POLL_INTERVAL)
+            if _stop_event.is_set():
+                break
+            for p in sorted(INPUT_FOLDER.rglob("*")):
+                if _stop_event.is_set():
+                    break
+                if p.is_file() and p.suffix.lower() in ALLOWED_EXT:
+                    _enqueue(p)
+
+    if POLL_INTERVAL > 0:
+        poll_thread = threading.Thread(target=_poll_loop, daemon=True, name="poll-rescan")
+        poll_thread.start()
+        log.info(f"Periodic rescan every {POLL_INTERVAL}s")
 
     # Graceful shutdown on SIGTERM / SIGINT
     def _shutdown(signum, frame):

@@ -1,12 +1,12 @@
 version: "3.9"
 
 services:
-  videoseal-watcher:
+  wm-watcher:
     build:
       context: ..               # project root (so COPY works for all sub-folders)
       dockerfile: watcher_service/Dockerfile
-    image: videoseal-watcher:latest
-    container_name: videoseal-watcher
+    image: wm-watcher:latest
+    container_name: wm-watcher
 
     # GPU access
     deploy:
@@ -25,20 +25,30 @@ services:
     environment:
       - INPUT_FOLDER=/data/input
       - OUTPUT_FOLDER=/data/output
+      - DB_PATH=/data/db/watermarks.db
+      - ERROR_LOG=/data/db/error.log
+      - STATS_CSV=/data/db/stats.csv
+      # AudioSeal cache → dùng thư mục persist, không download lại
+      - AUDIOSEAL_CACHE_DIR=/data/model_cache/audioseal
+      # Offline mode — chặn mọi HuggingFace network call
+      - HF_HUB_OFFLINE=1
+      - TRANSFORMERS_OFFLINE=1
 
     volumes:
-      # INPUT_FOLDER and OUTPUT_FOLDER are read from .env
-      # Docker substitutes ${INPUT_FOLDER} and ${OUTPUT_FOLDER} at runtime.
-      - ${INPUT_FOLDER}:/data/input
+      # Input videos (read-only from host)
+      - ${INPUT_FOLDER}:/data/input:ro
 
       # Watermarked output videos
       - ${OUTPUT_FOLDER}:/data/output
 
-      # Persistent DB + error.log (separate data dir)
-      - ${DATA_DIR:-./data/db}:/data
+      # DB, error.log, stats.csv — persisted on host
+      - ${DATA_DIR:-./data/db}:/data/db
 
       # Model checkpoints from host (read-only)
       - ../output:/app/output:ro
+
+      # Model cache — AudioSeal + HuggingFace, persisted across restarts
+      - ${MODEL_CACHE_DIR:-./data/model_cache}:/data/model_cache
 
       # ── Source code mount (dev mode) ──────────────────────────────────────
       # Uncomment các dòng dưới để sửa code mà KHÔNG cần rebuild image.
@@ -55,7 +65,7 @@ services:
 
     # Healthcheck: just verify the process is alive
     healthcheck:
-      test: ["CMD", "python", "-c", "import os; open('/data/watermarks.db')"]
+      test: ["CMD", "python", "-c", "import os; open('/data/db/watermarks.db')"]
       interval: 30s
       timeout: 10s
       retries: 3

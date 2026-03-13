@@ -23,3 +23,5 @@ slurm*
 ckpts/y_256b_img.jit
 data/train/
 data/val/
+wm-watcher.tar
+.tmp-wm-watcher.tar342455079

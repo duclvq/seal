@@ -1,0 +1,22 @@
+# Dev mode: mounts source code từ host → sửa code không cần rebuild image.
+# Dùng: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+#
+# Hoặc thêm alias trong .env:
+#   COMPOSE_FILE=docker-compose.yml:docker-compose.dev.yml
+# Sau đó chỉ cần: docker compose up
+
+version: "3.9"
+
+services:
+  wm-watcher:
+    # Không rebuild — dùng image đã build sẵn
+    command: python -u watcher_service/service.py
+
+    volumes:
+      # Source code mount — sửa file trên host, container thấy ngay
+      - ../videoseal:/app/videoseal
+      - ../audioseal:/app/audioseal
+      - ../configs:/app/configs
+      - ./service.py:/app/watcher_service/service.py
+      - ./worker.py:/app/watcher_service/worker.py
+      - ./db.py:/app/watcher_service/db.py

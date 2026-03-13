@@ -1,1 +1,5 @@
 timestamp,filename,resolution,total_frames,fps,embed_time_s,throughput_fps,has_audio,gpu_alloc_mb,gpu_reserved_mb,gpu_peak_mb,chunk_size,num_oom_splits,status
+2026-03-11 15:40:17,01112025-vietnam-leads-asean-growth-in-q3-51938079062190476098509.mp4,1920x1080,9990,24.37,1044.04,9.57,True,284,1390,6443,45,0,done
+2026-03-11 15:54:10,0918-yt-vfest-15072032722066480124537.mp4,1920x1080,1845,25.0,213.8,8.63,True,284,1364,6599,45,0,done
+2026-03-11 16:01:10,1019-yt-di-san-hue-qua-net-phan-92682726955682499965627.mp4,1920x1080,3465,24.38,418.28,8.28,True,284,1364,6290,45,0,done
+2026-03-11 16:10:49,1019-yt-du-lich-am-thuc-95266084195346607427777.mp4,1920x1080,4320,25.0,576.62,7.49,True,284,1364,6373,45,0,done

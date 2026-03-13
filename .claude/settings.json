@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker exec:*)",
+      "Read(//root/.cache/**)",
+      "Read(//c/Users/leduc/.cache/audioseal/**)",
+      "Read(//d/py_source/videoseal/$HOME/.cache/**)"
+    ]
+  }
+}
