@@ -221,6 +221,21 @@ def _worker(video_model, audio_model, device):
 
 
 # ── Enqueue helper ────────────────────────────────────────────────────────────
+def _is_file_stable(path: Path, wait_seconds: int = 3) -> bool:
+    """Return True if the file size hasn't changed over wait_seconds.
+    Prevents processing files that are still being copied."""
+    import time
+    try:
+        size1 = path.stat().st_size
+        if size1 == 0:
+            return False
+        time.sleep(wait_seconds)
+        size2 = path.stat().st_size
+        return size1 == size2
+    except OSError:
+        return False
+
+
 def _is_valid_video(path: Path) -> bool:
     """Quick check: can PyAV open the file and find a video stream?"""
     try:
@@ -241,6 +256,9 @@ def _enqueue(path: Path) -> None:
         return
     if is_processed(str(path)):
         log.debug(f"[SKIP] already done: {path.name}")
+        return
+    if not _is_file_stable(path):
+        log.info(f"[WAIT] file still changing, skip for now: {path.name}")
         return
     if not _is_valid_video(path):
         log.warning(f"[SKIP] invalid/corrupt video: {path.name}")
@@ -274,8 +292,11 @@ def main() -> None:
     OUTPUT_FOLDER.mkdir(parents=True, exist_ok=True)
 
     # DB
-    from db import init_db
+    from db import init_db, reset_stale_jobs
     init_db(str(DB_PATH))
+    stale = reset_stale_jobs(max_age_minutes=30)
+    if stale:
+        log.info(f"Reset {stale} stale processing job(s) — will retry")
     log.info(f"DB: {DB_PATH}")
 
     # Stats CSV

@@ -4,7 +4,20 @@
       "Bash(docker exec:*)",
       "Read(//root/.cache/**)",
       "Read(//c/Users/leduc/.cache/audioseal/**)",
-      "Read(//d/py_source/videoseal/$HOME/.cache/**)"
+      "Read(//d/py_source/videoseal/$HOME/.cache/**)",
+      "Bash(python -m json.tool)",
+      "Bash(ls d:/py_source/videoseal/watcher_service/.env*)",
+      "Bash(docker info:*)",
+      "Bash(docker version:*)",
+      "Bash(while read:*)",
+      "Bash(do echo:*)",
+      "Bash(ffprobe -hide_banner -i \"D:/data/youtube_mxf/$f\")",
+      "Bash(done)",
+      "Bash(docker compose:*)",
+      "Bash(docker rm:*)",
+      "Bash(docker ps:*)",
+      "Bash(docker images:*)",
+      "Bash(docker top:*)"
     ]
   }
 }

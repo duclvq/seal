@@ -66,13 +66,6 @@ def load_audio_model(device: torch.device):
 # Helpers
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _apply_center_mask(wm: torch.Tensor, orig: torch.Tensor) -> torch.Tensor:
-    H, W = wm.shape[-2], wm.shape[-1]
-    mask = torch.zeros_like(wm)
-    mask[..., int(H * 0.25):int(H * 0.75), int(W * 0.25):int(W * 0.75)] = 1.0
-    return wm * mask + orig * (1.0 - mask)
-
-
 def _encode_audio_msg(text: str, device: torch.device) -> torch.Tensor:
     """Encode first 2 ASCII chars of text into a 16-bit tensor for AudioSeal."""
     txt2 = (text + "\x00\x00")[:2]
@@ -136,7 +129,6 @@ def _flush_chunk(
     if device.type == "cuda":
         torch.cuda.empty_cache()
 
-    wm_chunk = _apply_center_mask(wm_chunk, video_chunk)
     del video_chunk
     vid_np   = (wm_chunk.clamp(0, 1) * 255).to(torch.uint8).permute(0, 2, 3, 1).numpy()
     del wm_chunk
@@ -224,9 +216,11 @@ def embed_to_file(
                 wav = TAF.resample(wav, sr_orig, 16000)
             wav = wav.float().to(device)
 
-            msg16 = _encode_audio_msg(watermark_text, device)
+            msg16 = _encode_audio_msg(watermark_text, device)  # [1, 16]
             with torch.no_grad():
-                wm_wav = audio_model(wav.unsqueeze(0), msg16.unsqueeze(0)).squeeze(0).cpu()
+                wm_wav = audio_model(
+                    wav.unsqueeze(0), sample_rate=16000, message=msg16
+                ).squeeze(0).cpu()
 
             # Resample back to original sample rate
             if sr_orig != 16000:
@@ -313,10 +307,8 @@ def embed_to_file(
         if audio_final and os.path.exists(audio_final):
             _mux_video_audio(tmp_vid, audio_final, output_path, fmt)
         elif fmt != "mp4":
-            subprocess.run(
-                ["ffmpeg", "-y", "-i", tmp_vid, "-c:v", "copy", "-an", "-f", fmt, output_path],
-                capture_output=True, check=True,
-            )
+            from web_demo.core.video_io import _remux_video
+            _remux_video(tmp_vid, output_path, fmt)
         else:
             if os.path.exists(output_path):
                 os.unlink(output_path)

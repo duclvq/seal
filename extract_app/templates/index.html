@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Watermark Verify</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+        }
+        .container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+            max-width: 560px;
+            width: 100%;
+            padding: 36px;
+        }
+        h1 {
+            font-size: 22px;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 12px;
+        }
+        .upload-area:hover, .upload-area.dragover {
+            border-color: #2d5be3;
+            background: #f8faff;
+        }
+        .upload-area .icon { font-size: 36px; margin-bottom: 8px; }
+        .upload-area p { color: #888; font-size: 13px; }
+        .upload-area .filename {
+            color: #2d5be3;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 8px;
+            word-break: break-all;
+        }
+
+        .or-divider {
+            text-align: center;
+            color: #aaa;
+            font-size: 12px;
+            margin: 8px 0;
+        }
+
+        .path-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .path-input:focus { border-color: #2d5be3; }
+
+        .btn {
+            width: 100%;
+            padding: 13px;
+            background: #2d5be3;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #1e4cc8; }
+        .btn:disabled {
+            background: #a8bce8;
+            cursor: not-allowed;
+        }
+
+        .result {
+            margin-top: 24px;
+            display: none;
+        }
+        .result.show { display: block; }
+
+        .result-card {
+            background: #f8faff;
+            border: 1px solid #e0e8f5;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eef2f8;
+            font-size: 14px;
+        }
+        .result-row:last-child { border-bottom: none; }
+        .result-label { color: #666; }
+        .result-value { color: #1a1a2e; font-weight: 600; text-align: right; max-width: 60%; word-break: break-all; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .status-found {
+            background: #e6f7ed;
+            color: #1a8f4a;
+        }
+        .status-not-found {
+            background: #fde8e8;
+            color: #c53030;
+        }
+        .status-partial {
+            background: #fff8e1;
+            color: #b8860b;
+        }
+
+        .wm-status {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .wm-chip {
+            flex: 1;
+            text-align: center;
+            padding: 10px 8px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .wm-chip.yes {
+            background: #e6f7ed;
+            color: #1a8f4a;
+        }
+        .wm-chip.no {
+            background: #fde8e8;
+            color: #c53030;
+        }
+        .wm-chip .label {
+            display: block;
+            font-size: 11px;
+            font-weight: 400;
+            color: #888;
+            margin-bottom: 3px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        .loading.show { display: block; }
+        .spinner {
+            width: 32px; height: 32px;
+            border: 3px solid #e8e8e8;
+            border-top-color: #2d5be3;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 10px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading p { color: #888; font-size: 13px; }
+
+        .error-msg {
+            background: #fde8e8;
+            color: #c53030;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-top: 16px;
+            display: none;
+        }
+        .error-msg.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Video Watermark Verify</h1>
+        <p class="subtitle">Verify embedded watermark in video</p>
+
+        <div class="upload-area" id="dropZone">
+            <div class="icon">&#128206;</div>
+            <p>Click or drag video file here</p>
+            <p style="font-size:11px; color:#aaa; margin-top:4px">MP4, MXF, MOV, MKV, AVI...</p>
+            <div class="filename" id="fileName"></div>
+        </div>
+        <input type="file" id="fileInput" accept="video/*,.mxf" style="display:none">
+
+        <div class="or-divider">or enter server path</div>
+
+        <input type="text" class="path-input" id="videoPath"
+               placeholder="D:\data\output\video.mxf">
+
+        <button class="btn" id="btnVerify">Verify</button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Analyzing video...</p>
+        </div>
+
+        <div class="error-msg" id="errorMsg"></div>
+
+        <div class="result" id="result">
+            <div class="wm-status">
+                <div class="wm-chip" id="chipVideo">
+                    <span class="label">Video Watermark</span>
+                    <span id="chipVideoText">-</span>
+                </div>
+                <div class="wm-chip" id="chipAudio">
+                    <span class="label">Audio Watermark</span>
+                    <span id="chipAudioText">-</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-row">
+                    <span class="result-label">Status</span>
+                    <span class="result-value" id="rStatus"></span>
+                </div>
+                <div class="result-row" id="rowVideoKey">
+                    <span class="result-label">Video Key</span>
+                    <span class="result-value" id="rVideoKey"></span>
+                </div>
+                <div class="result-row" id="rowAudioKey">
+                    <span class="result-label">Audio Key</span>
+                    <span class="result-value" id="rAudioKey"></span>
+                </div>
+                <div class="result-row" id="rowOriginal">
+                    <span class="result-label">Original File</span>
+                    <span class="result-value" id="rOriginal"></span>
+                </div>
+                <div class="result-row" id="rowTime">
+                    <span class="result-label">Embed Time</span>
+                    <span class="result-value" id="rTime"></span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Frames Analyzed</span>
+                    <span class="result-value" id="rFrames"></span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Process Time</span>
+                    <span class="result-value" id="rElapsed"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+// File upload
+const fileInput = document.getElementById('fileInput');
+const dropZone = document.getElementById('dropZone');
+const fileName = document.getElementById('fileName');
+let selectedFile = null;
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) selectFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', () => { if (fileInput.files.length) selectFile(fileInput.files[0]); });
+
+function selectFile(f) {
+    selectedFile = f;
+    fileName.textContent = f.name + ' (' + (f.size / 1024 / 1024).toFixed(1) + ' MB)';
+    document.getElementById('videoPath').value = '';
+    hideResult();
+}
+
+// Submit
+document.getElementById('btnVerify').addEventListener('click', () => {
+    const pathVal = document.getElementById('videoPath').value.trim();
+    const fd = new FormData();
+
+    if (selectedFile) {
+        fd.append('file', selectedFile);
+    } else if (pathVal) {
+        fd.append('path', pathVal);
+    } else {
+        showError('Please select a video file or enter a path');
+        return;
+    }
+    doExtract(fd);
+});
+
+// Clear file selection when path is typed
+document.getElementById('videoPath').addEventListener('input', () => {
+    selectedFile = null;
+    fileName.textContent = '';
+    fileInput.value = '';
+});
+
+function doExtract(formData) {
+    hideResult();
+    showLoading(true);
+
+    fetch('/api/extract', { method: 'POST', body: formData })
+        .then(r => r.json())
+        .then(data => {
+            showLoading(false);
+            if (data.error) {
+                showError(data.error);
+                return;
+            }
+            showResult(data);
+        })
+        .catch(err => {
+            showLoading(false);
+            showError('Connection error: ' + err.message);
+        });
+}
+
+function showResult(d) {
+    const el = document.getElementById('result');
+    const hasMatch = d.original_filename != null;
+
+    // Video/Audio chips
+    const chipVideo = document.getElementById('chipVideo');
+    const chipAudio = document.getElementById('chipAudio');
+    chipVideo.className = 'wm-chip ' + (d.video_watermark ? 'yes' : 'no');
+    chipAudio.className = 'wm-chip ' + (d.audio_watermark ? 'yes' : 'no');
+    document.getElementById('chipVideoText').textContent = d.video_watermark ? 'Detected' : 'Not Found';
+    document.getElementById('chipAudioText').textContent = d.audio_watermark ? 'Detected' : 'Not Found';
+
+    // Status
+    const statusEl = document.getElementById('rStatus');
+    if (hasMatch && d.video_watermark) {
+        statusEl.innerHTML = '<span class="status-badge status-found">Watermark Verified</span>';
+    } else if (d.video_watermark) {
+        statusEl.innerHTML = '<span class="status-badge status-partial">Watermark Detected</span>';
+    } else {
+        statusEl.innerHTML = '<span class="status-badge status-not-found">Not Found</span>';
+    }
+
+    // Video key
+    document.getElementById('rVideoKey').textContent = d.video_watermark ? (d.video_key || '-') : '-';
+    document.getElementById('rowVideoKey').style.display = d.video_watermark ? '' : 'none';
+
+    // Audio key
+    const audioKeyEl = document.getElementById('rAudioKey');
+    if (d.audio_watermark && d.audio_key) {
+        let audioText = d.audio_key;
+        if (d.audio_db_match) audioText += ' (matched: ' + d.audio_db_match + ')';
+        audioKeyEl.textContent = audioText;
+    } else {
+        audioKeyEl.textContent = '-';
+    }
+    document.getElementById('rowAudioKey').style.display = d.audio_watermark ? '' : 'none';
+
+    // Original file & time (only when matched in DB)
+    document.getElementById('rOriginal').textContent = d.original_filename || '-';
+    document.getElementById('rTime').textContent = d.embed_time ? formatTime(d.embed_time) : '-';
+    document.getElementById('rowOriginal').style.display = hasMatch ? '' : 'none';
+    document.getElementById('rowTime').style.display = hasMatch ? '' : 'none';
+
+    document.getElementById('rFrames').textContent = d.frames_analyzed;
+    document.getElementById('rElapsed').textContent = d.extract_time + 's';
+
+    el.classList.add('show');
+}
+
+function formatTime(iso) {
+    try {
+        const d = new Date(iso);
+        if (isNaN(d)) return iso;
+        return d.toLocaleString('vi-VN');
+    } catch { return iso; }
+}
+
+function hideResult() {
+    document.getElementById('result').classList.remove('show');
+    document.getElementById('errorMsg').classList.remove('show');
+}
+
+function showLoading(v) {
+    document.getElementById('loading').classList.toggle('show', v);
+    document.getElementById('btnVerify').disabled = v;
+}
+
+function showError(msg) {
+    const el = document.getElementById('errorMsg');
+    el.textContent = msg;
+    el.classList.add('show');
+}
+</script>
+</body>
+</html>

@@ -4,7 +4,7 @@ Tracks every job: pending / processing / done / error.
 """
 import json
 import sqlite3
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Optional
 
@@ -46,14 +46,27 @@ def _conn() -> sqlite3.Connection:
     return sqlite3.connect(_DB_PATH, check_same_thread=False)
 
 
+def reset_stale_jobs(max_age_minutes: int = 30) -> int:
+    """Reset jobs stuck in 'processing' for longer than max_age_minutes.
+    Called at service startup to recover from crashes / interrupted copies."""
+    cutoff = (datetime.now(timezone.utc) - timedelta(minutes=max_age_minutes)).isoformat()
+    with _conn() as c:
+        n = c.execute(
+            "DELETE FROM jobs WHERE status='processing' AND created_at < ?",
+            (cutoff,),
+        ).rowcount
+    return n
+
+
 def is_processed(input_path: str) -> bool:
-    """Return True only if this path has been successfully processed before."""
+    """Return True if this path already has a 'done' or 'error' job.
+    Jobs stuck in 'processing' are NOT considered processed (allows retry)."""
     with _conn() as c:
         row = c.execute(
             "SELECT status FROM jobs WHERE input_path=? ORDER BY id DESC LIMIT 1",
             (input_path,),
         ).fetchone()
-    return row is not None and row[0] == "done"
+    return row is not None and row[0] in ("done", "error")
 
 
 def insert_job(

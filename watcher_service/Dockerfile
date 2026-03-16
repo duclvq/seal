@@ -44,6 +44,7 @@ COPY web_demo/        /app/web_demo/
 COPY audioseal/       /app/audioseal/
 COPY configs/         /app/configs/
 COPY watcher_service/ /app/watcher_service/
+COPY extract_app/     /app/extract_app/
 COPY pyproject.toml   /app/pyproject.toml
 
 # Install the videoseal package in editable mode

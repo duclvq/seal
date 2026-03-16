@@ -51,15 +51,14 @@ services:
       - ${MODEL_CACHE_DIR:-./data/model_cache}:/data/model_cache
 
       # ── Source code mount (dev mode) ──────────────────────────────────────
-      # Uncomment các dòng dưới để sửa code mà KHÔNG cần rebuild image.
       # Comment lại khi deploy production (dùng code đã baked vào image).
-      # - ../videoseal:/app/videoseal
-      # - ../web_demo:/app/web_demo
-      # - ../audioseal:/app/audioseal
-      # - ../configs:/app/configs
-      # - ./service.py:/app/watcher_service/service.py
-      # - ./worker.py:/app/watcher_service/worker.py
-      # - ./db.py:/app/watcher_service/db.py
+      - ../videoseal:/app/videoseal
+      - ../audioseal:/app/audioseal
+      - ../web_demo:/app/web_demo
+      - ../configs:/app/configs
+      - ./service.py:/app/watcher_service/service.py
+      - ./worker.py:/app/watcher_service/worker.py
+      - ./db.py:/app/watcher_service/db.py
 
     restart: unless-stopped
 
@@ -70,3 +69,63 @@ services:
       timeout: 10s
       retries: 3
       start_period: 60s
+
+  # ── Extract / Verify web UI ──────────────────────────────────────────────────
+  wm-extract:
+    image: wm-watcher:latest          # same image, different command
+    container_name: wm-extract
+    depends_on:
+      - wm-watcher
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    environment:
+      - DEVICE=cuda
+      - CKPT_PATH=output/run2_video/checkpoint350.pth
+      - WATCHER_DB=/data/db/watermarks.db
+      - MATCH_THRESHOLD=0.70
+      - MAX_FRAMES=900
+      - AUDIOSEAL_CACHE_DIR=/data/model_cache/audioseal
+      - HF_HUB_OFFLINE=1
+      - TRANSFORMERS_OFFLINE=1
+      - PYTHONUNBUFFERED=1
+      - NO_TORCH_COMPILE=1
+
+    volumes:
+      # DB (read from watcher's DB)
+      - ${DATA_DIR:-./data/db}:/data/db:ro
+
+      # Model checkpoints
+      - ../output:/app/output:ro
+
+      # Model cache (AudioSeal detector)
+      - ${MODEL_CACHE_DIR:-./data/model_cache}:/data/model_cache
+
+      # Upload folder (temp, inside container is fine)
+
+      # ── Source code mount (dev mode) ────────────────────────────────────
+      - ../videoseal:/app/videoseal
+      - ../audioseal:/app/audioseal
+      - ../web_demo:/app/web_demo
+      - ../configs:/app/configs
+      - ../extract_app:/app/extract_app
+
+    ports:
+      - "5001:5001"
+
+    restart: unless-stopped
+
+    command: ["python", "extract_app/app.py"]
+
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5001/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
