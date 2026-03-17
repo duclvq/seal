@@ -35,8 +35,8 @@ services:
       - TRANSFORMERS_OFFLINE=1
 
     volumes:
-      # Input videos (read-only from host)
-      - ${INPUT_FOLDER}:/data/input:ro
+      # Input videos (read-only from host) — UNC path for network share
+      - //10.41.185.66/OUTPUT:/data/input:ro
 
       # Watermarked output videos
       - ${OUTPUT_FOLDER}:/data/output
@@ -129,3 +129,25 @@ services:
       timeout: 10s
       retries: 3
       start_period: 120s
+
+  # ── Monitor web UI — cổng 5002 ───────────────────────────────────────────────
+  wm-monitor:
+    image: wm-watcher:latest
+    container_name: wm-monitor
+    depends_on:
+      - wm-watcher
+
+    environment:
+      - DB_PATH=/data/db/watermarks.db
+      - PYTHONUNBUFFERED=1
+
+    volumes:
+      - ${DATA_DIR:-./data/db}:/data/db:ro
+      - ./monitor.py:/app/watcher_service/monitor.py
+
+    ports:
+      - "5002:5002"
+
+    restart: unless-stopped
+
+    command: ["python", "watcher_service/monitor.py"]

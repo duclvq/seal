@@ -80,6 +80,8 @@ log = _setup_logging()
 
 # ── Job queue (single worker = single GPU stream) ────────────────────────────
 _job_queue: queue.Queue = queue.Queue()
+_queued_paths: set      = set()           # dedup: paths currently in queue
+_queued_lock            = threading.Lock()
 _stop_event             = threading.Event()
 _csv_lock               = threading.Lock()
 
@@ -134,6 +136,8 @@ def _worker(video_model, audio_model, device):
             _msg_tensor, codeword, bits_list = text_to_msg_tensor_bch(wm_text, msg_bits=MSG_BITS)
         except Exception as e:
             log.error(f"[ECC] {filename}: {e}", exc_info=True)
+            with _queued_lock:
+                _queued_paths.discard(str(input_path))
             _job_queue.task_done()
             continue
 
@@ -148,8 +152,13 @@ def _worker(video_model, audio_model, device):
             center_mask   = True,
         )
 
-        output_path = OUTPUT_FOLDER / filename
-        OUTPUT_FOLDER.mkdir(parents=True, exist_ok=True)
+        # Preserve subfolder structure: input/a/b/c.mxf → output/a/b/c.mxf
+        try:
+            rel = input_path.relative_to(INPUT_FOLDER)
+        except ValueError:
+            rel = Path(filename)
+        output_path = OUTPUT_FOLDER / rel
+        output_path.parent.mkdir(parents=True, exist_ok=True)
 
         t0 = time.time()
         try:
@@ -214,6 +223,8 @@ def _worker(video_model, audio_model, device):
                 "status":    "error",
             })
         finally:
+            with _queued_lock:
+                _queued_paths.discard(str(input_path))
             if device.type == "cuda":
                 import torch as _torch
                 _torch.cuda.empty_cache()
@@ -254,6 +265,9 @@ def _enqueue(path: Path) -> None:
         return  # macOS resource fork / AppleDouble metadata file
     if path.suffix.lower() not in ALLOWED_EXT:
         return
+    with _queued_lock:
+        if str(path) in _queued_paths:
+            return  # already in queue, skip
     if is_processed(str(path)):
         log.debug(f"[SKIP] already done: {path.name}")
         return
@@ -263,6 +277,10 @@ def _enqueue(path: Path) -> None:
     if not _is_valid_video(path):
         log.warning(f"[SKIP] invalid/corrupt video: {path.name}")
         return
+    with _queued_lock:
+        if str(path) in _queued_paths:
+            return  # re-check after slow validation
+        _queued_paths.add(str(path))
     log.info(f"[QUEUE] {path.name}")
     _job_queue.put(path)
 

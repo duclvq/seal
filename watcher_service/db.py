@@ -59,14 +59,14 @@ def reset_stale_jobs(max_age_minutes: int = 30) -> int:
 
 
 def is_processed(input_path: str) -> bool:
-    """Return True if this path already has a 'done' or 'error' job.
-    Jobs stuck in 'processing' are NOT considered processed (allows retry)."""
+    """Return True if this path already has a job (processing, done, or error).
+    Stale 'processing' jobs are cleaned up by reset_stale_jobs() at startup."""
     with _conn() as c:
         row = c.execute(
             "SELECT status FROM jobs WHERE input_path=? ORDER BY id DESC LIMIT 1",
             (input_path,),
         ).fetchone()
-    return row is not None and row[0] in ("done", "error")
+    return row is not None and row[0] in ("processing", "done", "error")
 
 
 def insert_job(
