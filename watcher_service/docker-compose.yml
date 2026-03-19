@@ -16,6 +16,9 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+        limits:
+          memory: 16g        # Hard RAM limit — prevents system crash
+          cpus: "8"
 
     # .env file (copy .env.example → .env and fill values)
     env_file:
@@ -84,6 +87,9 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+        limits:
+          memory: 8g
+          cpus: "4"
 
     environment:
       - DEVICE=cuda

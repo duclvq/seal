@@ -140,6 +140,26 @@ function renderStats() {
       <div class="value">${s[c.key] ?? 0}</div>
       ${c.key === 'done' && s.avg_time ? `<div class="sub">avg ${s.avg_time}s/video</div>` : ''}
     </div>`).join('');
+
+  // Memory cards
+  let memHtml = '';
+  if (s.ram_pct !== undefined) {
+    const ramCls = s.ram_pct > 85 ? 'error' : s.ram_pct > 70 ? 'pending' : 'done';
+    memHtml += `<div class="card ${ramCls}">
+      <div class="label">RAM</div>
+      <div class="value" style="font-size:1.4rem">${s.ram_pct}%</div>
+      <div class="sub">${s.ram_used_gb}/${s.ram_total_gb} GB</div>
+    </div>`;
+  }
+  if (s.vram_pct !== undefined) {
+    const vramCls = s.vram_pct > 85 ? 'error' : s.vram_pct > 70 ? 'pending' : 'done';
+    memHtml += `<div class="card ${vramCls}">
+      <div class="label">VRAM</div>
+      <div class="value" style="font-size:1.4rem">${s.vram_pct}%</div>
+      <div class="sub">${s.vram_reserved_gb}/${s.vram_total_gb} GB</div>
+    </div>`;
+  }
+  document.getElementById('stats-cards').innerHTML += memHtml;
 }
 
 function renderTabs() {
@@ -237,6 +257,30 @@ def api_jobs():
         "SELECT ROUND(AVG(embed_time_s),1) as v FROM jobs WHERE status='done' AND embed_time_s IS NOT NULL"
     )
     stats["avg_time"] = avg[0]["v"] if avg else None
+
+    # System memory info
+    try:
+        import psutil
+        ram = psutil.virtual_memory()
+        stats["ram_used_gb"] = round(ram.used / 1024**3, 1)
+        stats["ram_total_gb"] = round(ram.total / 1024**3, 1)
+        stats["ram_pct"] = ram.percent
+    except ImportError:
+        pass
+
+    # GPU memory info
+    try:
+        import torch
+        if torch.cuda.is_available():
+            alloc = torch.cuda.memory_allocated(0) / 1024**3
+            reserved = torch.cuda.memory_reserved(0) / 1024**3
+            total = torch.cuda.get_device_properties(0).total_memory / 1024**3
+            stats["vram_alloc_gb"] = round(alloc, 1)
+            stats["vram_reserved_gb"] = round(reserved, 1)
+            stats["vram_total_gb"] = round(total, 1)
+            stats["vram_pct"] = round(reserved / total * 100, 0) if total > 0 else 0
+    except Exception:
+        pass
 
     return jsonify({"jobs": jobs, "stats": stats})
 

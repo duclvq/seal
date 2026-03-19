@@ -1,0 +1,24 @@
+# Watermark Service Configuration
+# This file overrides .env settings.
+# Changes are hot-reloaded by the watcher service every poll cycle.
+# Settings marked [restart] require service restart to take effect.
+
+watermark_text: "vtvwm0"
+chunk_size: 30
+gpu_memory_fraction: 0.7    # [restart]
+num_workers: 1               # [restart]
+scan_existing: true
+poll_interval: 30
+fast_embed: true             # CPU resize pipeline (much faster for 2K+)
+
+# Memory safety — tránh crash máy
+ram_limit_pct: 70            # max % RAM hệ thống
+vram_limit_pct: 75           # max % VRAM GPU
+
+# Decode/Encode tuning
+decode_threads: 0            # 0=auto (min(8, cpu_count)), hoặc set cụ thể 2/4/8
+encode_preset: ""            # libx264 preset override: ultrafast/veryfast/fast (mặc định: ultrafast)
+nvenc_preset: "p4"           # NVENC preset: p1(fastest)..p7(quality) [restart]
+
+# Set to true to trigger graceful service restart (auto-cleared)
+restart: false
