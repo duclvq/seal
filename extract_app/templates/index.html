@@ -249,11 +249,11 @@
                     <span class="result-label">Audio Key</span>
                     <span class="result-value" id="rAudioKey"></span>
                 </div>
-                <div class="result-row" id="rowOriginal">
+                <div class="result-row" id="rowOriginal" style="display:none">
                     <span class="result-label">Original File</span>
                     <span class="result-value" id="rOriginal"></span>
                 </div>
-                <div class="result-row" id="rowTime">
+                <div class="result-row" id="rowTime" style="display:none">
                     <span class="result-label">Embed Time</span>
                     <span class="result-value" id="rTime"></span>
                 </div>
@@ -393,11 +393,9 @@ function showResult(d) {
     }
     document.getElementById('rowAudioKey').style.display = d.audio_watermark ? '' : 'none';
 
-    // Original file & time (only when matched in DB)
-    document.getElementById('rOriginal').textContent = d.original_filename || '-';
-    document.getElementById('rTime').textContent = d.embed_time ? formatTime(d.embed_time) : '-';
-    document.getElementById('rowOriginal').style.display = hasMatch ? '' : 'none';
-    document.getElementById('rowTime').style.display = hasMatch ? '' : 'none';
+    // Original file & time — hidden
+    document.getElementById('rowOriginal').style.display = 'none';
+    document.getElementById('rowTime').style.display = 'none';
 
     document.getElementById('rFrames').textContent = d.frames_analyzed;
     document.getElementById('rElapsed').textContent = d.extract_time + 's';

@@ -452,3 +452,46 @@ frame=    1 fps=0.0 q=-1.0 Lsize=       0kB time=00:00:00.04 bitrate=   0.0kbits
 video:32kB audio:8kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
 Conversion failed!
 
+2026-03-19 23:20:10,804 [ERROR   ] Element at 0x945da3 ending at 0xdbcff964b8 exceeds containing master element ending at 0x98172f
+2026-03-19 23:20:10,845 [ERROR   ]   WebM test error: [Errno 1094995529] Invalid data found when processing input: 'avcodec_send_packet()'; last error log: [matroska,webm] Element at 0x945da3 ending at 0xdbcff964b8 exceeds containing master element ending at 0x98172f
+Traceback (most recent call last):
+  File "D:\py_source\videoseal\watcher_service\tests\test_pipeline.py", line 479, in test_webm_format
+    result = embed_to_file(webm_in, out, model, WM_TEXT, DEVICE, audio_model)
+  File "D:\py_source\videoseal\watcher_service\worker.py", line 1723, in embed_to_file
+    fps, total_frames, res = _embed_pipelined(
+                             ~~~~~~~~~~~~~~~~^
+        av_path, tmp_vid, video_model, msg_gpu, device,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        use_fast, progress_callback, _filename, mode_str,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        bitrate_kbps=bitrate_kbps,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\py_source\videoseal\watcher_service\worker.py", line 1458, in _embed_pipelined
+    frame = next(_frame_iter)
+  File "av/container/input.pyx", line 216, in decode
+  File "av/packet.py", line 84, in av.packet.Packet.decode
+  File "av/video/stream.py", line 42, in av.video.stream.VideoStream.decode
+  File "av/video/stream.py", line 51, in av.video.stream.VideoStream.decode
+  File "av/codec/context.pyx", line 448, in av.codec.context.CodecContext.decode
+  File "av/codec/context.pyx", line 340, in av.codec.context.CodecContext._send_packet_and_recv
+  File "av/error.pyx", line 424, in av.error.err_check
+av.error.InvalidDataError: [Errno 1094995529] Invalid data found when processing input: 'avcodec_send_packet()'; last error log: [matroska,webm] Element at 0x945da3 ending at 0xdbcff964b8 exceeds containing master element ending at 0x98172f
+2026-03-20 00:14:07,325 [CRITICAL] [MEMORY] Sustained high memory for 30s. Consider reducing CHUNK_SIZE or NUM_WORKERS.
+2026-03-20 00:14:12,476 [CRITICAL] [MEMORY] Sustained high memory for 35s. Consider reducing CHUNK_SIZE or NUM_WORKERS.
+2026-03-20 00:14:17,580 [CRITICAL] [MEMORY] Sustained high memory for 40s. Consider reducing CHUNK_SIZE or NUM_WORKERS.
+2026-03-20 00:14:22,691 [CRITICAL] [MEMORY] Sustained high memory for 45s. Consider reducing CHUNK_SIZE or NUM_WORKERS.
+2026-03-20 00:14:27,787 [CRITICAL] [MEMORY] Sustained high memory for 50s. Consider reducing CHUNK_SIZE or NUM_WORKERS.
+2026-03-20 00:14:32,912 [CRITICAL] [MEMORY] Sustained high memory for 55s. Consider reducing CHUNK_SIZE or NUM_WORKERS.
+2026-03-20 00:14:38,034 [CRITICAL] [MEMORY] Sustained high memory for 60s. Consider reducing CHUNK_SIZE or NUM_WORKERS.
+2026-03-20 00:14:38,035 [CRITICAL] [MEMORY] EMERGENCY — signaling workers to abort current job
+2026-03-20 00:14:43,154 [CRITICAL] [MEMORY] Sustained high memory for 65s. Consider reducing CHUNK_SIZE or NUM_WORKERS.
+2026-03-20 00:14:43,155 [CRITICAL] [MEMORY] EMERGENCY — signaling workers to abort current job
+2026-03-20 00:14:48,261 [CRITICAL] [MEMORY] Sustained high memory for 70s. Consider reducing CHUNK_SIZE or NUM_WORKERS.
+2026-03-20 00:14:48,261 [CRITICAL] [MEMORY] EMERGENCY — signaling workers to abort current job
+2026-03-20 00:14:53,436 [CRITICAL] [MEMORY] Sustained high memory for 75s. Consider reducing CHUNK_SIZE or NUM_WORKERS.
+2026-03-20 00:14:53,437 [CRITICAL] [MEMORY] EMERGENCY — signaling workers to abort current job
+2026-03-20 00:14:58,552 [CRITICAL] [MEMORY] Sustained high memory for 80s. Consider reducing CHUNK_SIZE or NUM_WORKERS.
+2026-03-20 00:14:58,553 [CRITICAL] [MEMORY] EMERGENCY — signaling workers to abort current job
+2026-03-20 00:15:39,055 [CRITICAL] [MEMORY] Sustained high memory for 30s. Consider reducing CHUNK_SIZE or NUM_WORKERS.

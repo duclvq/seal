@@ -52,6 +52,7 @@ NVENC_PRESET = os.getenv("NVENC_PRESET", "p4")                   # p1=fastest ..
 DECODE_THREADS = int(os.getenv("DECODE_THREADS", "0"))            # 0=auto (min(8, cpu_count))
 ENCODE_PRESET  = os.getenv("ENCODE_PRESET", "")                   # override libx264 preset (ultrafast/fast/etc)
 NUM_WORKERS  = int(os.getenv("NUM_WORKERS", "1"))                 # parallel video processing
+FFMPEG_DECODE = os.getenv("FFMPEG_DECODE", "true").lower() == "true"  # use ffmpeg subprocess for decoding (handles MXF etc. directly)
 _oom_splits = 0  # counter for OOM auto-splits (per-video, reset in embed_to_file)
 CRF        = "18"   # near-visually-lossless H.264
 
@@ -346,21 +347,60 @@ def _get_encoder_config(bitrate_kbps: int = 0) -> dict:
 
 
 def _probe_bitrate(path: str) -> int:
-    """Get video bitrate in kbps from a file. Returns 0 on failure."""
+    """Get video bitrate in kbps from a file. Returns 0 on failure.
+
+    Strategy:
+      1. PyAV stream/codec bit_rate (works for MP4, MOV)
+      2. PyAV file-size / duration estimate
+      3. ffprobe bit_rate field (works for most containers)
+      4. ffprobe duration + file-size estimate (works for MKV, WebM, etc.)
+    """
+    # ── 1 & 2: PyAV ──────────────────────────────────────────────────────
     try:
         with av.open(path) as c:
             vs = c.streams.video[0]
-            # PyAV exposes bit_rate on the stream or codec context
             br = vs.bit_rate or vs.codec_context.bit_rate
             if br and br > 0:
                 return int(br / 1000)
-            # Fallback: estimate from file size and duration
             duration = float(vs.duration * vs.time_base) if vs.duration else 0
             if duration > 0:
                 fsize_bits = os.path.getsize(path) * 8
                 return int(fsize_bits / duration / 1000)
     except Exception:
         pass
+
+    # ── 3 & 4: ffprobe fallback (MKV, WebM, etc.) ────────────────────────
+    try:
+        import subprocess, json
+        cmd = [
+            "ffprobe", "-v", "quiet", "-print_format", "json",
+            "-show_format", "-show_streams", "-select_streams", "v:0", path,
+        ]
+        out = subprocess.check_output(cmd, timeout=10)
+        data = json.loads(out)
+
+        # 3: Try stream-level bit_rate
+        streams = data.get("streams", [])
+        if streams:
+            sbr = streams[0].get("bit_rate")
+            if sbr and int(sbr) > 0:
+                return int(int(sbr) / 1000)
+
+        # 3b: Try format-level bit_rate
+        fmt = data.get("format", {})
+        fbr = fmt.get("bit_rate")
+        if fbr and int(fbr) > 0:
+            # format bit_rate includes audio; rough but better than 0
+            return int(int(fbr) / 1000)
+
+        # 4: Estimate from file size and duration
+        dur = fmt.get("duration")
+        if dur and float(dur) > 0:
+            fsize_bits = os.path.getsize(path) * 8
+            return int(fsize_bits / float(dur) / 1000)
+    except Exception:
+        pass
+
     return 0
 
 _INTERP = dict(mode="bilinear", align_corners=False, antialias=True)
@@ -392,6 +432,102 @@ def _probe_video_info(path: str) -> dict:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# FFmpeg subprocess decoder — reads any format directly (MXF, VOB, WMV, etc.)
+# ─────────────────────────────────────────────────────────────────────────────
+
+class FFmpegDecoder:
+    """
+    Decode video frames via `ffmpeg -i <path> -f rawvideo -pix_fmt yuv420p pipe:1`.
+    Works with any container/codec ffmpeg supports — no PyAV limitations.
+
+    Usage:
+        dec = FFmpegDecoder(path)
+        for nd in dec:          # yields numpy [H*3//2, W] uint8 per frame
+            ...
+        dec.close()
+    Or as context manager:
+        with FFmpegDecoder(path) as dec:
+            for nd in dec: ...
+    """
+
+    def __init__(self, path: str):
+        import subprocess, threading
+        info = _probe_video_info(path)
+        self.fps = info["fps"]
+        self.width = info["width"]
+        self.height = info["height"]
+        self.n_frames = info["n_frames"]
+        self.codec_name = info["codec"]
+
+        if self.width == 0 or self.height == 0:
+            raise RuntimeError(f"ffprobe could not determine resolution for {path}")
+
+        # Ensure even dimensions (required for YUV420P)
+        self.height = self.height - self.height % 2
+        self.width = self.width - self.width % 2
+
+        self._frame_bytes = self.width * self.height * 3 // 2  # YUV420P
+        self._stderr_lines = []
+
+        decode_threads = DECODE_THREADS or min(8, os.cpu_count() or 4)
+        cmd = [
+            "ffmpeg", "-hide_banner", "-loglevel", "warning",
+            "-threads", str(decode_threads),
+            "-i", path,
+            "-f", "rawvideo",
+            "-pix_fmt", "yuv420p",
+            "-s", f"{self.width}x{self.height}",
+            "pipe:1",
+        ]
+        self._proc = subprocess.Popen(
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            bufsize=self._frame_bytes * 4,
+        )
+        # Drain stderr in background to prevent pipe deadlock
+        self._stderr_thread = threading.Thread(
+            target=self._drain_stderr, daemon=True, name="ffmpeg-dec-stderr",
+        )
+        self._stderr_thread.start()
+
+    def _drain_stderr(self):
+        try:
+            for line in self._proc.stderr:
+                decoded = line.decode(errors="replace").rstrip()
+                if decoded:
+                    self._stderr_lines.append(decoded)
+        except Exception:
+            pass
+
+    def __iter__(self):
+        return self
+
+    def __next__(self) -> np.ndarray:
+        raw = self._proc.stdout.read(self._frame_bytes)
+        if len(raw) < self._frame_bytes:
+            raise StopIteration
+        nd = np.frombuffer(raw, dtype=np.uint8).reshape(
+            self.height * 3 // 2, self.width
+        )
+        return nd
+
+    def close(self):
+        try:
+            if self._proc.stdout:
+                self._proc.stdout.close()
+            self._proc.wait(timeout=10)
+        except Exception:
+            self._proc.kill()
+            self._proc.wait(timeout=5)
+        self._stderr_thread.join(timeout=3)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.close()
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Model loaders
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -405,6 +541,13 @@ def load_video_model(ckpt_path: str, device: torch.device):
         original_chunk = model.chunk_size
         model.chunk_size = int(custom_chunk_size)
         print(f"Model chunk_size overridden: {original_chunk} -> {model.chunk_size}")
+    
+    # Override scaling_w (watermark strength) if specified
+    custom_scaling_w = os.getenv("SCALING_W")
+    if custom_scaling_w:
+        original_sw = float(model.blender.scaling_w)
+        model.blender.scaling_w = float(custom_scaling_w)
+        print(f"Model scaling_w overridden: {original_sw} -> {model.blender.scaling_w}")
     
     model.eval().to(device)
     return model
@@ -923,47 +1066,47 @@ def _embed_sequential(
     h_out = w_out = None
     out_stream = None
 
+    # Choose decoder: FFmpeg subprocess (handles MXF etc.) or PyAV
+    use_ffmpeg_dec = FFMPEG_DECODE and Path(av_path).suffix.lstrip(".").lower() in _FFMPEG_CONVERT_EXT
+
     with av.open(tmp_vid, mode="w") as out_container:
-        with av.open(av_path) as in_container:
-            in_stream = in_container.streams.video[0]
-            rate = in_stream.average_rate or in_stream.guessed_rate
-            if rate:
-                fps = float(rate)
-            n_total = in_stream.frames or 0
-            res = f"{in_stream.width}x{in_stream.height}"
-            _log.info(f"[EMBED-{mode_str}] {filename}: {res}, ~{n_total}f, fps={fps:.1f}, chunk={CHUNK_SIZE}, bitrate={bitrate_kbps}kbps")
-            in_stream.thread_type = "AUTO"
-            in_stream.codec_context.thread_count = DECODE_THREADS or min(8, os.cpu_count() or 4)
+        if use_ffmpeg_dec:
+            dec = FFmpegDecoder(av_path)
+            fps = dec.fps
+            n_total = dec.n_frames
+            res = f"{dec.width}x{dec.height}"
+            _log.info(f"[EMBED-{mode_str}+FFDEC] {filename}: {res}, ~{n_total}f, fps={fps:.1f}, chunk={CHUNK_SIZE}, bitrate={bitrate_kbps}kbps")
 
             if progress_callback and n_total > 0:
                 progress_callback(0, n_total)
 
             chunk: list = []
-            for frame in in_container.decode(in_stream):
-                chunk.append(
-                    torch.from_numpy(frame.to_ndarray(format="rgb24")).permute(2, 0, 1)
-                )
-                if len(chunk) >= CHUNK_SIZE:
-                    t0 = _time.time()
-                    out_stream, h_out, w_out = _flush_chunk(
-                        chunk, video_model, msg_gpu, device,
-                        out_container, out_stream, fps, h_out, w_out,
-                        fast=use_fast,
-                        bitrate_kbps=bitrate_kbps,
-                    )
-                    total_frames += CHUNK_SIZE
-                    dt = _time.time() - t0
-                    gpu_s = ""
-                    if device.type == "cuda":
-                        alloc = torch.cuda.memory_allocated(device) / 1024**2
-                        peak  = torch.cuda.max_memory_allocated(device) / 1024**2
-                        util  = f"alloc={alloc:.0f}MB peak={peak:.0f}MB"
-                        gpu_s = f"  [{util}]"
-                    _log.info(f"  [{filename}] {total_frames}/{n_total}f  ({dt:.1f}s, {CHUNK_SIZE/dt:.1f}f/s){gpu_s}")
-                    chunk = []
+            try:
+                for yuv_nd in dec:
+                    # Convert YUV420P → RGB24 tensor [3, H, W]
+                    H_frame = dec.height
+                    W_frame = dec.width
+                    yuv_t = torch.from_numpy(yuv_nd.copy()).unsqueeze(0)  # [1, H*3//2, W]
+                    rgb_t = _yuv420p_to_rgb_gpu(yuv_t, torch.device("cpu"))  # [1, 3, H, W]
+                    chunk.append(rgb_t.squeeze(0))  # [3, H, W] uint8
+                    del yuv_t, rgb_t
 
-                    if progress_callback and n_total > 0:
-                        progress_callback(total_frames, n_total)
+                    if len(chunk) >= CHUNK_SIZE:
+                        t0 = _time.time()
+                        out_stream, h_out, w_out = _flush_chunk(
+                            chunk, video_model, msg_gpu, device,
+                            out_container, out_stream, fps, h_out, w_out,
+                            fast=use_fast,
+                            bitrate_kbps=bitrate_kbps,
+                        )
+                        total_frames += CHUNK_SIZE
+                        dt = _time.time() - t0
+                        _log.info(f"  [{filename}] {total_frames}/{n_total}f  ({dt:.1f}s, {CHUNK_SIZE/dt:.1f}f/s)")
+                        chunk = []
+                        if progress_callback and n_total > 0:
+                            progress_callback(total_frames, n_total)
+            finally:
+                dec.close()
 
             if chunk:
                 n_remaining = len(chunk)
@@ -974,9 +1117,63 @@ def _embed_sequential(
                     bitrate_kbps=bitrate_kbps,
                 )
                 total_frames += n_remaining
-
                 if progress_callback and n_total > 0:
                     progress_callback(total_frames, n_total)
+
+        else:
+            with av.open(av_path) as in_container:
+                in_stream = in_container.streams.video[0]
+                rate = in_stream.average_rate or in_stream.guessed_rate
+                if rate:
+                    fps = float(rate)
+                n_total = in_stream.frames or 0
+                res = f"{in_stream.width}x{in_stream.height}"
+                _log.info(f"[EMBED-{mode_str}] {filename}: {res}, ~{n_total}f, fps={fps:.1f}, chunk={CHUNK_SIZE}, bitrate={bitrate_kbps}kbps")
+                in_stream.thread_type = "AUTO"
+                in_stream.codec_context.thread_count = DECODE_THREADS or min(8, os.cpu_count() or 4)
+
+                if progress_callback and n_total > 0:
+                    progress_callback(0, n_total)
+
+                chunk: list = []
+                for frame in in_container.decode(in_stream):
+                    chunk.append(
+                        torch.from_numpy(frame.to_ndarray(format="rgb24")).permute(2, 0, 1)
+                    )
+                    if len(chunk) >= CHUNK_SIZE:
+                        t0 = _time.time()
+                        out_stream, h_out, w_out = _flush_chunk(
+                            chunk, video_model, msg_gpu, device,
+                            out_container, out_stream, fps, h_out, w_out,
+                            fast=use_fast,
+                            bitrate_kbps=bitrate_kbps,
+                        )
+                        total_frames += CHUNK_SIZE
+                        dt = _time.time() - t0
+                        gpu_s = ""
+                        if device.type == "cuda":
+                            alloc = torch.cuda.memory_allocated(device) / 1024**2
+                            peak  = torch.cuda.max_memory_allocated(device) / 1024**2
+                            util  = f"alloc={alloc:.0f}MB peak={peak:.0f}MB"
+                            gpu_s = f"  [{util}]"
+                        _log.info(f"  [{filename}] {total_frames}/{n_total}f  ({dt:.1f}s, {CHUNK_SIZE/dt:.1f}f/s){gpu_s}")
+                        chunk = []
+
+                        if progress_callback and n_total > 0:
+                            progress_callback(total_frames, n_total)
+
+                if chunk:
+                    n_remaining = len(chunk)
+                    out_stream, h_out, w_out = _flush_chunk(
+                        chunk, video_model, msg_gpu, device,
+                        out_container, out_stream, fps, h_out, w_out,
+                        fast=use_fast,
+                        bitrate_kbps=bitrate_kbps,
+                    )
+                    total_frames += n_remaining
+
+                    if progress_callback and n_total > 0:
+                        progress_callback(total_frames, n_total)
 
         if out_stream:
             for packet in out_stream.encode():
@@ -1408,20 +1605,14 @@ def _embed_pipelined(
     res = "?"
     n_total = 0
 
-    with av.open(av_path) as in_container:
-        in_stream = in_container.streams.video[0]
-        rate = in_stream.average_rate or in_stream.guessed_rate
-        if rate:
-            fps = float(rate)
-        n_total = in_stream.frames or 0
-        res = f"{in_stream.width}x{in_stream.height}"
-        in_stream.thread_type = "AUTO"
-        in_stream.codec_context.thread_count = DECODE_THREADS or min(8, os.cpu_count() or 4)
+    # Choose decoder: FFmpeg subprocess (handles MXF etc.) or PyAV
+    use_ffmpeg_dec = FFMPEG_DECODE and Path(av_path).suffix.lstrip(".").lower() in _FFMPEG_CONVERT_EXT
 
-        _log.info(
-            f"[EMBED-{mode_str}] {filename}: {res}, "
-            f"~{n_total}f, fps={fps:.1f}, chunk={CHUNK_SIZE}"
-        )
+    def _run_decode_loop(frame_iter, fps, n_total, res, frame_shape_hint=None):
+        """Shared decode loop for both PyAV and FFmpeg decoders.
+        frame_iter yields numpy [H*3//2, W] uint8 arrays (YUV420P).
+        """
+        nonlocal stop, decode_q, state
 
         if progress_callback and n_total > 0:
             progress_callback(0, n_total)
@@ -1436,7 +1627,6 @@ def _embed_pipelined(
         enc_t.start()
 
         t_start = _time.time()
-        chunk = []
         chunks_decoded = 0
         _t_avdec_total = 0.0
         _t_ndarray_total = 0.0
@@ -1444,31 +1634,31 @@ def _embed_pipelined(
         _t_decode_total = 0.0
         _t_stack_total = 0.0
 
-        # Preallocated pinned decode buffers (lazy init after first frame gives shape)
-        _dec_buf_a = None  # double buffer A
-        _dec_buf_b = None  # double buffer B
-        _dec_use_a = True  # toggle
-        _frame_shape = None  # (H*3//2, W) for YUV420P
+        _dec_buf_a = None
+        _dec_buf_b = None
+        _dec_use_a = True
+        _frame_shape = frame_shape_hint
 
-        _frame_iter = in_container.decode(in_stream)
+        # Pre-allocate if shape is known (FFmpeg path)
+        if _frame_shape is not None:
+            _dec_buf_a = torch.empty(
+                (CHUNK_SIZE, *_frame_shape), dtype=torch.uint8,
+            ).pin_memory()
+            _dec_buf_b = torch.empty(
+                (CHUNK_SIZE, *_frame_shape), dtype=torch.uint8,
+            ).pin_memory()
+            _log.info(f"  [PREALLOC] decode buffers: 2x [{CHUNK_SIZE}, {_frame_shape[0]}, {_frame_shape[1]}] pinned "
+                      f"({2 * _dec_buf_a.nbytes / 1024**2:.0f}MB total)")
+
         frame_idx_in_chunk = 0
-        while not stop.is_set():
-            _t0 = _time.perf_counter()
-            try:
-                frame = next(_frame_iter)
-            except StopIteration:
+        for nd in frame_iter:
+            if stop.is_set():
                 break
-            _t1 = _time.perf_counter()
-            _t_avdec_total += _t1 - _t0
-
-            # Decode to native YUV420P (no swscale conversion — near zero-cost)
-            nd = frame.to_ndarray(format="yuv420p")  # shape [H*3//2, W] uint8
-            _t2 = _time.perf_counter()
-            _t_ndarray_total += _t2 - _t1
+            _t0 = _time.perf_counter()
 
             # Lazy-init preallocated pinned buffers on first frame
             if _frame_shape is None:
-                _frame_shape = nd.shape  # (H*3//2, W)
+                _frame_shape = nd.shape
                 _dec_buf_a = torch.empty(
                     (CHUNK_SIZE, *_frame_shape), dtype=torch.uint8,
                 ).pin_memory()
@@ -1478,20 +1668,14 @@ def _embed_pipelined(
                 _log.info(f"  [PREALLOC] decode buffers: 2x [{CHUNK_SIZE}, {_frame_shape[0]}, {_frame_shape[1]}] pinned "
                           f"({2 * _dec_buf_a.nbytes / 1024**2:.0f}MB total)")
 
-            # Copy frame into preallocated buffer slot (avoids per-frame tensor alloc)
             cur_dec_buf = _dec_buf_a if _dec_use_a else _dec_buf_b
             cur_dec_buf[frame_idx_in_chunk].numpy()[:] = nd
             frame_idx_in_chunk += 1
-            _t3 = _time.perf_counter()
-            _t_tensor_total += _t3 - _t2
-            _t_decode_total += _t3 - _t0
+            _t_decode_total += _time.perf_counter() - _t0
 
             if frame_idx_in_chunk >= CHUNK_SIZE:
-                _t0 = _time.perf_counter()
-                batch = cur_dec_buf[:frame_idx_in_chunk]  # view, no copy
-                _t_stack_total += _time.perf_counter() - _t0
-
-                _dec_use_a = not _dec_use_a  # swap to other buffer
+                batch = cur_dec_buf[:frame_idx_in_chunk]
+                _dec_use_a = not _dec_use_a
                 frame_idx_in_chunk = 0
 
                 while not stop.is_set():
@@ -1513,17 +1697,6 @@ def _embed_pipelined(
                     f"  [{filename}] decode={decoded_f} embed={state['total_frames']} "
                     f"/ {n_total}f  ({dt:.1f}s){gpu_s}"
                 )
-                _log.info(
-                    f"  [TIMING-PIPE-DEC] chunk#{chunks_decoded}  "
-                    f"av_decode={_t_avdec_total:.3f}s  to_ndarray={_t_ndarray_total:.3f}s  "
-                    f"to_tensor={_t_tensor_total:.3f}s  stack+pin={_t_stack_total:.3f}s  "
-                    f"total={_t_decode_total+_t_stack_total:.3f}s"
-                )
-                _t_decode_total = 0.0
-                _t_avdec_total = 0.0
-                _t_ndarray_total = 0.0
-                _t_tensor_total = 0.0
-                _t_stack_total = 0.0
 
                 if progress_callback and n_total > 0:
                     progress_callback(min(decoded_f, n_total), n_total)
@@ -1553,16 +1726,55 @@ def _embed_pipelined(
             except Exception:
                 pass
 
-    # Wait for workers
-    gpu_t.join(timeout=600)
-    enc_t.join(timeout=600)
+        # Wait for workers
+        gpu_t.join(timeout=600)
+        enc_t.join(timeout=600)
 
-    if errors:
-        raise errors[0]
+        if errors:
+            raise errors[0]
 
-    # Final progress
-    if progress_callback and n_total > 0:
-        progress_callback(state["total_frames"], n_total)
+        if progress_callback and n_total > 0:
+            progress_callback(state["total_frames"], n_total)
+
+    if use_ffmpeg_dec:
+        # ── FFmpeg subprocess decoder (MXF, VOB, WMV, etc.) ──────────────
+        dec = FFmpegDecoder(av_path)
+        fps = dec.fps
+        n_total = dec.n_frames
+        res = f"{dec.width}x{dec.height}"
+        frame_shape = (dec.height * 3 // 2, dec.width)
+
+        _log.info(
+            f"[EMBED-{mode_str}+FFDEC] {filename}: {res}, "
+            f"~{n_total}f, fps={fps:.1f}, chunk={CHUNK_SIZE}"
+        )
+
+        try:
+            _run_decode_loop(dec, fps, n_total, res, frame_shape_hint=frame_shape)
+        finally:
+            dec.close()
+    else:
+        # ── PyAV decoder (standard path) ─────────────────────────────────
+        with av.open(av_path) as in_container:
+            in_stream = in_container.streams.video[0]
+            rate = in_stream.average_rate or in_stream.guessed_rate
+            if rate:
+                fps = float(rate)
+            n_total = in_stream.frames or 0
+            res = f"{in_stream.width}x{in_stream.height}"
+            in_stream.thread_type = "AUTO"
+            in_stream.codec_context.thread_count = DECODE_THREADS or min(8, os.cpu_count() or 4)
+
+            _log.info(
+                f"[EMBED-{mode_str}] {filename}: {res}, "
+                f"~{n_total}f, fps={fps:.1f}, chunk={CHUNK_SIZE}"
+            )
+
+            def _pyav_yuv_iter():
+                for frame in in_container.decode(in_stream):
+                    yield frame.to_ndarray(format="yuv420p")
+
+            _run_decode_loop(_pyav_yuv_iter(), fps, n_total, res)
 
     return fps, state["total_frames"], res
 
@@ -1609,9 +1821,10 @@ def embed_to_file(
     fmt     = _EXT_TO_FORMAT.get(out_ext, "mp4")
 
     # Pre-convert formats PyAV cannot read directly
+    # (skip if FFMPEG_DECODE is enabled — ffmpeg subprocess handles all formats)
     tmp_converted: Optional[str] = None
     av_path = input_path
-    if ext in _FFMPEG_CONVERT_EXT:
+    if ext in _FFMPEG_CONVERT_EXT and not FFMPEG_DECODE:
         tmp_converted = _to_mp4_via_ffmpeg(input_path)
         av_path = tmp_converted
 
@@ -1678,6 +1891,8 @@ def embed_to_file(
         mode_str += "+FP16"
     if PIPELINE:
         mode_str += "+PIPE"
+    if FFMPEG_DECODE and ext in _FFMPEG_CONVERT_EXT:
+        mode_str += "+FFDEC"
     msg_gpu   = msg_tensor.to(device)
     _filename = Path(input_path).name
 
