@@ -342,3 +342,1035 @@
 2026-03-19 10:07:11,220 [INFO    ] [TIMING] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: mux=1.020s
 2026-03-19 10:07:11,221 [INFO    ] Done in 50.8s — {'fps': 25.0, 'total_frames': 1660, 'has_audio': True, 'resolution': '1920x1080', 'oom_splits': 0, 'mode': 'FAST+GPU-BLEND+NVENC+PIPE+VBR(3587k)'}
 2026-03-19 10:07:11,221 [INFO    ] Output size: 26.1MB
+2026-03-19 10:18:33,976 [INFO    ] Loading model...
+2026-03-19 10:18:34,917 [INFO    ] Model loaded.
+2026-03-19 10:18:34,918 [INFO    ] Embedding: data/val/tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4 -> C:\Users\leduc\AppData\Local\Temp\tmp6rcdmulh.mp4
+2026-03-19 10:18:35,036 [INFO    ] [TIMING] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: audio_extract+wm=0.117s (has_audio=True)
+2026-03-19 10:18:35,078 [INFO    ] [BITRATE] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: source=3587 kbps, will use VBR to match
+2026-03-19 10:18:35,117 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+VBR(3587k)] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: 1920x1080, ~1660f, fps=25.0, chunk=30
+2026-03-19 10:18:35,334 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=30 embed=0 / 1660f  (0.2s)  [alloc=219MB peak=219MB]
+2026-03-19 10:18:35,335 [INFO    ]   [TIMING-PIPE-DEC] chunk#1  decode+to_tensor=0.053s  stack+pin=0.109s
+2026-03-19 10:18:35,572 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=60 embed=0 / 1660f  (0.5s)  [alloc=219MB peak=219MB]
+2026-03-19 10:18:35,573 [INFO    ]   [TIMING-PIPE-DEC] chunk#2  decode+to_tensor=0.089s  stack+pin=0.130s
+2026-03-19 10:18:35,731 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=90 embed=0 / 1660f  (0.6s)  [alloc=258MB peak=268MB]
+2026-03-19 10:18:35,731 [INFO    ]   [TIMING-PIPE-DEC] chunk#3  decode+to_tensor=0.063s  stack+pin=0.082s
+2026-03-19 10:18:36,123 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.350s  vidmode=0.000s  atten=0.043s  download=0.000s  total=0.398s
+2026-03-19 10:18:36,251 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.601s  gpu_upload+resize_up+blend=0.127s  total=0.790s
+2026-03-19 10:18:36,282 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.127s  embed=0.790s  to_numpy=0.030s  total=0.948s
+2026-03-19 10:18:36,283 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=120 embed=0 / 1660f  (1.2s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:36,321 [INFO    ]   [TIMING-PIPE-DEC] chunk#4  decode+to_tensor=0.055s  stack+pin=0.076s
+2026-03-19 10:18:36,666 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.077s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.083s
+2026-03-19 10:18:36,808 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.077s  delta=0.084s  gpu_upload+resize_up+blend=0.141s  total=0.302s
+2026-03-19 10:18:36,853 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.223s  embed=0.303s  to_numpy=0.044s  total=0.570s
+2026-03-19 10:18:36,861 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=150 embed=0 / 1660f  (1.7s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:36,862 [INFO    ]   [TIMING-PIPE-DEC] chunk#5  decode+to_tensor=0.280s  stack+pin=0.045s
+2026-03-19 10:18:37,138 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.058s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.063s
+2026-03-19 10:18:37,292 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.070s  delta=0.064s  gpu_upload+resize_up+blend=0.154s  total=0.288s
+2026-03-19 10:18:37,329 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.150s  embed=0.289s  to_numpy=0.036s  total=0.476s
+2026-03-19 10:18:37,330 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=180 embed=0 / 1660f  (2.2s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:37,330 [INFO    ]   [TIMING-PIPE-DEC] chunk#6  decode+to_tensor=0.276s  stack+pin=0.055s
+2026-03-19 10:18:37,599 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.859s  encode=0.453s  mux=0.004s  total=1.316s  (22.8f/s)
+2026-03-19 10:18:37,600 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.064s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.071s
+2026-03-19 10:18:37,739 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.108s  delta=0.074s  gpu_upload+resize_up+blend=0.136s  total=0.318s
+2026-03-19 10:18:37,792 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.320s  to_numpy=0.051s  total=0.462s
+2026-03-19 10:18:37,793 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=210 embed=30 / 1660f  (2.7s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:37,793 [INFO    ]   [TIMING-PIPE-DEC] chunk#7  decode+to_tensor=0.260s  stack+pin=0.054s
+2026-03-19 10:18:38,054 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.073s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.078s
+2026-03-19 10:18:38,235 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.081s  delta=0.079s  gpu_upload+resize_up+blend=0.147s  total=0.307s
+2026-03-19 10:18:38,266 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.101s  embed=0.344s  to_numpy=0.028s  total=0.473s
+2026-03-19 10:18:38,550 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.719s  encode=0.223s  mux=0.002s  total=0.948s  (31.7f/s)
+2026-03-19 10:18:38,551 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=240 embed=60 / 1660f  (3.4s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:38,551 [INFO    ]   [TIMING-PIPE-DEC] chunk#8  decode+to_tensor=0.223s  stack+pin=0.053s
+2026-03-19 10:18:38,889 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.061s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.069s
+2026-03-19 10:18:39,014 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.130s  delta=0.071s  gpu_upload+resize_up+blend=0.124s  total=0.325s
+2026-03-19 10:18:39,048 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.138s  embed=0.326s  to_numpy=0.034s  total=0.497s
+2026-03-19 10:18:39,435 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.670s  encode=0.207s  mux=0.001s  total=0.885s  (33.9f/s)
+2026-03-19 10:18:39,436 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=270 embed=90 / 1660f  (4.3s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:39,436 [INFO    ]   [TIMING-PIPE-DEC] chunk#9  decode+to_tensor=0.269s  stack+pin=0.123s
+2026-03-19 10:18:39,697 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.075s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.080s
+2026-03-19 10:18:39,836 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.053s  delta=0.100s  gpu_upload+resize_up+blend=0.104s  total=0.257s
+2026-03-19 10:18:39,866 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.109s  embed=0.292s  to_numpy=0.030s  total=0.431s
+2026-03-19 10:18:40,259 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.611s  encode=0.207s  mux=0.001s  total=0.824s  (36.4f/s)
+2026-03-19 10:18:40,260 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=300 embed=120 / 1660f  (5.1s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:40,260 [INFO    ]   [TIMING-PIPE-DEC] chunk#10  decode+to_tensor=0.215s  stack+pin=0.051s
+2026-03-19 10:18:40,499 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.076s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.083s
+2026-03-19 10:18:40,652 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.070s  delta=0.084s  gpu_upload+resize_up+blend=0.153s  total=0.307s
+2026-03-19 10:18:40,720 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.307s  to_numpy=0.067s  total=0.461s
+2026-03-19 10:18:41,139 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.676s  encode=0.199s  mux=0.001s  total=0.880s  (34.1f/s)
+2026-03-19 10:18:41,140 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=330 embed=150 / 1660f  (6.0s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:41,140 [INFO    ]   [TIMING-PIPE-DEC] chunk#11  decode+to_tensor=0.267s  stack+pin=0.086s
+2026-03-19 10:18:41,360 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.072s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.078s
+2026-03-19 10:18:41,552 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.059s  delta=0.079s  gpu_upload+resize_up+blend=0.156s  total=0.294s
+2026-03-19 10:18:41,584 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.082s  embed=0.330s  to_numpy=0.031s  total=0.444s
+2026-03-19 10:18:42,008 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.661s  encode=0.198s  mux=0.002s  total=0.869s  (34.5f/s)
+2026-03-19 10:18:42,009 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=360 embed=180 / 1660f  (6.9s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:42,010 [INFO    ]   [TIMING-PIPE-DEC] chunk#12  decode+to_tensor=0.262s  stack+pin=0.111s
+2026-03-19 10:18:42,297 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.064s  vidmode=0.000s  atten=0.035s  download=0.000s  total=0.103s
+2026-03-19 10:18:42,432 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.084s  delta=0.107s  gpu_upload+resize_up+blend=0.093s  total=0.284s
+2026-03-19 10:18:42,518 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.100s  embed=0.351s  to_numpy=0.058s  total=0.509s
+2026-03-19 10:18:42,852 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.629s  encode=0.207s  mux=0.001s  total=0.843s  (35.6f/s)
+2026-03-19 10:18:42,853 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=390 embed=210 / 1660f  (7.7s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:42,853 [INFO    ]   [TIMING-PIPE-DEC] chunk#13  decode+to_tensor=0.247s  stack+pin=0.042s
+2026-03-19 10:18:43,086 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.053s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.059s
+2026-03-19 10:18:43,267 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.051s  delta=0.084s  gpu_upload+resize_up+blend=0.146s  total=0.281s
+2026-03-19 10:18:43,296 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.099s  embed=0.315s  to_numpy=0.029s  total=0.443s
+2026-03-19 10:18:43,723 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.659s  encode=0.207s  mux=0.002s  total=0.871s  (34.4f/s)
+2026-03-19 10:18:43,724 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=420 embed=240 / 1660f  (8.6s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:43,724 [INFO    ]   [TIMING-PIPE-DEC] chunk#14  decode+to_tensor=0.279s  stack+pin=0.075s
+2026-03-19 10:18:43,978 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.061s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.067s
+2026-03-19 10:18:44,138 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.083s  delta=0.068s  gpu_upload+resize_up+blend=0.159s  total=0.310s
+2026-03-19 10:18:44,186 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.104s  embed=0.310s  to_numpy=0.048s  total=0.462s
+2026-03-19 10:18:44,561 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.641s  encode=0.190s  mux=0.001s  total=0.837s  (35.8f/s)
+2026-03-19 10:18:44,561 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=450 embed=270 / 1660f  (9.4s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:44,562 [INFO    ]   [TIMING-PIPE-DEC] chunk#15  decode+to_tensor=0.200s  stack+pin=0.122s
+2026-03-19 10:18:44,801 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.061s  vidmode=0.000s  atten=0.022s  download=0.000s  total=0.086s
+2026-03-19 10:18:44,950 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.087s  gpu_upload+resize_up+blend=0.142s  total=0.290s
+2026-03-19 10:18:44,987 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.092s  embed=0.297s  to_numpy=0.036s  total=0.425s
+2026-03-19 10:18:45,394 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.617s  encode=0.208s  mux=0.001s  total=0.833s  (36.0f/s)
+2026-03-19 10:18:45,395 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=480 embed=300 / 1660f  (10.3s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:45,395 [INFO    ]   [TIMING-PIPE-DEC] chunk#16  decode+to_tensor=0.217s  stack+pin=0.085s
+2026-03-19 10:18:45,658 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.066s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.072s
+2026-03-19 10:18:45,801 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.080s  delta=0.073s  gpu_upload+resize_up+blend=0.142s  total=0.296s
+2026-03-19 10:18:45,832 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.110s  embed=0.297s  to_numpy=0.030s  total=0.437s
+2026-03-19 10:18:46,249 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.656s  encode=0.194s  mux=0.001s  total=0.855s  (35.1f/s)
+2026-03-19 10:18:46,251 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=510 embed=330 / 1660f  (11.1s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:46,251 [INFO    ]   [TIMING-PIPE-DEC] chunk#17  decode+to_tensor=0.263s  stack+pin=0.114s
+2026-03-19 10:18:46,457 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.025s  embedder=0.051s  vidmode=0.001s  atten=0.002s  download=0.000s  total=0.078s
+2026-03-19 10:18:46,639 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.049s  delta=0.079s  gpu_upload+resize_up+blend=0.147s  total=0.276s
+2026-03-19 10:18:46,668 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.079s  embed=0.311s  to_numpy=0.028s  total=0.418s
+2026-03-19 10:18:47,103 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.646s  encode=0.200s  mux=0.002s  total=0.853s  (35.2f/s)
+2026-03-19 10:18:47,104 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=540 embed=360 / 1660f  (12.0s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:47,104 [INFO    ]   [TIMING-PIPE-DEC] chunk#18  decode+to_tensor=0.268s  stack+pin=0.054s
+2026-03-19 10:18:47,368 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.055s  vidmode=0.000s  atten=0.025s  download=0.000s  total=0.084s
+2026-03-19 10:18:47,497 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.068s  delta=0.085s  gpu_upload+resize_up+blend=0.128s  total=0.280s
+2026-03-19 10:18:47,556 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.112s  embed=0.281s  to_numpy=0.058s  total=0.452s
+2026-03-19 10:18:47,967 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.655s  encode=0.203s  mux=0.002s  total=0.864s  (34.7f/s)
+2026-03-19 10:18:47,968 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=570 embed=390 / 1660f  (12.8s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:47,968 [INFO    ]   [TIMING-PIPE-DEC] chunk#19  decode+to_tensor=0.261s  stack+pin=0.093s
+2026-03-19 10:18:48,196 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.057s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.062s
+2026-03-19 10:18:48,376 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.068s  delta=0.064s  gpu_upload+resize_up+blend=0.146s  total=0.277s
+2026-03-19 10:18:48,423 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.097s  embed=0.312s  to_numpy=0.046s  total=0.455s
+2026-03-19 10:18:48,822 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.635s  encode=0.213s  mux=0.001s  total=0.854s  (35.1f/s)
+2026-03-19 10:18:48,822 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=600 embed=420 / 1660f  (13.7s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:48,823 [INFO    ]   [TIMING-PIPE-DEC] chunk#20  decode+to_tensor=0.264s  stack+pin=0.074s
+2026-03-19 10:18:49,062 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.057s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.063s
+2026-03-19 10:18:49,214 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.083s  delta=0.065s  gpu_upload+resize_up+blend=0.151s  total=0.298s
+2026-03-19 10:18:49,242 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.093s  embed=0.299s  to_numpy=0.028s  total=0.419s
+2026-03-19 10:18:49,692 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.655s  encode=0.207s  mux=0.001s  total=0.870s  (34.5f/s)
+2026-03-19 10:18:49,693 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=630 embed=450 / 1660f  (14.6s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:49,694 [INFO    ]   [TIMING-PIPE-DEC] chunk#21  decode+to_tensor=0.271s  stack+pin=0.084s
+2026-03-19 10:18:49,982 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.081s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.088s
+2026-03-19 10:18:50,153 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.072s  delta=0.089s  gpu_upload+resize_up+blend=0.140s  total=0.301s
+2026-03-19 10:18:50,181 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.129s  embed=0.333s  to_numpy=0.028s  total=0.489s
+2026-03-19 10:18:50,582 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.667s  encode=0.206s  mux=0.001s  total=0.890s  (33.7f/s)
+2026-03-19 10:18:50,583 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=660 embed=480 / 1660f  (15.5s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:50,583 [INFO    ]   [TIMING-PIPE-DEC] chunk#22  decode+to_tensor=0.290s  stack+pin=0.059s
+2026-03-19 10:18:50,825 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.079s  vidmode=0.001s  atten=0.002s  download=0.000s  total=0.085s
+2026-03-19 10:18:50,974 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.069s  delta=0.086s  gpu_upload+resize_up+blend=0.149s  total=0.304s
+2026-03-19 10:18:51,041 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.087s  embed=0.305s  to_numpy=0.065s  total=0.458s
+2026-03-19 10:18:51,428 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.645s  encode=0.195s  mux=0.001s  total=0.846s  (35.5f/s)
+2026-03-19 10:18:51,429 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=690 embed=510 / 1660f  (16.3s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:51,429 [INFO    ]   [TIMING-PIPE-DEC] chunk#23  decode+to_tensor=0.250s  stack+pin=0.113s
+2026-03-19 10:18:51,648 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.067s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.074s
+2026-03-19 10:18:51,828 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.075s  gpu_upload+resize_up+blend=0.146s  total=0.283s
+2026-03-19 10:18:51,858 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.082s  embed=0.317s  to_numpy=0.030s  total=0.429s
+2026-03-19 10:18:52,299 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.661s  encode=0.200s  mux=0.001s  total=0.870s  (34.5f/s)
+2026-03-19 10:18:52,299 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=720 embed=540 / 1660f  (17.2s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:52,300 [INFO    ]   [TIMING-PIPE-DEC] chunk#24  decode+to_tensor=0.225s  stack+pin=0.081s
+2026-03-19 10:18:52,540 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.084s  vidmode=0.001s  atten=0.003s  download=0.000s  total=0.090s
+2026-03-19 10:18:52,681 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.068s  delta=0.091s  gpu_upload+resize_up+blend=0.141s  total=0.300s
+2026-03-19 10:18:52,715 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.082s  embed=0.300s  to_numpy=0.033s  total=0.415s
+2026-03-19 10:18:53,136 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.632s  encode=0.198s  mux=0.002s  total=0.836s  (35.9f/s)
+2026-03-19 10:18:53,136 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=750 embed=570 / 1660f  (18.0s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:53,136 [INFO    ]   [TIMING-PIPE-DEC] chunk#25  decode+to_tensor=0.241s  stack+pin=0.081s
+2026-03-19 10:18:53,378 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.077s  vidmode=0.001s  atten=0.002s  download=0.000s  total=0.083s
+2026-03-19 10:18:53,571 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.069s  delta=0.085s  gpu_upload+resize_up+blend=0.157s  total=0.310s
+2026-03-19 10:18:53,645 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.372s  to_numpy=0.048s  total=0.509s
+2026-03-19 10:18:53,978 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.635s  encode=0.198s  mux=0.001s  total=0.842s  (35.6f/s)
+2026-03-19 10:18:53,979 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=780 embed=600 / 1660f  (18.9s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:53,979 [INFO    ]   [TIMING-PIPE-DEC] chunk#26  decode+to_tensor=0.213s  stack+pin=0.049s
+2026-03-19 10:18:54,218 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.076s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.082s
+2026-03-19 10:18:54,402 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.071s  delta=0.083s  gpu_upload+resize_up+blend=0.149s  total=0.303s
+2026-03-19 10:18:54,434 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.339s  to_numpy=0.031s  total=0.455s
+2026-03-19 10:18:54,819 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.647s  encode=0.187s  mux=0.002s  total=0.841s  (35.7f/s)
+2026-03-19 10:18:54,820 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=810 embed=630 / 1660f  (19.7s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:54,820 [INFO    ]   [TIMING-PIPE-DEC] chunk#27  decode+to_tensor=0.193s  stack+pin=0.056s
+2026-03-19 10:18:55,048 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.063s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.068s
+2026-03-19 10:18:55,201 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.069s  gpu_upload+resize_up+blend=0.120s  total=0.251s
+2026-03-19 10:18:55,236 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.097s  embed=0.286s  to_numpy=0.034s  total=0.416s
+2026-03-19 10:18:55,696 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.672s  encode=0.198s  mux=0.002s  total=0.876s  (34.2f/s)
+2026-03-19 10:18:55,696 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=840 embed=660 / 1660f  (20.6s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:55,697 [INFO    ]   [TIMING-PIPE-DEC] chunk#28  decode+to_tensor=0.258s  stack+pin=0.079s
+2026-03-19 10:18:55,924 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.064s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.069s
+2026-03-19 10:18:56,049 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.077s  delta=0.071s  gpu_upload+resize_up+blend=0.124s  total=0.271s
+2026-03-19 10:18:56,109 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.081s  embed=0.304s  to_numpy=0.028s  total=0.413s
+2026-03-19 10:18:56,526 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.636s  encode=0.187s  mux=0.001s  total=0.830s  (36.1f/s)
+2026-03-19 10:18:56,528 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=870 embed=690 / 1660f  (21.4s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:56,529 [INFO    ]   [TIMING-PIPE-DEC] chunk#29  decode+to_tensor=0.265s  stack+pin=0.051s
+2026-03-19 10:18:56,752 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.019s  embedder=0.067s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.089s
+2026-03-19 10:18:56,933 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.053s  delta=0.090s  gpu_upload+resize_up+blend=0.148s  total=0.291s
+2026-03-19 10:18:56,969 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.082s  embed=0.325s  to_numpy=0.035s  total=0.442s
+2026-03-19 10:18:57,397 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.662s  encode=0.199s  mux=0.002s  total=0.871s  (34.5f/s)
+2026-03-19 10:18:57,398 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=900 embed=720 / 1660f  (22.3s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:57,398 [INFO    ]   [TIMING-PIPE-DEC] chunk#30  decode+to_tensor=0.208s  stack+pin=0.048s
+2026-03-19 10:18:57,637 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.059s  vidmode=0.001s  atten=0.002s  download=0.000s  total=0.065s
+2026-03-19 10:18:57,762 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.094s  delta=0.066s  gpu_upload+resize_up+blend=0.124s  total=0.284s
+2026-03-19 10:18:57,806 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.079s  embed=0.286s  to_numpy=0.043s  total=0.408s
+2026-03-19 10:18:58,263 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.661s  encode=0.196s  mux=0.002s  total=0.866s  (34.7f/s)
+2026-03-19 10:18:58,264 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=930 embed=750 / 1660f  (23.1s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:58,264 [INFO    ]   [TIMING-PIPE-DEC] chunk#31  decode+to_tensor=0.193s  stack+pin=0.120s
+2026-03-19 10:18:58,504 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.081s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.087s
+2026-03-19 10:18:58,648 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.088s  gpu_upload+resize_up+blend=0.144s  total=0.297s
+2026-03-19 10:18:58,679 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.087s  embed=0.298s  to_numpy=0.030s  total=0.415s
+2026-03-19 10:18:59,099 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.629s  encode=0.199s  mux=0.001s  total=0.835s  (35.9f/s)
+2026-03-19 10:18:59,099 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=960 embed=780 / 1660f  (24.0s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:59,099 [INFO    ]   [TIMING-PIPE-DEC] chunk#32  decode+to_tensor=0.234s  stack+pin=0.083s
+2026-03-19 10:18:59,369 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.083s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.089s
+2026-03-19 10:18:59,530 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.092s  delta=0.090s  gpu_upload+resize_up+blend=0.123s  total=0.305s
+2026-03-19 10:18:59,615 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.088s  embed=0.366s  to_numpy=0.062s  total=0.516s
+2026-03-19 10:18:59,957 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.655s  encode=0.195s  mux=0.001s  total=0.858s  (35.0f/s)
+2026-03-19 10:18:59,957 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=990 embed=810 / 1660f  (24.8s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:18:59,958 [INFO    ]   [TIMING-PIPE-DEC] chunk#33  decode+to_tensor=0.243s  stack+pin=0.053s
+2026-03-19 10:19:00,208 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.062s  vidmode=0.028s  atten=0.002s  download=0.000s  total=0.096s
+2026-03-19 10:19:00,382 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.070s  delta=0.097s  gpu_upload+resize_up+blend=0.140s  total=0.307s
+2026-03-19 10:19:00,411 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.084s  embed=0.341s  to_numpy=0.028s  total=0.454s
+2026-03-19 10:19:00,787 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.636s  encode=0.187s  mux=0.001s  total=0.830s  (36.1f/s)
+2026-03-19 10:19:00,788 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1020 embed=840 / 1660f  (25.7s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:00,788 [INFO    ]   [TIMING-PIPE-DEC] chunk#34  decode+to_tensor=0.227s  stack+pin=0.049s
+2026-03-19 10:19:01,056 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.092s  vidmode=0.001s  atten=0.002s  download=0.000s  total=0.097s
+2026-03-19 10:19:01,199 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.091s  delta=0.099s  gpu_upload+resize_up+blend=0.104s  total=0.294s
+2026-03-19 10:19:01,231 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.079s  embed=0.333s  to_numpy=0.031s  total=0.443s
+2026-03-19 10:19:01,621 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.635s  encode=0.193s  mux=0.002s  total=0.834s  (36.0f/s)
+2026-03-19 10:19:01,622 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1050 embed=870 / 1660f  (26.5s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:01,623 [INFO    ]   [TIMING-PIPE-DEC] chunk#35  decode+to_tensor=0.238s  stack+pin=0.052s
+2026-03-19 10:19:01,851 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.030s  embedder=0.062s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.095s
+2026-03-19 10:19:02,033 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.052s  delta=0.096s  gpu_upload+resize_up+blend=0.154s  total=0.303s
+2026-03-19 10:19:02,066 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.081s  embed=0.330s  to_numpy=0.033s  total=0.444s
+2026-03-19 10:19:02,472 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.649s  encode=0.194s  mux=0.001s  total=0.850s  (35.3f/s)
+2026-03-19 10:19:02,472 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1080 embed=900 / 1660f  (27.4s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:02,473 [INFO    ]   [TIMING-PIPE-DEC] chunk#36  decode+to_tensor=0.261s  stack+pin=0.074s
+2026-03-19 10:19:02,715 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.084s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.090s
+2026-03-19 10:19:02,862 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.070s  delta=0.092s  gpu_upload+resize_up+blend=0.147s  total=0.308s
+2026-03-19 10:19:02,893 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.081s  embed=0.309s  to_numpy=0.030s  total=0.420s
+2026-03-19 10:19:03,305 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.631s  encode=0.197s  mux=0.001s  total=0.833s  (36.0f/s)
+2026-03-19 10:19:03,306 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1110 embed=930 / 1660f  (28.2s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:03,306 [INFO    ]   [TIMING-PIPE-DEC] chunk#37  decode+to_tensor=0.254s  stack+pin=0.085s
+2026-03-19 10:19:03,526 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.069s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.074s
+2026-03-19 10:19:03,680 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.063s  delta=0.075s  gpu_upload+resize_up+blend=0.118s  total=0.256s
+2026-03-19 10:19:03,717 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.082s  embed=0.293s  to_numpy=0.036s  total=0.411s
+2026-03-19 10:19:04,173 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.662s  encode=0.196s  mux=0.002s  total=0.867s  (34.6f/s)
+2026-03-19 10:19:04,174 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1140 embed=960 / 1660f  (29.1s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:04,174 [INFO    ]   [TIMING-PIPE-DEC] chunk#38  decode+to_tensor=0.294s  stack+pin=0.074s
+2026-03-19 10:19:04,420 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.085s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.091s
+2026-03-19 10:19:04,572 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.068s  delta=0.092s  gpu_upload+resize_up+blend=0.151s  total=0.311s
+2026-03-19 10:19:04,633 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.312s  to_numpy=0.061s  total=0.458s
+2026-03-19 10:19:05,052 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.673s  encode=0.198s  mux=0.001s  total=0.878s  (34.2f/s)
+2026-03-19 10:19:05,052 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1170 embed=990 / 1660f  (29.9s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:05,053 [INFO    ]   [TIMING-PIPE-DEC] chunk#39  decode+to_tensor=0.240s  stack+pin=0.085s
+2026-03-19 10:19:05,308 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.085s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.093s
+2026-03-19 10:19:05,463 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.070s  delta=0.094s  gpu_upload+resize_up+blend=0.121s  total=0.285s
+2026-03-19 10:19:05,523 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.092s  embed=0.319s  to_numpy=0.060s  total=0.471s
+2026-03-19 10:19:05,931 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.665s  encode=0.208s  mux=0.001s  total=0.879s  (34.1f/s)
+2026-03-19 10:19:05,932 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1200 embed=1020 / 1660f  (30.8s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:05,933 [INFO    ]   [TIMING-PIPE-DEC] chunk#40  decode+to_tensor=0.237s  stack+pin=0.093s
+2026-03-19 10:19:06,154 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.064s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.071s
+2026-03-19 10:19:06,362 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.068s  delta=0.094s  gpu_upload+resize_up+blend=0.158s  total=0.320s
+2026-03-19 10:19:06,396 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.082s  embed=0.348s  to_numpy=0.034s  total=0.463s
+2026-03-19 10:19:06,799 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.648s  encode=0.212s  mux=0.001s  total=0.867s  (34.6f/s)
+2026-03-19 10:19:06,800 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1230 embed=1050 / 1660f  (31.7s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:06,802 [INFO    ]   [TIMING-PIPE-DEC] chunk#41  decode+to_tensor=0.268s  stack+pin=0.091s
+2026-03-19 10:19:07,064 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.067s  vidmode=0.000s  atten=0.024s  download=0.000s  total=0.094s
+2026-03-19 10:19:07,251 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.095s  gpu_upload+resize_up+blend=0.157s  total=0.314s
+2026-03-19 10:19:07,281 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.107s  embed=0.344s  to_numpy=0.030s  total=0.481s
+2026-03-19 10:19:07,682 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.670s  encode=0.202s  mux=0.003s  total=0.882s  (34.0f/s)
+2026-03-19 10:19:07,683 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1260 embed=1080 / 1660f  (32.6s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:07,683 [INFO    ]   [TIMING-PIPE-DEC] chunk#42  decode+to_tensor=0.243s  stack+pin=0.056s
+2026-03-19 10:19:07,978 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.101s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.108s
+2026-03-19 10:19:08,120 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.074s  delta=0.110s  gpu_upload+resize_up+blend=0.141s  total=0.324s
+2026-03-19 10:19:08,171 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.112s  embed=0.325s  to_numpy=0.050s  total=0.488s
+2026-03-19 10:19:08,574 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.691s  encode=0.194s  mux=0.002s  total=0.891s  (33.7f/s)
+2026-03-19 10:19:08,574 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1290 embed=1110 / 1660f  (33.5s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:08,575 [INFO    ]   [TIMING-PIPE-DEC] chunk#43  decode+to_tensor=0.287s  stack+pin=0.115s
+2026-03-19 10:19:08,804 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.085s  vidmode=0.001s  atten=0.002s  download=0.000s  total=0.092s
+2026-03-19 10:19:08,957 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.047s  delta=0.093s  gpu_upload+resize_up+blend=0.125s  total=0.265s
+2026-03-19 10:19:08,993 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.294s  to_numpy=0.034s  total=0.419s
+2026-03-19 10:19:09,461 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.673s  encode=0.208s  mux=0.001s  total=0.887s  (33.8f/s)
+2026-03-19 10:19:09,462 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1320 embed=1140 / 1660f  (34.3s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:09,462 [INFO    ]   [TIMING-PIPE-DEC] chunk#44  decode+to_tensor=0.298s  stack+pin=0.079s
+2026-03-19 10:19:09,702 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.058s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.063s
+2026-03-19 10:19:09,849 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.068s  delta=0.065s  gpu_upload+resize_up+blend=0.146s  total=0.279s
+2026-03-19 10:19:09,884 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.108s  embed=0.281s  to_numpy=0.033s  total=0.422s
+2026-03-19 10:19:10,360 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.683s  encode=0.204s  mux=0.001s  total=0.898s  (33.4f/s)
+2026-03-19 10:19:10,360 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1350 embed=1170 / 1660f  (35.2s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:10,360 [INFO    ]   [TIMING-PIPE-DEC] chunk#45  decode+to_tensor=0.245s  stack+pin=0.080s
+2026-03-19 10:19:10,586 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.070s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.076s
+2026-03-19 10:19:10,735 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.063s  delta=0.078s  gpu_upload+resize_up+blend=0.124s  total=0.265s
+2026-03-19 10:19:10,768 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.085s  embed=0.291s  to_numpy=0.031s  total=0.408s
+2026-03-19 10:19:11,237 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.673s  encode=0.197s  mux=0.001s  total=0.877s  (34.2f/s)
+2026-03-19 10:19:11,237 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1380 embed=1200 / 1660f  (36.1s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:11,238 [INFO    ]   [TIMING-PIPE-DEC] chunk#46  decode+to_tensor=0.236s  stack+pin=0.069s
+2026-03-19 10:19:11,460 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.066s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.072s
+2026-03-19 10:19:11,633 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.069s  delta=0.093s  gpu_upload+resize_up+blend=0.153s  total=0.315s
+2026-03-19 10:19:11,696 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.080s  embed=0.316s  to_numpy=0.062s  total=0.458s
+2026-03-19 10:19:12,084 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.645s  encode=0.196s  mux=0.001s  total=0.847s  (35.4f/s)
+2026-03-19 10:19:12,084 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1410 embed=1230 / 1660f  (37.0s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:12,085 [INFO    ]   [TIMING-PIPE-DEC] chunk#47  decode+to_tensor=0.252s  stack+pin=0.087s
+2026-03-19 10:19:12,329 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.063s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.068s
+2026-03-19 10:19:12,507 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.068s  delta=0.070s  gpu_upload+resize_up+blend=0.150s  total=0.288s
+2026-03-19 10:19:12,537 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.107s  embed=0.315s  to_numpy=0.029s  total=0.452s
+2026-03-19 10:19:12,945 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.656s  encode=0.200s  mux=0.001s  total=0.861s  (34.9f/s)
+2026-03-19 10:19:12,946 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1440 embed=1260 / 1660f  (37.8s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:12,946 [INFO    ]   [TIMING-PIPE-DEC] chunk#48  decode+to_tensor=0.247s  stack+pin=0.114s
+2026-03-19 10:19:13,228 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.087s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.093s
+2026-03-19 10:19:13,353 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.071s  delta=0.094s  gpu_upload+resize_up+blend=0.124s  total=0.289s
+2026-03-19 10:19:13,384 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.118s  embed=0.290s  to_numpy=0.029s  total=0.438s
+2026-03-19 10:19:13,841 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.686s  encode=0.197s  mux=0.002s  total=0.896s  (33.5f/s)
+2026-03-19 10:19:13,842 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1470 embed=1290 / 1660f  (38.7s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:13,843 [INFO    ]   [TIMING-PIPE-DEC] chunk#49  decode+to_tensor=0.267s  stack+pin=0.076s
+2026-03-19 10:19:14,081 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.034s  embedder=0.058s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.095s
+2026-03-19 10:19:14,272 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.051s  delta=0.097s  gpu_upload+resize_up+blend=0.159s  total=0.307s
+2026-03-19 10:19:14,346 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.092s  embed=0.369s  to_numpy=0.043s  total=0.504s
+2026-03-19 10:19:14,726 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.666s  encode=0.209s  mux=0.002s  total=0.884s  (33.9f/s)
+2026-03-19 10:19:14,726 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1500 embed=1320 / 1660f  (39.6s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:14,727 [INFO    ]   [TIMING-PIPE-DEC] chunk#50  decode+to_tensor=0.266s  stack+pin=0.050s
+2026-03-19 10:19:14,932 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.060s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.067s
+2026-03-19 10:19:15,081 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.057s  delta=0.068s  gpu_upload+resize_up+blend=0.113s  total=0.238s
+2026-03-19 10:19:15,145 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.081s  embed=0.275s  to_numpy=0.063s  total=0.419s
+2026-03-19 10:19:15,589 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.658s  encode=0.199s  mux=0.001s  total=0.863s  (34.8f/s)
+2026-03-19 10:19:15,590 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1530 embed=1350 / 1660f  (40.5s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:15,591 [INFO    ]   [TIMING-PIPE-DEC] chunk#51  decode+to_tensor=0.248s  stack+pin=0.070s
+2026-03-19 10:19:15,821 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.018s  embedder=0.052s  vidmode=0.001s  atten=0.003s  download=0.000s  total=0.074s
+2026-03-19 10:19:16,012 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.071s  delta=0.075s  gpu_upload+resize_up+blend=0.160s  total=0.306s
+2026-03-19 10:19:16,078 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.085s  embed=0.337s  to_numpy=0.066s  total=0.488s
+2026-03-19 10:19:16,447 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.644s  encode=0.206s  mux=0.001s  total=0.857s  (35.0f/s)
+2026-03-19 10:19:16,448 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1560 embed=1380 / 1660f  (41.3s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:16,448 [INFO    ]   [TIMING-PIPE-DEC] chunk#52  decode+to_tensor=0.241s  stack+pin=0.085s
+2026-03-19 10:19:16,691 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.060s  vidmode=0.000s  atten=0.026s  download=0.000s  total=0.090s
+2026-03-19 10:19:16,847 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.067s  delta=0.091s  gpu_upload+resize_up+blend=0.123s  total=0.282s
+2026-03-19 10:19:16,898 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.085s  embed=0.315s  to_numpy=0.051s  total=0.450s
+2026-03-19 10:19:17,298 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.642s  encode=0.202s  mux=0.001s  total=0.850s  (35.3f/s)
+2026-03-19 10:19:17,299 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1590 embed=1410 / 1660f  (42.2s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:17,299 [INFO    ]   [TIMING-PIPE-DEC] chunk#53  decode+to_tensor=0.240s  stack+pin=0.112s
+2026-03-19 10:19:17,546 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.026s  embedder=0.058s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.086s
+2026-03-19 10:19:17,692 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.069s  delta=0.087s  gpu_upload+resize_up+blend=0.111s  total=0.267s
+2026-03-19 10:19:17,721 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.092s  embed=0.301s  to_numpy=0.028s  total=0.422s
+2026-03-19 10:19:18,165 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.659s  encode=0.201s  mux=0.001s  total=0.867s  (34.6f/s)
+2026-03-19 10:19:18,166 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1620 embed=1440 / 1660f  (43.0s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:18,166 [INFO    ]   [TIMING-PIPE-DEC] chunk#54  decode+to_tensor=0.246s  stack+pin=0.075s
+2026-03-19 10:19:18,394 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.071s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.077s
+2026-03-19 10:19:18,585 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.079s  gpu_upload+resize_up+blend=0.157s  total=0.299s
+2026-03-19 10:19:18,617 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.334s  to_numpy=0.032s  total=0.452s
+2026-03-19 10:19:19,029 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.662s  encode=0.195s  mux=0.001s  total=0.864s  (34.7f/s)
+2026-03-19 10:19:19,030 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1650 embed=1470 / 1660f  (43.9s)  [alloc=227MB peak=1185MB]
+2026-03-19 10:19:19,030 [INFO    ]   [TIMING-PIPE-DEC] chunk#55  decode+to_tensor=0.263s  stack+pin=0.088s
+2026-03-19 10:19:19,298 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.071s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.076s
+2026-03-19 10:19:19,425 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.067s  delta=0.113s  gpu_upload+resize_up+blend=0.091s  total=0.271s
+2026-03-19 10:19:19,470 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.088s  embed=0.307s  to_numpy=0.045s  total=0.440s
+2026-03-19 10:19:19,845 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.630s  encode=0.180s  mux=0.001s  total=0.815s  (36.8f/s)
+2026-03-19 10:19:20,071 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.002s  embedder=0.056s  vidmode=0.000s  atten=0.021s  download=0.000s  total=0.080s
+2026-03-19 10:19:20,203 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.060s  delta=0.080s  gpu_upload+resize_up+blend=0.104s  total=0.244s
+2026-03-19 10:19:20,269 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.293s  to_numpy=0.044s  total=0.423s
+2026-03-19 10:19:20,622 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.592s  encode=0.176s  mux=0.001s  total=0.776s  (38.6f/s)
+2026-03-19 10:19:20,875 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.078s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.084s
+2026-03-19 10:19:21,004 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.060s  delta=0.085s  gpu_upload+resize_up+blend=0.101s  total=0.246s
+2026-03-19 10:19:21,052 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.108s  embed=0.274s  to_numpy=0.048s  total=0.430s
+2026-03-19 10:19:21,395 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.580s  encode=0.190s  mux=0.001s  total=0.773s  (38.8f/s)
+2026-03-19 10:19:21,657 [INFO    ]   [TIMING-DELTA] 10f 256x256  upload=0.001s  embedder=0.092s  vidmode=0.000s  atten=0.023s  download=0.000s  total=0.116s
+2026-03-19 10:19:21,713 [INFO    ]   [TIMING-FAST] 10f 1080x1920  resize_down=0.096s  delta=0.117s  gpu_upload+resize_up+blend=0.053s  total=0.265s
+2026-03-19 10:19:21,772 [INFO    ]   [TIMING-PIPE-GPU] 10f  normalize=0.049s  embed=0.304s  to_numpy=0.024s  total=0.377s
+2026-03-19 10:19:22,191 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.612s  encode=0.181s  mux=0.001s  total=0.795s  (37.7f/s)
+2026-03-19 10:19:22,854 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.511s  encode=0.150s  mux=0.001s  total=0.663s  (45.2f/s)
+2026-03-19 10:19:23,510 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.507s  encode=0.146s  mux=0.000s  total=0.656s  (45.7f/s)
+2026-03-19 10:19:23,724 [INFO    ]   [TIMING-PIPE-ENC] 10f  from_ndarray=0.165s  encode=0.046s  mux=0.000s  total=0.214s  (46.8f/s)
+2026-03-19 10:19:23,777 [INFO    ] [TIMING] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: video_embed=48.698s (1660f, 34.1f/s)
+2026-03-19 10:19:24,828 [INFO    ] [TIMING] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: mux=1.051s
+2026-03-19 10:19:24,828 [INFO    ] Done in 49.9s — {'fps': 25.0, 'total_frames': 1660, 'has_audio': True, 'resolution': '1920x1080', 'oom_splits': 0, 'mode': 'FAST+GPU-BLEND+NVENC+PIPE+VBR(3587k)'}
+2026-03-19 10:19:24,829 [INFO    ] Output size: 26.1MB
+2026-03-19 10:25:07,274 [INFO    ] Loading model...
+2026-03-19 10:25:08,210 [INFO    ] Model loaded.
+2026-03-19 10:25:08,211 [INFO    ] Embedding: data/val/tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4 -> C:\Users\leduc\AppData\Local\Temp\tmp0so3oq0s.mp4
+2026-03-19 10:25:08,329 [INFO    ] [TIMING] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: audio_extract+wm=0.118s (has_audio=True)
+2026-03-19 10:25:08,371 [INFO    ] [BITRATE] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: source=3587 kbps, will use VBR to match
+2026-03-19 10:25:08,411 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+VBR(3587k)] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: 1920x1080, ~1660f, fps=25.0, chunk=30
+2026-03-19 10:25:08,630 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=30 embed=0 / 1660f  (0.2s)  [alloc=219MB peak=219MB]
+2026-03-19 10:25:08,630 [INFO    ]   [TIMING-PIPE-DEC] chunk#1  decode+to_tensor=0.053s  stack+pin=0.114s
+2026-03-19 10:25:08,834 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=60 embed=0 / 1660f  (0.4s)  [alloc=219MB peak=219MB]
+2026-03-19 10:25:08,834 [INFO    ]   [TIMING-PIPE-DEC] chunk#2  decode+to_tensor=0.082s  stack+pin=0.109s
+2026-03-19 10:25:08,990 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=90 embed=0 / 1660f  (0.6s)  [alloc=256MB peak=268MB]
+2026-03-19 10:25:08,990 [INFO    ]   [TIMING-PIPE-DEC] chunk#3  decode+to_tensor=0.062s  stack+pin=0.081s
+2026-03-19 10:25:09,465 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.402s  vidmode=0.000s  atten=0.074s  download=0.000s  total=0.480s
+2026-03-19 10:25:09,576 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.054s  delta=0.669s  gpu_upload+resize_up+blend=0.110s  total=0.832s
+2026-03-19 10:25:09,642 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.113s  embed=0.833s  clamp+uint8=0.001s  rgb2yuv_gpu=0.065s  total=1.012s
+2026-03-19 10:25:09,643 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=120 embed=0 / 1660f  (1.2s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:09,789 [INFO    ]   [TIMING-PIPE-DEC] chunk#4  decode+to_tensor=0.071s  stack+pin=0.087s
+2026-03-19 10:25:09,958 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.080s  encode=0.232s  mux=0.003s  total=0.316s  (95.0f/s)
+2026-03-19 10:25:09,959 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.007s  download=0.000s  total=0.057s
+2026-03-19 10:25:10,062 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.058s  gpu_upload+resize_up+blend=0.103s  total=0.224s
+2026-03-19 10:25:10,105 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.195s  embed=0.225s  clamp+uint8=0.000s  rgb2yuv_gpu=0.043s  total=0.463s
+2026-03-19 10:25:10,106 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=150 embed=30 / 1660f  (1.7s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:10,106 [INFO    ]   [TIMING-PIPE-DEC] chunk#5  decode+to_tensor=0.131s  stack+pin=0.039s
+2026-03-19 10:25:10,317 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.099s  encode=0.107s  mux=0.003s  total=0.211s  (142.2f/s)
+2026-03-19 10:25:10,337 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.007s  embedder=0.049s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.058s
+2026-03-19 10:25:10,429 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.077s  delta=0.059s  gpu_upload+resize_up+blend=0.091s  total=0.228s
+2026-03-19 10:25:10,471 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.094s  embed=0.229s  clamp+uint8=0.000s  rgb2yuv_gpu=0.042s  total=0.365s
+2026-03-19 10:25:10,472 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=180 embed=60 / 1660f  (2.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:10,473 [INFO    ]   [TIMING-PIPE-DEC] chunk#6  decode+to_tensor=0.113s  stack+pin=0.053s
+2026-03-19 10:25:10,662 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.099s  mux=0.002s  total=0.191s  (157.4f/s)
+2026-03-19 10:25:10,687 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.047s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.055s
+2026-03-19 10:25:10,839 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.056s  gpu_upload+resize_up+blend=0.086s  total=0.206s
+2026-03-19 10:25:10,887 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.095s  embed=0.272s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.415s
+2026-03-19 10:25:10,888 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=210 embed=90 / 1660f  (2.5s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:10,888 [INFO    ]   [TIMING-PIPE-DEC] chunk#7  decode+to_tensor=0.116s  stack+pin=0.050s
+2026-03-19 10:25:11,082 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.093s  encode=0.097s  mux=0.002s  total=0.194s  (154.6f/s)
+2026-03-19 10:25:11,097 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.054s
+2026-03-19 10:25:11,181 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.063s  delta=0.055s  gpu_upload+resize_up+blend=0.084s  total=0.203s
+2026-03-19 10:25:11,255 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.367s
+2026-03-19 10:25:11,256 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=240 embed=120 / 1660f  (2.8s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:11,256 [INFO    ]   [TIMING-PIPE-DEC] chunk#8  decode+to_tensor=0.120s  stack+pin=0.048s
+2026-03-19 10:25:11,450 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.100s  mux=0.002s  total=0.194s  (154.5f/s)
+2026-03-19 10:25:11,459 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:11,541 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.054s  gpu_upload+resize_up+blend=0.082s  total=0.198s
+2026-03-19 10:25:11,617 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.087s  embed=0.223s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.361s
+2026-03-19 10:25:11,617 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=270 embed=150 / 1660f  (3.2s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:11,617 [INFO    ]   [TIMING-PIPE-DEC] chunk#9  decode+to_tensor=0.123s  stack+pin=0.048s
+2026-03-19 10:25:11,808 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.096s  mux=0.003s  total=0.191s  (157.2f/s)
+2026-03-19 10:25:11,823 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:25:11,908 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.054s  gpu_upload+resize_up+blend=0.084s  total=0.204s
+2026-03-19 10:25:11,981 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.229s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.364s
+2026-03-19 10:25:11,982 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=300 embed=180 / 1660f  (3.6s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:11,983 [INFO    ]   [TIMING-PIPE-DEC] chunk#10  decode+to_tensor=0.129s  stack+pin=0.046s
+2026-03-19 10:25:12,177 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.092s  encode=0.098s  mux=0.002s  total=0.195s  (153.5f/s)
+2026-03-19 10:25:12,192 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:25:12,275 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.054s  gpu_upload+resize_up+blend=0.083s  total=0.202s
+2026-03-19 10:25:12,350 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.368s
+2026-03-19 10:25:12,350 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=330 embed=210 / 1660f  (3.9s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:12,351 [INFO    ]   [TIMING-PIPE-DEC] chunk#11  decode+to_tensor=0.115s  stack+pin=0.044s
+2026-03-19 10:25:12,538 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.093s  mux=0.002s  total=0.188s  (159.9f/s)
+2026-03-19 10:25:12,552 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:12,636 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.059s  delta=0.052s  gpu_upload+resize_up+blend=0.084s  total=0.195s
+2026-03-19 10:25:12,709 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.220s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.359s
+2026-03-19 10:25:12,710 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=360 embed=240 / 1660f  (4.3s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:12,710 [INFO    ]   [TIMING-PIPE-DEC] chunk#12  decode+to_tensor=0.127s  stack+pin=0.044s
+2026-03-19 10:25:12,903 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.100s  mux=0.002s  total=0.193s  (155.8f/s)
+2026-03-19 10:25:12,917 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:13,000 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.053s  gpu_upload+resize_up+blend=0.082s  total=0.197s
+2026-03-19 10:25:13,076 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.092s  embed=0.222s  clamp+uint8=0.000s  rgb2yuv_gpu=0.051s  total=0.366s
+2026-03-19 10:25:13,077 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=390 embed=270 / 1660f  (4.7s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:13,077 [INFO    ]   [TIMING-PIPE-DEC] chunk#13  decode+to_tensor=0.118s  stack+pin=0.052s
+2026-03-19 10:25:13,257 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.086s  encode=0.092s  mux=0.001s  total=0.181s  (166.1f/s)
+2026-03-19 10:25:13,277 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.050s
+2026-03-19 10:25:13,363 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.051s  gpu_upload+resize_up+blend=0.085s  total=0.198s
+2026-03-19 10:25:13,437 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.088s  embed=0.222s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.360s
+2026-03-19 10:25:13,437 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=420 embed=300 / 1660f  (5.0s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:13,438 [INFO    ]   [TIMING-PIPE-DEC] chunk#14  decode+to_tensor=0.125s  stack+pin=0.049s
+2026-03-19 10:25:13,626 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.096s  mux=0.002s  total=0.188s  (159.5f/s)
+2026-03-19 10:25:13,647 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:13,727 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.054s  gpu_upload+resize_up+blend=0.080s  total=0.199s
+2026-03-19 10:25:13,802 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.224s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.364s
+2026-03-19 10:25:13,802 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=450 embed=330 / 1660f  (5.4s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:13,803 [INFO    ]   [TIMING-PIPE-DEC] chunk#15  decode+to_tensor=0.125s  stack+pin=0.048s
+2026-03-19 10:25:13,986 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.086s  encode=0.094s  mux=0.002s  total=0.184s  (163.5f/s)
+2026-03-19 10:25:14,016 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:14,102 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.066s  delta=0.053s  gpu_upload+resize_up+blend=0.085s  total=0.204s
+2026-03-19 10:25:14,175 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.095s  embed=0.230s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.373s
+2026-03-19 10:25:14,176 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=480 embed=360 / 1660f  (5.8s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:14,178 [INFO    ]   [TIMING-PIPE-DEC] chunk#16  decode+to_tensor=0.121s  stack+pin=0.055s
+2026-03-19 10:25:14,357 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.084s  encode=0.093s  mux=0.001s  total=0.181s  (165.9f/s)
+2026-03-19 10:25:14,388 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:14,472 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.063s  delta=0.053s  gpu_upload+resize_up+blend=0.083s  total=0.199s
+2026-03-19 10:25:14,544 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.097s  embed=0.223s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.369s
+2026-03-19 10:25:14,545 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=510 embed=390 / 1660f  (6.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:14,545 [INFO    ]   [TIMING-PIPE-DEC] chunk#17  decode+to_tensor=0.122s  stack+pin=0.043s
+2026-03-19 10:25:14,726 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.085s  encode=0.093s  mux=0.001s  total=0.181s  (165.6f/s)
+2026-03-19 10:25:14,747 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.043s  vidmode=0.001s  atten=0.007s  download=0.000s  total=0.055s
+2026-03-19 10:25:14,830 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.060s  delta=0.056s  gpu_upload+resize_up+blend=0.083s  total=0.198s
+2026-03-19 10:25:14,905 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.087s  embed=0.224s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.359s
+2026-03-19 10:25:14,905 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=540 embed=420 / 1660f  (6.5s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:14,906 [INFO    ]   [TIMING-PIPE-DEC] chunk#18  decode+to_tensor=0.129s  stack+pin=0.039s
+2026-03-19 10:25:15,091 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.089s  encode=0.094s  mux=0.002s  total=0.186s  (161.3f/s)
+2026-03-19 10:25:15,110 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:25:15,196 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.054s  gpu_upload+resize_up+blend=0.086s  total=0.204s
+2026-03-19 10:25:15,270 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.087s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.365s
+2026-03-19 10:25:15,271 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=570 embed=450 / 1660f  (6.9s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:15,271 [INFO    ]   [TIMING-PIPE-DEC] chunk#19  decode+to_tensor=0.134s  stack+pin=0.047s
+2026-03-19 10:25:15,484 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.102s  encode=0.107s  mux=0.001s  total=0.213s  (141.0f/s)
+2026-03-19 10:25:15,495 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.042s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:15,576 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.052s  gpu_upload+resize_up+blend=0.081s  total=0.197s
+2026-03-19 10:25:15,650 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.108s  embed=0.222s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.379s
+2026-03-19 10:25:15,650 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=600 embed=480 / 1660f  (7.2s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:15,651 [INFO    ]   [TIMING-PIPE-DEC] chunk#20  decode+to_tensor=0.105s  stack+pin=0.055s
+2026-03-19 10:25:15,844 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.093s  encode=0.096s  mux=0.003s  total=0.194s  (155.0f/s)
+2026-03-19 10:25:15,856 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:25:15,937 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.055s  gpu_upload+resize_up+blend=0.081s  total=0.197s
+2026-03-19 10:25:16,012 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.223s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.361s
+2026-03-19 10:25:16,013 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=630 embed=510 / 1660f  (7.6s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:16,013 [INFO    ]   [TIMING-PIPE-DEC] chunk#21  decode+to_tensor=0.117s  stack+pin=0.046s
+2026-03-19 10:25:16,211 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.093s  encode=0.102s  mux=0.002s  total=0.199s  (151.1f/s)
+2026-03-19 10:25:16,222 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:25:16,305 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.066s  delta=0.054s  gpu_upload+resize_up+blend=0.082s  total=0.202s
+2026-03-19 10:25:16,379 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.227s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.366s
+2026-03-19 10:25:16,380 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=660 embed=540 / 1660f  (8.0s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:16,380 [INFO    ]   [TIMING-PIPE-DEC] chunk#22  decode+to_tensor=0.119s  stack+pin=0.046s
+2026-03-19 10:25:16,564 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.087s  encode=0.093s  mux=0.002s  total=0.185s  (162.4f/s)
+2026-03-19 10:25:16,582 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:16,663 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.063s  delta=0.053s  gpu_upload+resize_up+blend=0.080s  total=0.196s
+2026-03-19 10:25:16,737 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.087s  embed=0.221s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.357s
+2026-03-19 10:25:16,738 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=690 embed=570 / 1660f  (8.3s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:16,738 [INFO    ]   [TIMING-PIPE-DEC] chunk#23  decode+to_tensor=0.125s  stack+pin=0.046s
+2026-03-19 10:25:16,930 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.097s  mux=0.002s  total=0.193s  (155.6f/s)
+2026-03-19 10:25:16,940 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:17,022 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.054s  gpu_upload+resize_up+blend=0.081s  total=0.197s
+2026-03-19 10:25:17,098 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.088s  embed=0.222s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.360s
+2026-03-19 10:25:17,098 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=720 embed=600 / 1660f  (8.7s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:17,099 [INFO    ]   [TIMING-PIPE-DEC] chunk#24  decode+to_tensor=0.121s  stack+pin=0.048s
+2026-03-19 10:25:17,292 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.099s  mux=0.002s  total=0.194s  (154.7f/s)
+2026-03-19 10:25:17,309 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.052s
+2026-03-19 10:25:17,393 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.053s  gpu_upload+resize_up+blend=0.083s  total=0.201s
+2026-03-19 10:25:17,469 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.093s  embed=0.227s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.370s
+2026-03-19 10:25:17,469 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=750 embed=630 / 1660f  (9.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:17,470 [INFO    ]   [TIMING-PIPE-DEC] chunk#25  decode+to_tensor=0.117s  stack+pin=0.049s
+2026-03-19 10:25:17,656 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.085s  encode=0.097s  mux=0.002s  total=0.186s  (161.2f/s)
+2026-03-19 10:25:17,675 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:25:17,755 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.059s  delta=0.056s  gpu_upload+resize_up+blend=0.080s  total=0.196s
+2026-03-19 10:25:17,829 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.222s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.359s
+2026-03-19 10:25:17,830 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=780 embed=660 / 1660f  (9.4s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:17,830 [INFO    ]   [TIMING-PIPE-DEC] chunk#26  decode+to_tensor=0.126s  stack+pin=0.044s
+2026-03-19 10:25:18,008 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.085s  encode=0.091s  mux=0.002s  total=0.179s  (167.7f/s)
+2026-03-19 10:25:18,032 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.042s  vidmode=0.000s  atten=0.008s  download=0.000s  total=0.054s
+2026-03-19 10:25:18,119 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.056s  gpu_upload+resize_up+blend=0.085s  total=0.202s
+2026-03-19 10:25:18,196 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.087s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.051s  total=0.366s
+2026-03-19 10:25:18,197 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=810 embed=690 / 1660f  (9.8s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:18,197 [INFO    ]   [TIMING-PIPE-DEC] chunk#27  decode+to_tensor=0.138s  stack+pin=0.040s
+2026-03-19 10:25:18,378 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.087s  encode=0.091s  mux=0.001s  total=0.181s  (165.5f/s)
+2026-03-19 10:25:18,402 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:18,483 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.063s  delta=0.052s  gpu_upload+resize_up+blend=0.081s  total=0.197s
+2026-03-19 10:25:18,558 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.222s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.361s
+2026-03-19 10:25:18,559 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=840 embed=720 / 1660f  (10.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:18,559 [INFO    ]   [TIMING-PIPE-DEC] chunk#28  decode+to_tensor=0.135s  stack+pin=0.048s
+2026-03-19 10:25:18,742 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.087s  encode=0.093s  mux=0.002s  total=0.183s  (163.5f/s)
+2026-03-19 10:25:18,765 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:18,847 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.068s  delta=0.053s  gpu_upload+resize_up+blend=0.082s  total=0.203s
+2026-03-19 10:25:18,920 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.085s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.361s
+2026-03-19 10:25:18,921 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=870 embed=750 / 1660f  (10.5s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:18,921 [INFO    ]   [TIMING-PIPE-DEC] chunk#29  decode+to_tensor=0.139s  stack+pin=0.040s
+2026-03-19 10:25:19,113 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.097s  mux=0.002s  total=0.192s  (156.1f/s)
+2026-03-19 10:25:19,137 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.054s
+2026-03-19 10:25:19,219 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.070s  delta=0.055s  gpu_upload+resize_up+blend=0.082s  total=0.207s
+2026-03-19 10:25:19,296 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.232s  clamp+uint8=0.000s  rgb2yuv_gpu=0.052s  total=0.374s
+2026-03-19 10:25:19,296 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=900 embed=780 / 1660f  (10.9s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:19,297 [INFO    ]   [TIMING-PIPE-DEC] chunk#30  decode+to_tensor=0.125s  stack+pin=0.051s
+2026-03-19 10:25:19,491 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.087s  encode=0.102s  mux=0.003s  total=0.194s  (154.4f/s)
+2026-03-19 10:25:19,499 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:25:19,586 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.054s  gpu_upload+resize_up+blend=0.086s  total=0.201s
+2026-03-19 10:25:19,661 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.088s  embed=0.226s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.364s
+2026-03-19 10:25:19,661 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=930 embed=810 / 1660f  (11.2s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:19,662 [INFO    ]   [TIMING-PIPE-DEC] chunk#31  decode+to_tensor=0.116s  stack+pin=0.049s
+2026-03-19 10:25:19,851 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.095s  mux=0.002s  total=0.189s  (158.6f/s)
+2026-03-19 10:25:19,865 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:19,950 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.053s  gpu_upload+resize_up+blend=0.085s  total=0.200s
+2026-03-19 10:25:20,025 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.088s  embed=0.226s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.364s
+2026-03-19 10:25:20,026 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=960 embed=840 / 1660f  (11.6s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:20,026 [INFO    ]   [TIMING-PIPE-DEC] chunk#32  decode+to_tensor=0.113s  stack+pin=0.054s
+2026-03-19 10:25:20,220 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.093s  encode=0.097s  mux=0.001s  total=0.194s  (155.0f/s)
+2026-03-19 10:25:20,240 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:20,320 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.070s  delta=0.054s  gpu_upload+resize_up+blend=0.080s  total=0.204s
+2026-03-19 10:25:20,394 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.229s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.368s
+2026-03-19 10:25:20,395 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=990 embed=870 / 1660f  (12.0s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:20,395 [INFO    ]   [TIMING-PIPE-DEC] chunk#33  decode+to_tensor=0.124s  stack+pin=0.058s
+2026-03-19 10:25:20,584 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.095s  mux=0.002s  total=0.189s  (158.6f/s)
+2026-03-19 10:25:20,599 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.042s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.049s
+2026-03-19 10:25:20,687 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.051s  gpu_upload+resize_up+blend=0.087s  total=0.203s
+2026-03-19 10:25:20,761 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.229s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.366s
+2026-03-19 10:25:20,761 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1020 embed=900 / 1660f  (12.3s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:20,762 [INFO    ]   [TIMING-PIPE-DEC] chunk#34  decode+to_tensor=0.128s  stack+pin=0.044s
+2026-03-19 10:25:20,950 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.086s  encode=0.097s  mux=0.002s  total=0.188s  (159.4f/s)
+2026-03-19 10:25:20,963 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:21,047 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.063s  delta=0.053s  gpu_upload+resize_up+blend=0.084s  total=0.200s
+2026-03-19 10:25:21,122 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.225s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.360s
+2026-03-19 10:25:21,123 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1050 embed=930 / 1660f  (12.7s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:21,123 [INFO    ]   [TIMING-PIPE-DEC] chunk#35  decode+to_tensor=0.116s  stack+pin=0.046s
+2026-03-19 10:25:21,306 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.086s  encode=0.093s  mux=0.002s  total=0.183s  (163.6f/s)
+2026-03-19 10:25:21,327 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:21,411 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.053s  gpu_upload+resize_up+blend=0.083s  total=0.197s
+2026-03-19 10:25:21,488 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.222s  clamp+uint8=0.000s  rgb2yuv_gpu=0.052s  total=0.365s
+2026-03-19 10:25:21,488 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1080 embed=960 / 1660f  (13.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:21,489 [INFO    ]   [TIMING-PIPE-DEC] chunk#36  decode+to_tensor=0.122s  stack+pin=0.047s
+2026-03-19 10:25:21,687 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.093s  encode=0.101s  mux=0.003s  total=0.199s  (150.9f/s)
+2026-03-19 10:25:21,699 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:25:21,780 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.054s  gpu_upload+resize_up+blend=0.081s  total=0.200s
+2026-03-19 10:25:21,854 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.225s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.365s
+2026-03-19 10:25:21,855 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1110 embed=990 / 1660f  (13.4s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:21,855 [INFO    ]   [TIMING-PIPE-DEC] chunk#37  decode+to_tensor=0.121s  stack+pin=0.047s
+2026-03-19 10:25:22,048 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.101s  mux=0.002s  total=0.194s  (154.5f/s)
+2026-03-19 10:25:22,061 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:22,151 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.052s  gpu_upload+resize_up+blend=0.089s  total=0.205s
+2026-03-19 10:25:22,226 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.231s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.371s
+2026-03-19 10:25:22,226 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1140 embed=1020 / 1660f  (13.8s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:22,227 [INFO    ]   [TIMING-PIPE-DEC] chunk#38  decode+to_tensor=0.125s  stack+pin=0.049s
+2026-03-19 10:25:22,422 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.094s  encode=0.097s  mux=0.003s  total=0.195s  (153.5f/s)
+2026-03-19 10:25:22,436 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:22,516 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.066s  delta=0.053s  gpu_upload+resize_up+blend=0.079s  total=0.198s
+2026-03-19 10:25:22,591 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.224s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.364s
+2026-03-19 10:25:22,591 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1170 embed=1050 / 1660f  (14.2s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:22,592 [INFO    ]   [TIMING-PIPE-DEC] chunk#39  decode+to_tensor=0.117s  stack+pin=0.048s
+2026-03-19 10:25:22,776 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.089s  encode=0.091s  mux=0.002s  total=0.184s  (162.7f/s)
+2026-03-19 10:25:22,794 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.050s
+2026-03-19 10:25:22,878 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.051s  gpu_upload+resize_up+blend=0.083s  total=0.196s
+2026-03-19 10:25:22,953 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.221s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.362s
+2026-03-19 10:25:22,954 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1200 embed=1080 / 1660f  (14.5s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:22,954 [INFO    ]   [TIMING-PIPE-DEC] chunk#40  decode+to_tensor=0.125s  stack+pin=0.057s
+2026-03-19 10:25:23,154 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.094s  encode=0.103s  mux=0.002s  total=0.200s  (149.8f/s)
+2026-03-19 10:25:23,171 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.054s
+2026-03-19 10:25:23,256 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.071s  delta=0.056s  gpu_upload+resize_up+blend=0.084s  total=0.211s
+2026-03-19 10:25:23,331 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.235s  clamp+uint8=0.000s  rgb2yuv_gpu=0.051s  total=0.377s
+2026-03-19 10:25:23,332 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1230 embed=1110 / 1660f  (14.9s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:23,332 [INFO    ]   [TIMING-PIPE-DEC] chunk#41  decode+to_tensor=0.119s  stack+pin=0.044s
+2026-03-19 10:25:23,521 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.092s  encode=0.094s  mux=0.001s  total=0.189s  (158.5f/s)
+2026-03-19 10:25:23,536 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:25:23,618 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.054s  gpu_upload+resize_up+blend=0.081s  total=0.197s
+2026-03-19 10:25:23,693 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.222s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.361s
+2026-03-19 10:25:23,694 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1260 embed=1140 / 1660f  (15.3s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:23,694 [INFO    ]   [TIMING-PIPE-DEC] chunk#42  decode+to_tensor=0.108s  stack+pin=0.048s
+2026-03-19 10:25:23,885 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.099s  mux=0.002s  total=0.191s  (157.1f/s)
+2026-03-19 10:25:23,903 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.007s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:25:23,984 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.054s  gpu_upload+resize_up+blend=0.081s  total=0.196s
+2026-03-19 10:25:24,062 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.094s  embed=0.222s  clamp+uint8=0.000s  rgb2yuv_gpu=0.052s  total=0.368s
+2026-03-19 10:25:24,063 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1290 embed=1170 / 1660f  (15.6s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:24,063 [INFO    ]   [TIMING-PIPE-DEC] chunk#43  decode+to_tensor=0.121s  stack+pin=0.050s
+2026-03-19 10:25:24,245 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.090s  mux=0.002s  total=0.182s  (164.6f/s)
+2026-03-19 10:25:24,267 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.005s  download=0.000s  total=0.055s
+2026-03-19 10:25:24,349 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.059s  delta=0.056s  gpu_upload+resize_up+blend=0.081s  total=0.196s
+2026-03-19 10:25:24,424 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.221s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.361s
+2026-03-19 10:25:24,424 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1320 embed=1200 / 1660f  (16.0s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:24,425 [INFO    ]   [TIMING-PIPE-DEC] chunk#44  decode+to_tensor=0.125s  stack+pin=0.039s
+2026-03-19 10:25:24,610 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.086s  encode=0.096s  mux=0.002s  total=0.186s  (161.6f/s)
+2026-03-19 10:25:24,628 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:24,727 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.060s  delta=0.052s  gpu_upload+resize_up+blend=0.099s  total=0.211s
+2026-03-19 10:25:24,800 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.237s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.376s
+2026-03-19 10:25:24,801 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1350 embed=1230 / 1660f  (16.4s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:24,801 [INFO    ]   [TIMING-PIPE-DEC] chunk#45  decode+to_tensor=0.126s  stack+pin=0.049s
+2026-03-19 10:25:24,983 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.083s  encode=0.095s  mux=0.002s  total=0.182s  (165.0f/s)
+2026-03-19 10:25:25,009 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:25,094 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.053s  gpu_upload+resize_up+blend=0.085s  total=0.201s
+2026-03-19 10:25:25,172 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.226s  clamp+uint8=0.000s  rgb2yuv_gpu=0.053s  total=0.371s
+2026-03-19 10:25:25,173 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1380 embed=1260 / 1660f  (16.8s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:25,173 [INFO    ]   [TIMING-PIPE-DEC] chunk#46  decode+to_tensor=0.124s  stack+pin=0.047s
+2026-03-19 10:25:25,367 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.092s  encode=0.098s  mux=0.002s  total=0.194s  (154.4f/s)
+2026-03-19 10:25:25,383 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:25:25,464 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.067s  delta=0.054s  gpu_upload+resize_up+blend=0.081s  total=0.202s
+2026-03-19 10:25:25,542 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.227s  clamp+uint8=0.000s  rgb2yuv_gpu=0.052s  total=0.369s
+2026-03-19 10:25:25,542 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1410 embed=1290 / 1660f  (17.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:25,543 [INFO    ]   [TIMING-PIPE-DEC] chunk#47  decode+to_tensor=0.119s  stack+pin=0.052s
+2026-03-19 10:25:25,737 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.099s  mux=0.003s  total=0.195s  (154.1f/s)
+2026-03-19 10:25:25,746 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:25,827 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.053s  gpu_upload+resize_up+blend=0.080s  total=0.198s
+2026-03-19 10:25:25,901 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.087s  embed=0.222s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.359s
+2026-03-19 10:25:25,902 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1440 embed=1320 / 1660f  (17.5s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:25,902 [INFO    ]   [TIMING-PIPE-DEC] chunk#48  decode+to_tensor=0.122s  stack+pin=0.051s
+2026-03-19 10:25:26,102 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.094s  encode=0.101s  mux=0.003s  total=0.200s  (150.1f/s)
+2026-03-19 10:25:26,110 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:26,198 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.054s  gpu_upload+resize_up+blend=0.088s  total=0.206s
+2026-03-19 10:25:26,272 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.232s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.370s
+2026-03-19 10:25:26,273 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1470 embed=1350 / 1660f  (17.9s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:26,273 [INFO    ]   [TIMING-PIPE-DEC] chunk#49  decode+to_tensor=0.119s  stack+pin=0.062s
+2026-03-19 10:25:26,463 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.094s  mux=0.003s  total=0.190s  (158.1f/s)
+2026-03-19 10:25:26,478 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.054s
+2026-03-19 10:25:26,560 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.055s  gpu_upload+resize_up+blend=0.081s  total=0.198s
+2026-03-19 10:25:26,636 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.088s  embed=0.223s  clamp+uint8=0.000s  rgb2yuv_gpu=0.051s  total=0.363s
+2026-03-19 10:25:26,636 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1500 embed=1380 / 1660f  (18.2s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:26,636 [INFO    ]   [TIMING-PIPE-DEC] chunk#50  decode+to_tensor=0.118s  stack+pin=0.051s
+2026-03-19 10:25:26,828 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.097s  mux=0.003s  total=0.192s  (156.3f/s)
+2026-03-19 10:25:26,843 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:26,925 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.053s  gpu_upload+resize_up+blend=0.082s  total=0.195s
+2026-03-19 10:25:27,000 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.093s  embed=0.221s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.363s
+2026-03-19 10:25:27,000 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1530 embed=1410 / 1660f  (18.6s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:27,001 [INFO    ]   [TIMING-PIPE-DEC] chunk#51  decode+to_tensor=0.132s  stack+pin=0.048s
+2026-03-19 10:25:27,196 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.092s  encode=0.100s  mux=0.002s  total=0.196s  (153.3f/s)
+2026-03-19 10:25:27,210 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.041s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.049s
+2026-03-19 10:25:27,295 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.050s  gpu_upload+resize_up+blend=0.084s  total=0.199s
+2026-03-19 10:25:27,370 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.095s  embed=0.224s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.370s
+2026-03-19 10:25:27,371 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1560 embed=1440 / 1660f  (19.0s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:27,371 [INFO    ]   [TIMING-PIPE-DEC] chunk#52  decode+to_tensor=0.114s  stack+pin=0.055s
+2026-03-19 10:25:27,561 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.099s  mux=0.002s  total=0.190s  (157.5f/s)
+2026-03-19 10:25:27,572 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:25:27,657 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.059s  delta=0.053s  gpu_upload+resize_up+blend=0.084s  total=0.196s
+2026-03-19 10:25:27,733 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.221s  clamp+uint8=0.000s  rgb2yuv_gpu=0.052s  total=0.362s
+2026-03-19 10:25:27,734 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1590 embed=1470 / 1660f  (19.3s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:27,734 [INFO    ]   [TIMING-PIPE-DEC] chunk#53  decode+to_tensor=0.120s  stack+pin=0.047s
+2026-03-19 10:25:27,930 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.093s  encode=0.099s  mux=0.002s  total=0.196s  (152.9f/s)
+2026-03-19 10:25:27,943 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.040s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.049s
+2026-03-19 10:25:28,024 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.070s  delta=0.050s  gpu_upload+resize_up+blend=0.081s  total=0.200s
+2026-03-19 10:25:28,103 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.226s  clamp+uint8=0.000s  rgb2yuv_gpu=0.053s  total=0.369s
+2026-03-19 10:25:28,103 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1620 embed=1500 / 1660f  (19.7s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:28,104 [INFO    ]   [TIMING-PIPE-DEC] chunk#54  decode+to_tensor=0.123s  stack+pin=0.046s
+2026-03-19 10:25:28,298 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.095s  encode=0.097s  mux=0.001s  total=0.195s  (154.1f/s)
+2026-03-19 10:25:28,313 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.043s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.051s
+2026-03-19 10:25:28,399 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.067s  delta=0.054s  gpu_upload+resize_up+blend=0.085s  total=0.207s
+2026-03-19 10:25:28,475 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.233s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.371s
+2026-03-19 10:25:28,475 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1650 embed=1530 / 1660f  (20.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:25:28,476 [INFO    ]   [TIMING-PIPE-DEC] chunk#55  decode+to_tensor=0.131s  stack+pin=0.049s
+2026-03-19 10:25:28,640 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.082s  encode=0.080s  mux=0.001s  total=0.165s  (182.1f/s)
+2026-03-19 10:25:28,671 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.041s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.047s
+2026-03-19 10:25:28,752 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.048s  gpu_upload+resize_up+blend=0.080s  total=0.188s
+2026-03-19 10:25:28,815 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.088s  embed=0.203s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.340s
+2026-03-19 10:25:28,962 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.074s  encode=0.069s  mux=0.001s  total=0.146s  (205.7f/s)
+2026-03-19 10:25:29,000 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.039s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.046s
+2026-03-19 10:25:29,085 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.055s  delta=0.047s  gpu_upload+resize_up+blend=0.085s  total=0.187s
+2026-03-19 10:25:29,143 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.082s  embed=0.197s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.328s
+2026-03-19 10:25:29,292 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.074s  encode=0.072s  mux=0.001s  total=0.149s  (202.0f/s)
+2026-03-19 10:25:29,326 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.040s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.045s
+2026-03-19 10:25:29,407 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.058s  delta=0.046s  gpu_upload+resize_up+blend=0.080s  total=0.184s
+2026-03-19 10:25:29,467 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.078s  embed=0.195s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.323s
+2026-03-19 10:25:29,582 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.058s  encode=0.055s  mux=0.000s  total=0.115s  (260.9f/s)
+2026-03-19 10:25:29,607 [INFO    ]   [TIMING-DELTA] 10f 256x256  upload=0.002s  embedder=0.022s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.027s
+2026-03-19 10:25:29,635 [INFO    ]   [TIMING-FAST] 10f 1080x1920  resize_down=0.078s  delta=0.028s  gpu_upload+resize_up+blend=0.027s  total=0.133s
+2026-03-19 10:25:29,679 [INFO    ]   [TIMING-PIPE-GPU] 10f  normalize=0.034s  embed=0.162s  clamp+uint8=0.000s  rgb2yuv_gpu=0.015s  total=0.212s
+2026-03-19 10:25:29,709 [INFO    ]   [TIMING-PIPE-ENC] 10f  from_ndarray=0.015s  encode=0.013s  mux=0.000s  total=0.029s  (340.8f/s)
+2026-03-19 10:25:29,757 [INFO    ] [TIMING] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: video_embed=21.385s (1660f, 77.6f/s)
+2026-03-19 10:25:30,819 [INFO    ] [TIMING] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: mux=1.062s
+2026-03-19 10:25:30,820 [INFO    ] Done in 22.6s — {'fps': 25.0, 'total_frames': 1660, 'has_audio': True, 'resolution': '1920x1080', 'oom_splits': 0, 'mode': 'FAST+GPU-BLEND+NVENC+PIPE+VBR(3587k)'}
+2026-03-19 10:25:30,820 [INFO    ] Output size: 25.8MB
+2026-03-19 10:29:58,437 [INFO    ] Loading model...
+2026-03-19 10:29:59,364 [INFO    ] Model loaded.
+2026-03-19 10:29:59,365 [INFO    ] Embedding: data/val/tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4 -> C:\Users\leduc\AppData\Local\Temp\tmpjdhh481j.mp4
+2026-03-19 10:29:59,479 [INFO    ] [TIMING] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: audio_extract+wm=0.113s (has_audio=True)
+2026-03-19 10:29:59,521 [INFO    ] [BITRATE] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: source=3587 kbps, will use VBR to match
+2026-03-19 10:29:59,561 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+VBR(3587k)] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: 1920x1080, ~1660f, fps=25.0, chunk=30
+2026-03-19 10:29:59,763 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=30 embed=0 / 1660f  (0.2s)  [alloc=219MB peak=219MB]
+2026-03-19 10:29:59,763 [INFO    ]   [TIMING-PIPE-DEC] chunk#1  decode+to_tensor=0.044s  stack+pin=0.104s
+2026-03-19 10:29:59,970 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=60 embed=0 / 1660f  (0.4s)  [alloc=219MB peak=219MB]
+2026-03-19 10:29:59,970 [INFO    ]   [TIMING-PIPE-DEC] chunk#2  decode+to_tensor=0.096s  stack+pin=0.094s
+2026-03-19 10:30:00,116 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=90 embed=0 / 1660f  (0.6s)  [alloc=256MB peak=268MB]
+2026-03-19 10:30:00,117 [INFO    ]   [TIMING-PIPE-DEC] chunk#3  decode+to_tensor=0.057s  stack+pin=0.078s
+2026-03-19 10:30:00,487 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.325s  vidmode=0.000s  atten=0.046s  download=0.000s  total=0.375s
+2026-03-19 10:30:00,585 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.054s  delta=0.553s  gpu_upload+resize_up+blend=0.097s  total=0.704s
+2026-03-19 10:30:00,654 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.118s  embed=0.705s  clamp+uint8=0.000s  rgb2yuv_gpu=0.068s  total=0.891s
+2026-03-19 10:30:00,654 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=120 embed=0 / 1660f  (1.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:00,655 [INFO    ]   [TIMING-PIPE-DEC] chunk#4  decode+to_tensor=0.055s  stack+pin=0.070s
+2026-03-19 10:30:00,972 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.046s  vidmode=0.000s  atten=0.008s  download=0.000s  total=0.058s
+2026-03-19 10:30:00,973 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.086s  encode=0.230s  mux=0.002s  total=0.319s  (94.2f/s)
+2026-03-19 10:30:01,087 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.066s  delta=0.060s  gpu_upload+resize_up+blend=0.114s  total=0.239s
+2026-03-19 10:30:01,132 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.193s  embed=0.240s  clamp+uint8=0.000s  rgb2yuv_gpu=0.044s  total=0.477s
+2026-03-19 10:30:01,133 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=150 embed=30 / 1660f  (1.6s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:01,133 [INFO    ]   [TIMING-PIPE-DEC] chunk#5  decode+to_tensor=0.142s  stack+pin=0.043s
+2026-03-19 10:30:01,351 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.098s  encode=0.115s  mux=0.003s  total=0.218s  (137.4f/s)
+2026-03-19 10:30:01,360 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.007s  embedder=0.049s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.058s
+2026-03-19 10:30:01,449 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.073s  delta=0.059s  gpu_upload+resize_up+blend=0.089s  total=0.221s
+2026-03-19 10:30:01,491 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.095s  embed=0.222s  clamp+uint8=0.000s  rgb2yuv_gpu=0.041s  total=0.358s
+2026-03-19 10:30:01,492 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=180 embed=60 / 1660f  (1.9s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:01,492 [INFO    ]   [TIMING-PIPE-DEC] chunk#6  decode+to_tensor=0.120s  stack+pin=0.048s
+2026-03-19 10:30:01,686 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.087s  encode=0.103s  mux=0.002s  total=0.195s  (154.0f/s)
+2026-03-19 10:30:01,706 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:01,803 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.054s  gpu_upload+resize_up+blend=0.097s  total=0.215s
+2026-03-19 10:30:01,846 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.096s  embed=0.216s  clamp+uint8=0.000s  rgb2yuv_gpu=0.042s  total=0.354s
+2026-03-19 10:30:01,847 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=210 embed=90 / 1660f  (2.3s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:01,847 [INFO    ]   [TIMING-PIPE-DEC] chunk#7  decode+to_tensor=0.123s  stack+pin=0.052s
+2026-03-19 10:30:02,015 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.079s  encode=0.086s  mux=0.002s  total=0.168s  (178.2f/s)
+2026-03-19 10:30:02,127 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.039s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.044s
+2026-03-19 10:30:02,208 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.142s  delta=0.046s  gpu_upload+resize_up+blend=0.080s  total=0.268s
+2026-03-19 10:30:02,282 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.093s  embed=0.293s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.435s
+2026-03-19 10:30:02,283 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=240 embed=120 / 1660f  (2.7s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:02,283 [INFO    ]   [TIMING-PIPE-DEC] chunk#8  decode+to_tensor=0.125s  stack+pin=0.088s
+2026-03-19 10:30:02,474 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.086s  encode=0.101s  mux=0.002s  total=0.191s  (157.0f/s)
+2026-03-19 10:30:02,493 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:02,574 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.054s  gpu_upload+resize_up+blend=0.081s  total=0.196s
+2026-03-19 10:30:02,649 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.095s  embed=0.221s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.366s
+2026-03-19 10:30:02,650 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=270 embed=150 / 1660f  (3.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:02,650 [INFO    ]   [TIMING-PIPE-DEC] chunk#9  decode+to_tensor=0.115s  stack+pin=0.051s
+2026-03-19 10:30:02,847 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.092s  encode=0.101s  mux=0.003s  total=0.197s  (151.9f/s)
+2026-03-19 10:30:02,854 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.054s
+2026-03-19 10:30:02,941 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.063s  delta=0.055s  gpu_upload+resize_up+blend=0.087s  total=0.204s
+2026-03-19 10:30:03,015 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.087s  embed=0.229s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.365s
+2026-03-19 10:30:03,015 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=300 embed=180 / 1660f  (3.5s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:03,016 [INFO    ]   [TIMING-PIPE-DEC] chunk#10  decode+to_tensor=0.130s  stack+pin=0.045s
+2026-03-19 10:30:03,199 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.089s  encode=0.092s  mux=0.002s  total=0.184s  (163.0f/s)
+2026-03-19 10:30:03,226 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:03,306 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.054s  gpu_upload+resize_up+blend=0.080s  total=0.195s
+2026-03-19 10:30:03,382 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.095s  embed=0.221s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.366s
+2026-03-19 10:30:03,383 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=330 embed=210 / 1660f  (3.8s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:03,383 [INFO    ]   [TIMING-PIPE-DEC] chunk#11  decode+to_tensor=0.140s  stack+pin=0.042s
+2026-03-19 10:30:03,578 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.100s  mux=0.003s  total=0.195s  (153.7f/s)
+2026-03-19 10:30:03,591 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.048s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.056s
+2026-03-19 10:30:03,677 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.057s  gpu_upload+resize_up+blend=0.086s  total=0.204s
+2026-03-19 10:30:03,755 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.053s  total=0.372s
+2026-03-19 10:30:03,756 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=360 embed=240 / 1660f  (4.2s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:03,756 [INFO    ]   [TIMING-PIPE-DEC] chunk#12  decode+to_tensor=0.123s  stack+pin=0.050s
+2026-03-19 10:30:03,953 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.092s  encode=0.100s  mux=0.002s  total=0.197s  (152.4f/s)
+2026-03-19 10:30:03,967 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.054s
+2026-03-19 10:30:04,051 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.055s  gpu_upload+resize_up+blend=0.083s  total=0.204s
+2026-03-19 10:30:04,125 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.229s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.369s
+2026-03-19 10:30:04,126 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=390 embed=270 / 1660f  (4.6s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:04,126 [INFO    ]   [TIMING-PIPE-DEC] chunk#13  decode+to_tensor=0.119s  stack+pin=0.050s
+2026-03-19 10:30:04,316 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.087s  encode=0.099s  mux=0.001s  total=0.189s  (158.4f/s)
+2026-03-19 10:30:04,336 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:30:04,420 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.053s  gpu_upload+resize_up+blend=0.083s  total=0.198s
+2026-03-19 10:30:04,497 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.095s  embed=0.223s  clamp+uint8=0.000s  rgb2yuv_gpu=0.053s  total=0.371s
+2026-03-19 10:30:04,498 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=420 embed=300 / 1660f  (4.9s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:04,498 [INFO    ]   [TIMING-PIPE-DEC] chunk#14  decode+to_tensor=0.130s  stack+pin=0.047s
+2026-03-19 10:30:04,702 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.094s  encode=0.105s  mux=0.003s  total=0.204s  (146.9f/s)
+2026-03-19 10:30:04,715 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.049s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.057s
+2026-03-19 10:30:04,804 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.068s  delta=0.059s  gpu_upload+resize_up+blend=0.089s  total=0.215s
+2026-03-19 10:30:04,878 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.240s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.380s
+2026-03-19 10:30:04,878 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=450 embed=330 / 1660f  (5.3s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:04,879 [INFO    ]   [TIMING-PIPE-DEC] chunk#15  decode+to_tensor=0.125s  stack+pin=0.051s
+2026-03-19 10:30:05,073 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.087s  encode=0.102s  mux=0.002s  total=0.195s  (154.2f/s)
+2026-03-19 10:30:05,088 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:05,171 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.054s  gpu_upload+resize_up+blend=0.083s  total=0.202s
+2026-03-19 10:30:05,246 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.227s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.367s
+2026-03-19 10:30:05,246 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=480 embed=360 / 1660f  (5.7s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:05,247 [INFO    ]   [TIMING-PIPE-DEC] chunk#16  decode+to_tensor=0.127s  stack+pin=0.046s
+2026-03-19 10:30:05,441 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.092s  encode=0.099s  mux=0.002s  total=0.195s  (154.0f/s)
+2026-03-19 10:30:05,457 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:05,538 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.068s  delta=0.054s  gpu_upload+resize_up+blend=0.081s  total=0.203s
+2026-03-19 10:30:05,614 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.367s
+2026-03-19 10:30:05,615 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=510 embed=390 / 1660f  (6.0s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:05,615 [INFO    ]   [TIMING-PIPE-DEC] chunk#17  decode+to_tensor=0.128s  stack+pin=0.045s
+2026-03-19 10:30:05,816 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.096s  encode=0.101s  mux=0.002s  total=0.201s  (149.0f/s)
+2026-03-19 10:30:05,822 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:05,905 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.054s  gpu_upload+resize_up+blend=0.083s  total=0.199s
+2026-03-19 10:30:05,984 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.224s  clamp+uint8=0.000s  rgb2yuv_gpu=0.053s  total=0.369s
+2026-03-19 10:30:05,984 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=540 embed=420 / 1660f  (6.4s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:05,985 [INFO    ]   [TIMING-PIPE-DEC] chunk#18  decode+to_tensor=0.128s  stack+pin=0.046s
+2026-03-19 10:30:06,175 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.096s  mux=0.002s  total=0.191s  (157.4f/s)
+2026-03-19 10:30:06,195 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:06,287 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.054s  gpu_upload+resize_up+blend=0.091s  total=0.209s
+2026-03-19 10:30:06,360 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.093s  embed=0.234s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.376s
+2026-03-19 10:30:06,361 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=570 embed=450 / 1660f  (6.8s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:06,361 [INFO    ]   [TIMING-PIPE-DEC] chunk#19  decode+to_tensor=0.124s  stack+pin=0.040s
+2026-03-19 10:30:06,556 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.102s  mux=0.002s  total=0.195s  (153.6f/s)
+2026-03-19 10:30:06,569 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:06,649 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.054s  gpu_upload+resize_up+blend=0.080s  total=0.199s
+2026-03-19 10:30:06,724 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.224s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.363s
+2026-03-19 10:30:06,725 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=600 embed=480 / 1660f  (7.2s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:06,725 [INFO    ]   [TIMING-PIPE-DEC] chunk#20  decode+to_tensor=0.123s  stack+pin=0.046s
+2026-03-19 10:30:06,905 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.084s  encode=0.093s  mux=0.002s  total=0.181s  (166.1f/s)
+2026-03-19 10:30:06,928 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.050s
+2026-03-19 10:30:07,010 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.051s  gpu_upload+resize_up+blend=0.081s  total=0.194s
+2026-03-19 10:30:07,085 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.219s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.360s
+2026-03-19 10:30:07,086 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=630 embed=510 / 1660f  (7.5s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:07,086 [INFO    ]   [TIMING-PIPE-DEC] chunk#21  decode+to_tensor=0.119s  stack+pin=0.044s
+2026-03-19 10:30:07,289 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.098s  encode=0.101s  mux=0.002s  total=0.203s  (147.8f/s)
+2026-03-19 10:30:07,295 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:07,379 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.066s  delta=0.053s  gpu_upload+resize_up+blend=0.083s  total=0.202s
+2026-03-19 10:30:07,452 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.227s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.367s
+2026-03-19 10:30:07,453 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=660 embed=540 / 1660f  (7.9s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:07,453 [INFO    ]   [TIMING-PIPE-DEC] chunk#22  decode+to_tensor=0.132s  stack+pin=0.045s
+2026-03-19 10:30:07,644 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.089s  encode=0.098s  mux=0.002s  total=0.191s  (157.2f/s)
+2026-03-19 10:30:07,658 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:30:07,747 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.063s  delta=0.052s  gpu_upload+resize_up+blend=0.088s  total=0.203s
+2026-03-19 10:30:07,821 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.229s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.368s
+2026-03-19 10:30:07,822 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=690 embed=570 / 1660f  (8.3s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:07,822 [INFO    ]   [TIMING-PIPE-DEC] chunk#23  decode+to_tensor=0.110s  stack+pin=0.045s
+2026-03-19 10:30:08,010 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.094s  mux=0.002s  total=0.188s  (159.6f/s)
+2026-03-19 10:30:08,031 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:08,116 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.053s  gpu_upload+resize_up+blend=0.084s  total=0.201s
+2026-03-19 10:30:08,190 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.093s  embed=0.226s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.368s
+2026-03-19 10:30:08,190 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=720 embed=600 / 1660f  (8.6s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:08,190 [INFO    ]   [TIMING-PIPE-DEC] chunk#24  decode+to_tensor=0.122s  stack+pin=0.048s
+2026-03-19 10:30:08,382 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.098s  mux=0.002s  total=0.191s  (156.8f/s)
+2026-03-19 10:30:08,393 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.054s
+2026-03-19 10:30:08,484 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.055s  gpu_upload+resize_up+blend=0.090s  total=0.208s
+2026-03-19 10:30:08,559 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.233s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.368s
+2026-03-19 10:30:08,559 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=750 embed=630 / 1660f  (9.0s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:08,559 [INFO    ]   [TIMING-PIPE-DEC] chunk#25  decode+to_tensor=0.125s  stack+pin=0.043s
+2026-03-19 10:30:08,742 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.085s  encode=0.094s  mux=0.002s  total=0.183s  (163.9f/s)
+2026-03-19 10:30:08,765 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.050s
+2026-03-19 10:30:08,851 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.051s  gpu_upload+resize_up+blend=0.086s  total=0.198s
+2026-03-19 10:30:08,925 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.093s  embed=0.224s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.366s
+2026-03-19 10:30:08,926 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=780 embed=660 / 1660f  (9.4s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:08,926 [INFO    ]   [TIMING-PIPE-DEC] chunk#26  decode+to_tensor=0.108s  stack+pin=0.050s
+2026-03-19 10:30:09,113 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.093s  mux=0.002s  total=0.187s  (160.5f/s)
+2026-03-19 10:30:09,141 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:09,222 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.072s  delta=0.053s  gpu_upload+resize_up+blend=0.081s  total=0.206s
+2026-03-19 10:30:09,296 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.231s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.370s
+2026-03-19 10:30:09,297 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=810 embed=690 / 1660f  (9.7s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:09,297 [INFO    ]   [TIMING-PIPE-DEC] chunk#27  decode+to_tensor=0.131s  stack+pin=0.045s
+2026-03-19 10:30:09,492 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.089s  encode=0.102s  mux=0.002s  total=0.195s  (153.6f/s)
+2026-03-19 10:30:09,499 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:09,584 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.060s  delta=0.053s  gpu_upload+resize_up+blend=0.085s  total=0.198s
+2026-03-19 10:30:09,658 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.224s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.361s
+2026-03-19 10:30:09,659 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=840 embed=720 / 1660f  (10.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:09,659 [INFO    ]   [TIMING-PIPE-DEC] chunk#28  decode+to_tensor=0.114s  stack+pin=0.048s
+2026-03-19 10:30:09,849 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.096s  mux=0.002s  total=0.190s  (157.7f/s)
+2026-03-19 10:30:09,864 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:09,947 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.054s  gpu_upload+resize_up+blend=0.082s  total=0.198s
+2026-03-19 10:30:10,025 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.223s  clamp+uint8=0.000s  rgb2yuv_gpu=0.053s  total=0.366s
+2026-03-19 10:30:10,025 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=870 embed=750 / 1660f  (10.5s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:10,026 [INFO    ]   [TIMING-PIPE-DEC] chunk#29  decode+to_tensor=0.117s  stack+pin=0.052s
+2026-03-19 10:30:10,231 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.092s  encode=0.109s  mux=0.003s  total=0.206s  (145.8f/s)
+2026-03-19 10:30:10,244 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.054s
+2026-03-19 10:30:10,325 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.055s  gpu_upload+resize_up+blend=0.080s  total=0.200s
+2026-03-19 10:30:10,402 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.099s  embed=0.225s  clamp+uint8=0.000s  rgb2yuv_gpu=0.052s  total=0.376s
+2026-03-19 10:30:10,402 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=900 embed=780 / 1660f  (10.8s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:10,403 [INFO    ]   [TIMING-PIPE-DEC] chunk#30  decode+to_tensor=0.123s  stack+pin=0.056s
+2026-03-19 10:30:10,590 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.097s  mux=0.001s  total=0.188s  (159.3f/s)
+2026-03-19 10:30:10,616 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:10,698 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.069s  delta=0.053s  gpu_upload+resize_up+blend=0.082s  total=0.203s
+2026-03-19 10:30:10,773 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.092s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.370s
+2026-03-19 10:30:10,774 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=930 embed=810 / 1660f  (11.2s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:10,774 [INFO    ]   [TIMING-PIPE-DEC] chunk#31  decode+to_tensor=0.129s  stack+pin=0.054s
+2026-03-19 10:30:10,969 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.098s  mux=0.005s  total=0.196s  (153.3f/s)
+2026-03-19 10:30:10,983 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:11,072 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.069s  delta=0.054s  gpu_upload+resize_up+blend=0.088s  total=0.212s
+2026-03-19 10:30:11,146 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.237s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.372s
+2026-03-19 10:30:11,147 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=960 embed=840 / 1660f  (11.6s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:11,147 [INFO    ]   [TIMING-PIPE-DEC] chunk#32  decode+to_tensor=0.129s  stack+pin=0.046s
+2026-03-19 10:30:11,343 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.101s  mux=0.002s  total=0.196s  (153.0f/s)
+2026-03-19 10:30:11,356 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.007s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:11,437 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.066s  delta=0.054s  gpu_upload+resize_up+blend=0.081s  total=0.201s
+2026-03-19 10:30:11,512 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.227s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.365s
+2026-03-19 10:30:11,512 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=990 embed=870 / 1660f  (11.9s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:11,513 [INFO    ]   [TIMING-PIPE-DEC] chunk#33  decode+to_tensor=0.118s  stack+pin=0.050s
+2026-03-19 10:30:11,700 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.085s  encode=0.098s  mux=0.003s  total=0.188s  (159.8f/s)
+2026-03-19 10:30:11,716 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:11,817 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.058s  gpu_upload+resize_up+blend=0.096s  total=0.216s
+2026-03-19 10:30:11,891 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.088s  embed=0.242s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.379s
+2026-03-19 10:30:11,892 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1020 embed=900 / 1660f  (12.3s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:11,892 [INFO    ]   [TIMING-PIPE-DEC] chunk#34  decode+to_tensor=0.117s  stack+pin=0.043s
+2026-03-19 10:30:12,088 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.096s  encode=0.095s  mux=0.002s  total=0.195s  (153.6f/s)
+2026-03-19 10:30:12,099 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:12,186 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.066s  delta=0.055s  gpu_upload+resize_up+blend=0.087s  total=0.207s
+2026-03-19 10:30:12,259 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.232s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.367s
+2026-03-19 10:30:12,260 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1050 embed=930 / 1660f  (12.7s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:12,264 [INFO    ]   [TIMING-PIPE-DEC] chunk#35  decode+to_tensor=0.124s  stack+pin=0.052s
+2026-03-19 10:30:12,448 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.087s  encode=0.098s  mux=0.002s  total=0.188s  (159.3f/s)
+2026-03-19 10:30:12,465 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:12,546 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.054s  gpu_upload+resize_up+blend=0.080s  total=0.198s
+2026-03-19 10:30:12,622 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.088s  embed=0.223s  clamp+uint8=0.000s  rgb2yuv_gpu=0.051s  total=0.362s
+2026-03-19 10:30:12,622 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1080 embed=960 / 1660f  (13.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:12,623 [INFO    ]   [TIMING-PIPE-DEC] chunk#36  decode+to_tensor=0.119s  stack+pin=0.047s
+2026-03-19 10:30:12,810 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.089s  encode=0.095s  mux=0.002s  total=0.188s  (159.7f/s)
+2026-03-19 10:30:12,826 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.042s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.049s
+2026-03-19 10:30:12,910 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.050s  gpu_upload+resize_up+blend=0.083s  total=0.198s
+2026-03-19 10:30:12,987 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.224s  clamp+uint8=0.000s  rgb2yuv_gpu=0.051s  total=0.365s
+2026-03-19 10:30:12,988 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1110 embed=990 / 1660f  (13.4s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:12,988 [INFO    ]   [TIMING-PIPE-DEC] chunk#37  decode+to_tensor=0.114s  stack+pin=0.052s
+2026-03-19 10:30:13,190 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.099s  encode=0.097s  mux=0.003s  total=0.202s  (148.4f/s)
+2026-03-19 10:30:13,209 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:30:13,291 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.071s  delta=0.052s  gpu_upload+resize_up+blend=0.081s  total=0.204s
+2026-03-19 10:30:13,365 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.098s  embed=0.230s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.377s
+2026-03-19 10:30:13,366 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1140 embed=1020 / 1660f  (13.8s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:13,366 [INFO    ]   [TIMING-PIPE-DEC] chunk#38  decode+to_tensor=0.122s  stack+pin=0.055s
+2026-03-19 10:30:13,562 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.089s  encode=0.103s  mux=0.002s  total=0.196s  (152.8f/s)
+2026-03-19 10:30:13,567 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:13,651 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.054s  gpu_upload+resize_up+blend=0.083s  total=0.199s
+2026-03-19 10:30:13,725 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.223s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.359s
+2026-03-19 10:30:13,725 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1170 embed=1050 / 1660f  (14.2s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:13,725 [INFO    ]   [TIMING-PIPE-DEC] chunk#39  decode+to_tensor=0.122s  stack+pin=0.041s
+2026-03-19 10:30:13,914 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.094s  mux=0.002s  total=0.188s  (159.4f/s)
+2026-03-19 10:30:13,932 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.050s
+2026-03-19 10:30:14,019 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.051s  gpu_upload+resize_up+blend=0.087s  total=0.202s
+2026-03-19 10:30:14,094 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.092s  embed=0.227s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.369s
+2026-03-19 10:30:14,095 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1200 embed=1080 / 1660f  (14.5s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:14,095 [INFO    ]   [TIMING-PIPE-DEC] chunk#40  decode+to_tensor=0.127s  stack+pin=0.049s
+2026-03-19 10:30:14,286 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.089s  encode=0.098s  mux=0.002s  total=0.191s  (157.4f/s)
+2026-03-19 10:30:14,304 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:14,389 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.067s  delta=0.053s  gpu_upload+resize_up+blend=0.084s  total=0.204s
+2026-03-19 10:30:14,465 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.229s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.370s
+2026-03-19 10:30:14,465 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1230 embed=1110 / 1660f  (14.9s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:14,466 [INFO    ]   [TIMING-PIPE-DEC] chunk#41  decode+to_tensor=0.118s  stack+pin=0.043s
+2026-03-19 10:30:14,657 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.100s  mux=0.002s  total=0.191s  (156.7f/s)
+2026-03-19 10:30:14,675 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:30:14,756 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.054s  gpu_upload+resize_up+blend=0.080s  total=0.198s
+2026-03-19 10:30:14,831 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.092s  embed=0.223s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.365s
+2026-03-19 10:30:14,831 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1260 embed=1140 / 1660f  (15.3s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:14,832 [INFO    ]   [TIMING-PIPE-DEC] chunk#42  decode+to_tensor=0.126s  stack+pin=0.045s
+2026-03-19 10:30:15,025 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.099s  mux=0.002s  total=0.194s  (155.0f/s)
+2026-03-19 10:30:15,036 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:15,125 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.061s  delta=0.054s  gpu_upload+resize_up+blend=0.088s  total=0.203s
+2026-03-19 10:30:15,199 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.368s
+2026-03-19 10:30:15,200 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1290 embed=1170 / 1660f  (15.6s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:15,201 [INFO    ]   [TIMING-PIPE-DEC] chunk#43  decode+to_tensor=0.122s  stack+pin=0.040s
+2026-03-19 10:30:15,381 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.087s  encode=0.088s  mux=0.002s  total=0.180s  (166.3f/s)
+2026-03-19 10:30:15,406 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.044s  vidmode=0.001s  atten=0.006s  download=0.000s  total=0.055s
+2026-03-19 10:30:15,488 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.063s  delta=0.058s  gpu_upload+resize_up+blend=0.082s  total=0.203s
+2026-03-19 10:30:15,564 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.085s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.363s
+2026-03-19 10:30:15,565 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1320 embed=1200 / 1660f  (16.0s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:15,565 [INFO    ]   [TIMING-PIPE-DEC] chunk#44  decode+to_tensor=0.125s  stack+pin=0.043s
+2026-03-19 10:30:15,769 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.098s  encode=0.101s  mux=0.003s  total=0.204s  (146.7f/s)
+2026-03-19 10:30:15,771 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:15,854 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.053s  gpu_upload+resize_up+blend=0.082s  total=0.199s
+2026-03-19 10:30:15,929 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.225s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.364s
+2026-03-19 10:30:15,930 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1350 embed=1230 / 1660f  (16.4s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:15,930 [INFO    ]   [TIMING-PIPE-DEC] chunk#45  decode+to_tensor=0.127s  stack+pin=0.042s
+2026-03-19 10:30:16,130 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.093s  encode=0.103s  mux=0.002s  total=0.200s  (150.1f/s)
+2026-03-19 10:30:16,144 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:16,229 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.068s  delta=0.054s  gpu_upload+resize_up+blend=0.085s  total=0.208s
+2026-03-19 10:30:16,303 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.233s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.373s
+2026-03-19 10:30:16,304 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1380 embed=1260 / 1660f  (16.7s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:16,304 [INFO    ]   [TIMING-PIPE-DEC] chunk#46  decode+to_tensor=0.112s  stack+pin=0.055s
+2026-03-19 10:30:16,495 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.090s  encode=0.097s  mux=0.002s  total=0.191s  (157.1f/s)
+2026-03-19 10:30:16,513 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.050s
+2026-03-19 10:30:16,596 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.054s  gpu_upload+resize_up+blend=0.083s  total=0.200s
+2026-03-19 10:30:16,673 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.092s  embed=0.225s  clamp+uint8=0.000s  rgb2yuv_gpu=0.052s  total=0.369s
+2026-03-19 10:30:16,674 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1410 embed=1290 / 1660f  (17.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:16,674 [INFO    ]   [TIMING-PIPE-DEC] chunk#47  decode+to_tensor=0.112s  stack+pin=0.050s
+2026-03-19 10:30:16,868 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.099s  mux=0.003s  total=0.194s  (154.3f/s)
+2026-03-19 10:30:16,882 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.054s
+2026-03-19 10:30:16,967 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.055s  gpu_upload+resize_up+blend=0.084s  total=0.204s
+2026-03-19 10:30:17,048 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.229s  clamp+uint8=0.000s  rgb2yuv_gpu=0.056s  total=0.374s
+2026-03-19 10:30:17,049 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1440 embed=1320 / 1660f  (17.5s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:17,049 [INFO    ]   [TIMING-PIPE-DEC] chunk#48  decode+to_tensor=0.122s  stack+pin=0.047s
+2026-03-19 10:30:17,246 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.093s  encode=0.099s  mux=0.002s  total=0.197s  (152.1f/s)
+2026-03-19 10:30:17,256 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.047s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.055s
+2026-03-19 10:30:17,341 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.056s  gpu_upload+resize_up+blend=0.085s  total=0.206s
+2026-03-19 10:30:17,416 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.087s  embed=0.230s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.367s
+2026-03-19 10:30:17,417 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1470 embed=1350 / 1660f  (17.9s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:17,417 [INFO    ]   [TIMING-PIPE-DEC] chunk#49  decode+to_tensor=0.122s  stack+pin=0.053s
+2026-03-19 10:30:17,607 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.097s  mux=0.002s  total=0.190s  (158.1f/s)
+2026-03-19 10:30:17,625 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.043s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.053s
+2026-03-19 10:30:17,708 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.065s  delta=0.054s  gpu_upload+resize_up+blend=0.083s  total=0.202s
+2026-03-19 10:30:17,785 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.227s  clamp+uint8=0.000s  rgb2yuv_gpu=0.052s  total=0.369s
+2026-03-19 10:30:17,786 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1500 embed=1380 / 1660f  (18.2s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:17,786 [INFO    ]   [TIMING-PIPE-DEC] chunk#50  decode+to_tensor=0.117s  stack+pin=0.052s
+2026-03-19 10:30:17,979 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.098s  mux=0.004s  total=0.192s  (156.0f/s)
+2026-03-19 10:30:17,989 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.052s
+2026-03-19 10:30:18,075 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.062s  delta=0.053s  gpu_upload+resize_up+blend=0.086s  total=0.201s
+2026-03-19 10:30:18,154 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.088s  embed=0.226s  clamp+uint8=0.000s  rgb2yuv_gpu=0.053s  total=0.367s
+2026-03-19 10:30:18,154 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1530 embed=1410 / 1660f  (18.6s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:18,155 [INFO    ]   [TIMING-PIPE-DEC] chunk#51  decode+to_tensor=0.130s  stack+pin=0.047s
+2026-03-19 10:30:18,343 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.088s  encode=0.096s  mux=0.002s  total=0.189s  (159.0f/s)
+2026-03-19 10:30:18,357 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.045s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.053s
+2026-03-19 10:30:18,446 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.059s  delta=0.055s  gpu_upload+resize_up+blend=0.089s  total=0.202s
+2026-03-19 10:30:18,520 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.089s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.366s
+2026-03-19 10:30:18,521 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1560 embed=1440 / 1660f  (19.0s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:18,521 [INFO    ]   [TIMING-PIPE-DEC] chunk#52  decode+to_tensor=0.127s  stack+pin=0.043s
+2026-03-19 10:30:18,712 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.091s  encode=0.097s  mux=0.002s  total=0.191s  (156.8f/s)
+2026-03-19 10:30:18,729 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.006s  embedder=0.042s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.050s
+2026-03-19 10:30:18,812 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.054s  gpu_upload+resize_up+blend=0.082s  total=0.200s
+2026-03-19 10:30:18,888 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.090s  embed=0.225s  clamp+uint8=0.000s  rgb2yuv_gpu=0.051s  total=0.367s
+2026-03-19 10:30:18,889 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1590 embed=1470 / 1660f  (19.3s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:18,889 [INFO    ]   [TIMING-PIPE-DEC] chunk#53  decode+to_tensor=0.115s  stack+pin=0.056s
+2026-03-19 10:30:19,087 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.099s  encode=0.096s  mux=0.001s  total=0.198s  (151.2f/s)
+2026-03-19 10:30:19,095 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.005s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.051s
+2026-03-19 10:30:19,177 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.064s  delta=0.052s  gpu_upload+resize_up+blend=0.081s  total=0.197s
+2026-03-19 10:30:19,252 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.091s  embed=0.223s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.364s
+2026-03-19 10:30:19,253 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1620 embed=1500 / 1660f  (19.7s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:19,253 [INFO    ]   [TIMING-PIPE-DEC] chunk#54  decode+to_tensor=0.118s  stack+pin=0.065s
+2026-03-19 10:30:19,428 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.082s  encode=0.090s  mux=0.001s  total=0.174s  (172.1f/s)
+2026-03-19 10:30:19,456 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.004s  embedder=0.045s  vidmode=0.001s  atten=0.009s  download=0.000s  total=0.058s
+2026-03-19 10:30:19,539 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.060s  delta=0.059s  gpu_upload+resize_up+blend=0.083s  total=0.202s
+2026-03-19 10:30:19,615 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.084s  embed=0.228s  clamp+uint8=0.000s  rgb2yuv_gpu=0.050s  total=0.362s
+2026-03-19 10:30:19,615 [INFO    ]   [tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4] decode=1650 embed=1530 / 1660f  (20.1s)  [alloc=235MB peak=2075MB]
+2026-03-19 10:30:19,616 [INFO    ]   [TIMING-PIPE-DEC] chunk#55  decode+to_tensor=0.132s  stack+pin=0.039s
+2026-03-19 10:30:19,774 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.079s  encode=0.076s  mux=0.001s  total=0.158s  (189.3f/s)
+2026-03-19 10:30:19,807 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.040s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.046s
+2026-03-19 10:30:19,888 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.058s  delta=0.047s  gpu_upload+resize_up+blend=0.081s  total=0.186s
+2026-03-19 10:30:19,952 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.086s  embed=0.201s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.337s
+2026-03-19 10:30:20,106 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.077s  encode=0.073s  mux=0.001s  total=0.153s  (195.5f/s)
+2026-03-19 10:30:20,138 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.042s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.048s
+2026-03-19 10:30:20,221 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.059s  delta=0.049s  gpu_upload+resize_up+blend=0.083s  total=0.191s
+2026-03-19 10:30:20,279 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.078s  embed=0.200s  clamp+uint8=0.000s  rgb2yuv_gpu=0.049s  total=0.327s
+2026-03-19 10:30:20,426 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.074s  encode=0.070s  mux=0.001s  total=0.146s  (204.8f/s)
+2026-03-19 10:30:20,463 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.040s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.045s
+2026-03-19 10:30:20,544 [INFO    ]   [TIMING-FAST] 30f 1080x1920  resize_down=0.054s  delta=0.046s  gpu_upload+resize_up+blend=0.081s  total=0.181s
+2026-03-19 10:30:20,603 [INFO    ]   [TIMING-PIPE-GPU] 30f  normalize=0.083s  embed=0.192s  clamp+uint8=0.000s  rgb2yuv_gpu=0.048s  total=0.323s
+2026-03-19 10:30:20,720 [INFO    ]   [TIMING-PIPE-ENC] 30f  from_ndarray=0.059s  encode=0.056s  mux=0.001s  total=0.116s  (258.0f/s)
+2026-03-19 10:30:20,744 [INFO    ]   [TIMING-DELTA] 10f 256x256  upload=0.001s  embedder=0.020s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.023s
+2026-03-19 10:30:20,771 [INFO    ]   [TIMING-FAST] 10f 1080x1920  resize_down=0.082s  delta=0.024s  gpu_upload+resize_up+blend=0.027s  total=0.133s
+2026-03-19 10:30:20,815 [INFO    ]   [TIMING-PIPE-GPU] 10f  normalize=0.035s  embed=0.160s  clamp+uint8=0.000s  rgb2yuv_gpu=0.017s  total=0.212s
+2026-03-19 10:30:20,843 [INFO    ]   [TIMING-PIPE-ENC] 10f  from_ndarray=0.015s  encode=0.011s  mux=0.000s  total=0.027s  (369.9f/s)
+2026-03-19 10:30:20,891 [INFO    ] [TIMING] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: video_embed=21.370s (1660f, 77.7f/s)
+2026-03-19 10:30:21,925 [INFO    ] [TIMING] tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4: mux=1.033s
+2026-03-19 10:30:21,925 [INFO    ] Done in 22.6s — {'fps': 25.0, 'total_frames': 1660, 'has_audio': True, 'resolution': '1920x1080', 'oom_splits': 0, 'mode': 'FAST+GPU-BLEND+NVENC+PIPE+VBR(3587k)'}
+2026-03-19 10:30:21,925 [INFO    ] Output size: 25.8MB

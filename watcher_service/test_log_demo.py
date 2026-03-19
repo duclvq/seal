@@ -51,7 +51,7 @@ import torch
 from worker import load_video_model, embed_to_file
 
 CKPT  = "output/run2_video/checkpoint350.pth"
-INPUT = "data/val/tt-highlight-coco-fine-cuisine-93589213962149676390612.mp4"  # 29MB
+INPUT = r"D:\samu_videos_gpu\DJI_20260104092139_0153_D_gpu_hevc.mp4"
 
 device = torch.device("cuda")
 log.info("Loading model...")

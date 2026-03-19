@@ -92,6 +92,89 @@ if USE_NVENC:
     except Exception:
         _NVENC_AVAILABLE = False
 
+import numpy as np
+
+# ── BT.709 RGB→YUV conversion matrices (GPU) ────────────────────────────
+# Standard BT.709 for HD content:
+#   Y  =  0.2126*R + 0.7152*G + 0.0722*B
+#   Cb = -0.1146*R - 0.3854*G + 0.5000*B + 128
+#   Cr =  0.5000*R - 0.4542*G - 0.0458*B + 128
+_BT709_Y  = torch.tensor([0.2126, 0.7152, 0.0722], dtype=torch.float32)
+_BT709_CB = torch.tensor([-0.1146, -0.3854, 0.5000], dtype=torch.float32)
+_BT709_CR = torch.tensor([0.5000, -0.4542, -0.0458], dtype=torch.float32)
+
+
+def _rgb_to_yuv420p_gpu(
+    rgb: torch.Tensor,
+) -> list[np.ndarray]:
+    """
+    Convert RGB uint8 tensor [N, H, W, 3] on GPU → list of YUV420P numpy arrays.
+
+    Each element is a numpy array of shape (H*3//2, W) uint8, which is the
+    packed YUV420P layout that PyAV's VideoFrame.from_ndarray(format="yuv420p")
+    expects.
+
+    All heavy math (matmul, chroma subsampling) runs on GPU.
+    Only the final uint8 result is transferred to CPU.
+    """
+    device = rgb.device
+    N, H, W, _ = rgb.shape
+
+    # Ensure even dimensions
+    H2 = H - H % 2
+    W2 = W - W % 2
+    if H2 != H or W2 != W:
+        rgb = rgb[:, :H2, :W2, :]
+        H, W = H2, W2
+
+    # Move conversion vectors to GPU (cached after first call)
+    global _BT709_Y, _BT709_CB, _BT709_CR
+    if _BT709_Y.device != device:
+        _BT709_Y = _BT709_Y.to(device)
+        _BT709_CB = _BT709_CB.to(device)
+        _BT709_CR = _BT709_CR.to(device)
+
+    # [N, H, W, 3] float32 for matmul
+    rgb_f = rgb.float()
+
+    # Y plane: full resolution [N, H, W]
+    Y = (rgb_f @ _BT709_Y).clamp_(0, 255).to(torch.uint8)
+
+    # Chroma subsampling 4:2:0: average 2x2 blocks
+    # Reshape to [N, H/2, 2, W/2, 2, 3] then mean over dims 2,4
+    rgb_sub = rgb_f.reshape(N, H // 2, 2, W // 2, 2, 3).mean(dim=(2, 4))
+    # rgb_sub: [N, H/2, W/2, 3]
+
+    Cb = (rgb_sub @ _BT709_CB + 128).clamp_(0, 255).to(torch.uint8)
+    Cr = (rgb_sub @ _BT709_CR + 128).clamp_(0, 255).to(torch.uint8)
+    del rgb_f, rgb_sub
+
+    # Pack into YUV420P layout: [H*3//2, W] per frame
+    # Layout: Y plane (H rows) + Cb plane (H/2 rows, W/2 cols) + Cr plane (H/2 rows, W/2 cols)
+    # PyAV expects shape (H*3//2, W) for yuv420p — but actually it expects
+    # a 3D array: np.ndarray with shape matching the 3-plane layout.
+    # from_ndarray(format="yuv420p") expects shape = (H * 3 // 2, W) as uint8.
+
+    hh = H // 2
+    hw = W // 2
+
+    # Build packed buffer on GPU: [N, H + H//2, W]
+    # Top H rows = Y, bottom H//2 rows = [Cb|Cr] side by side
+    packed = torch.empty((N, H + hh, W), dtype=torch.uint8, device=device)
+    packed[:, :H, :] = Y
+    # Cb and Cr each have shape [N, hh, hw], place side by side in bottom rows
+    packed[:, H:, :hw] = Cb
+    packed[:, H:, hw:] = Cr
+    del Y, Cb, Cr
+
+    # Transfer to CPU once (single contiguous block)
+    packed_np = packed.cpu().numpy()
+    del packed
+
+    # Split into list of per-frame arrays
+    return [packed_np[i] for i in range(N)]
+
+
 def _get_encoder_config(bitrate_kbps: int = 0) -> dict:
     """Return encoder codec name and stream options based on NVENC availability.
     
@@ -513,16 +596,27 @@ def _flush_chunk(
 
     _t0 = _t.perf_counter()
     if wm_chunk.is_cuda:
-        vid_np = wm_chunk.clamp_(0, 1).mul_(255).to(torch.uint8).permute(0, 2, 3, 1).cpu().numpy()
+        rgb_uint8 = wm_chunk.clamp_(0, 1).mul_(255).to(torch.uint8).permute(0, 2, 3, 1)
     else:
-        vid_np = (wm_chunk.clamp(0, 1) * 255).to(torch.uint8).permute(0, 2, 3, 1).numpy()
+        rgb_uint8 = (wm_chunk.clamp(0, 1) * 255).to(torch.uint8).permute(0, 2, 3, 1)
+        if device.type == "cuda":
+            rgb_uint8 = rgb_uint8.to(device)
     del wm_chunk
-    _t_to_numpy = _t.perf_counter() - _t0
+    _t_clamp = _t.perf_counter() - _t0
+
+    _t0 = _t.perf_counter()
+    yuv_frames = _rgb_to_yuv420p_gpu(rgb_uint8)
+    n_frames = rgb_uint8.shape[0]
+    del rgb_uint8
+    _t_yuv = _t.perf_counter() - _t0
 
     _t0 = _t.perf_counter()
     if out_stream is None:
-        H = vid_np.shape[1] - vid_np.shape[1] % 2
-        W = vid_np.shape[2] - vid_np.shape[2] % 2
+        _yuv_h, _yuv_w = yuv_frames[0].shape
+        H = (_yuv_h * 2) // 3
+        W = _yuv_w
+        H = H - H % 2
+        W = W - W % 2
         enc_cfg = _get_encoder_config(bitrate_kbps)
         out_stream         = out_container.add_stream(enc_cfg["codec"], rate=int(fps))
         out_stream.width   = W
@@ -535,17 +629,31 @@ def _flush_chunk(
             out_stream.codec_context.thread_type = av.codec.context.ThreadType.FRAME
         h_out, w_out = H, W
 
-    for frame_np in vid_np[:, :h_out, :w_out, :]:
-        av_frame = av.VideoFrame.from_ndarray(frame_np, format="rgb24")
-        for packet in out_stream.encode(av_frame):
+    _t_from_ndarray = 0.0
+    _t_encode_hw = 0.0
+    _t_mux_write = 0.0
+    for yuv_np in yuv_frames:
+        _t1 = _t.perf_counter()
+        av_frame = av.VideoFrame.from_ndarray(yuv_np, format="yuv420p")
+        _t_from_ndarray += _t.perf_counter() - _t1
+
+        _t1 = _t.perf_counter()
+        packets = out_stream.encode(av_frame)
+        _t_encode_hw += _t.perf_counter() - _t1
+
+        _t1 = _t.perf_counter()
+        for packet in packets:
             out_container.mux(packet)
+        _t_mux_write += _t.perf_counter() - _t1
     _t_encode = _t.perf_counter() - _t0
 
     _log.info(
-        f"  [TIMING-FLUSH] {vid_np.shape[0]}f  "
+        f"  [TIMING-FLUSH] {n_frames}f  "
         f"stack={_t_stack:.3f}s  embed={_t_embed:.3f}s  "
-        f"to_numpy={_t_to_numpy:.3f}s  encode={_t_encode:.3f}s  "
-        f"total={_t_stack+_t_embed+_t_to_numpy+_t_encode:.3f}s"
+        f"clamp+uint8={_t_clamp:.3f}s  rgb2yuv_gpu={_t_yuv:.3f}s  "
+        f"from_ndarray={_t_from_ndarray:.3f}s  encode={_t_encode_hw:.3f}s  mux={_t_mux_write:.3f}s  "
+        f"encode_total={_t_encode:.3f}s  "
+        f"total={_t_stack+_t_embed+_t_clamp+_t_yuv+_t_encode:.3f}s"
     )
 
     return out_stream, h_out, w_out
@@ -709,23 +817,30 @@ def _embed_pipelined(
                 del video_chunk
                 _t_embed = _time.perf_counter() - _t0
 
-                # Convert to uint8 numpy for encoder
+                # Convert to uint8 on GPU, then RGB→YUV420P on GPU
                 _t0 = _time.perf_counter()
-                # If wm is on GPU (GPU_BLEND path), do clamp+mul+uint8 on GPU then transfer
                 if wm.is_cuda:
-                    vid_np = wm.clamp_(0, 1).mul_(255).to(torch.uint8).permute(0, 2, 3, 1).cpu().numpy()
+                    rgb_uint8 = wm.clamp_(0, 1).mul_(255).to(torch.uint8).permute(0, 2, 3, 1)
                 else:
-                    vid_np = (wm.clamp(0, 1).mul_(255)).to(torch.uint8).permute(0, 2, 3, 1).numpy()
+                    rgb_uint8 = (wm.clamp(0, 1).mul_(255)).to(torch.uint8).permute(0, 2, 3, 1)
+                    if device.type == "cuda":
+                        rgb_uint8 = rgb_uint8.to(device)
                 del wm
-                _t_to_numpy = _time.perf_counter() - _t0
+                _t_clamp = _time.perf_counter() - _t0
+
+                _t0 = _time.perf_counter()
+                yuv_frames = _rgb_to_yuv420p_gpu(rgb_uint8)
+                n_frames = rgb_uint8.shape[0]
+                del rgb_uint8
+                _t_yuv = _time.perf_counter() - _t0
 
                 _log.info(
-                    f"  [TIMING-PIPE-GPU] {vid_np.shape[0]}f  "
+                    f"  [TIMING-PIPE-GPU] {n_frames}f  "
                     f"normalize={_t_normalize:.3f}s  embed={_t_embed:.3f}s  "
-                    f"to_numpy={_t_to_numpy:.3f}s  "
-                    f"total={_t_normalize+_t_embed+_t_to_numpy:.3f}s"
+                    f"clamp+uint8={_t_clamp:.3f}s  rgb2yuv_gpu={_t_yuv:.3f}s  "
+                    f"total={_t_normalize+_t_embed+_t_clamp+_t_yuv:.3f}s"
                 )
-                encode_q.put(vid_np)
+                encode_q.put(yuv_frames)
         except Exception as e:
             errors.append(e)
             stop.set()
@@ -748,12 +863,16 @@ def _embed_pipelined(
                 if item is SENTINEL:
                     break
 
-                vid_np = item
-                n = vid_np.shape[0]
+                vid_np = item  # This is now a list of YUV420P numpy arrays
+                n = len(vid_np)
 
                 if out_stream is None:
-                    H = vid_np.shape[1] - vid_np.shape[1] % 2
-                    W = vid_np.shape[2] - vid_np.shape[2] % 2
+                    # YUV420P packed layout: shape (H*3//2, W) — derive H, W
+                    _yuv_h, _yuv_w = vid_np[0].shape
+                    H = (_yuv_h * 2) // 3
+                    W = _yuv_w
+                    H = H - H % 2
+                    W = W - W % 2
                     enc_cfg = _get_encoder_config(bitrate_kbps)
                     out_stream = out_container.add_stream(enc_cfg["codec"], rate=int(fps))
                     out_stream.width   = W
@@ -766,19 +885,33 @@ def _embed_pipelined(
                         out_stream.codec_context.thread_type = av.codec.context.ThreadType.FRAME
                     h_out, w_out = H, W
 
-                # Encode: use local refs to avoid repeated attribute lookups
-                _t0 = _time.perf_counter()
+                # Encode: YUV420P frames — skip swscale entirely
+                _t0_all = _time.perf_counter()
                 _mux = out_container.mux
                 _encode = out_stream.encode
                 _from_ndarray = av.VideoFrame.from_ndarray
-                for frame_np in vid_np[:, :h_out, :w_out, :]:
-                    for packet in _encode(_from_ndarray(frame_np, format="rgb24")):
+                _t_from_ndarray = 0.0
+                _t_encode_hw = 0.0
+                _t_mux_write = 0.0
+                for yuv_np in vid_np:
+                    _t1 = _time.perf_counter()
+                    av_frame = _from_ndarray(yuv_np, format="yuv420p")
+                    _t_from_ndarray += _time.perf_counter() - _t1
+
+                    _t1 = _time.perf_counter()
+                    packets = _encode(av_frame)
+                    _t_encode_hw += _time.perf_counter() - _t1
+
+                    _t1 = _time.perf_counter()
+                    for packet in packets:
                         _mux(packet)
-                _t_enc = _time.perf_counter() - _t0
+                    _t_mux_write += _time.perf_counter() - _t1
+                _t_enc = _time.perf_counter() - _t0_all
 
                 _log.info(
                     f"  [TIMING-PIPE-ENC] {n}f  "
-                    f"encode+mux={_t_enc:.3f}s  ({n/_t_enc:.1f}f/s)"
+                    f"from_ndarray={_t_from_ndarray:.3f}s  encode={_t_encode_hw:.3f}s  mux={_t_mux_write:.3f}s  "
+                    f"total={_t_enc:.3f}s  ({n/_t_enc:.1f}f/s)"
                 )
 
                 state["total_frames"] += n
