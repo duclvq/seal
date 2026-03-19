@@ -24,7 +24,7 @@ import torch
 import torchaudio
 import torchaudio.functional as TAF
 from videoseal.utils.cfg import setup_model_from_checkpoint
-from web_demo.core.video_io import load_video_tensor, extract_audio_track
+from web_demo.core.video_io import extract_audio_track
 from web_demo.core.ecc import msg_tensor_to_text_bch
 
 # ── Config ─────────────────────────────────────────────────────────────────────
@@ -45,7 +45,17 @@ _video_model = None
 _audio_detector = None
 
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024 * 1024  # 2GB
+app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024 * 1024  # 5GB
+
+
+@app.errorhandler(413)
+def _err_413(e):
+    return jsonify({"error": "File quá lớn. Hãy dùng đường dẫn server thay vì upload."}), 413
+
+
+@app.errorhandler(500)
+def _err_500(e):
+    return jsonify({"error": f"Lỗi server: {e}"}), 500
 
 
 def _get_video_model():
@@ -67,8 +77,29 @@ def _get_audio_detector():
     if _audio_detector is not None:
         return _audio_detector
     try:
-        from audioseal import AudioSeal
-        _audio_detector = AudioSeal.load_detector("audioseal_detector_16bits").eval().to(device)
+        # Force offline mode to avoid hanging on machines without internet
+        os.environ.setdefault("HF_HUB_OFFLINE", "1")
+        os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
+        import threading
+        _det_result = [None]
+        _det_error = [None]
+
+        def _load_det():
+            try:
+                from audioseal import AudioSeal
+                _det_result[0] = AudioSeal.load_detector("audioseal_detector_16bits").eval().to(device)
+            except Exception as e:
+                _det_error[0] = e
+
+        t = threading.Thread(target=_load_det, daemon=True)
+        t.start()
+        t.join(timeout=15)
+
+        if t.is_alive() or _det_error[0]:
+            _audio_detector = False
+        else:
+            _audio_detector = _det_result[0]
     except Exception:
         _audio_detector = False
     return _audio_detector
@@ -207,6 +238,24 @@ def _lookup_in_watcher_db(bits_list: list) -> dict | None:
     return None
 
 
+# ── Streaming chunk extract helper ─────────────────────────────────────────────
+def _extract_chunk(model, chunk_buf: list) -> torch.Tensor:
+    """Extract watermark from a chunk of frames. Returns bit_preds [N, K] on CPU.
+    Accepts list of uint8 [3, H, W] tensors — normalizes on GPU to save CPU RAM."""
+    video_chunk = torch.stack(chunk_buf).to(device).float().div_(255.0)
+    chunk_buf.clear()  # free CPU memory immediately
+    with torch.no_grad():
+        outputs = model.detect(video_chunk, is_video=True)
+    preds = outputs["preds"]
+    if preds.dim() == 4:
+        preds = preds.mean(dim=(-2, -1))
+    bit_preds = preds[:, 1:].cpu()
+    del video_chunk, outputs, preds
+    if device.type == "cuda":
+        torch.cuda.empty_cache()
+    return bit_preds
+
+
 # ── Routes ─────────────────────────────────────────────────────────────────────
 @app.route("/")
 def index():
@@ -233,17 +282,80 @@ def api_extract():
 
     try:
         t0 = time.time()
-
         model = _get_video_model()
-        video, fps = load_video_tensor(video_path, max_frames=MAX_FRAMES)
-        n_frames = video.shape[0]
 
-        with torch.no_grad():
-            msg = model.extract_message(
-                video.to(device), aggregation="squared_avg"
-            )
+        # ── Streaming extract: decode + detect chunk-by-chunk ──
+        # Keeps frames as uint8 on CPU (4× less RAM than float32).
+        # Running aggregation — never accumulates all preds in memory.
+        import av
+        CHUNK_SIZE = min(int(os.getenv("EXTRACT_CHUNK", "8")), 16)  # small chunks to limit VRAM
 
-        decode = msg_tensor_to_text_bch(msg.cpu())
+        ext = os.path.splitext(video_path)[1].lstrip(".").lower()
+        from web_demo.core.video_io import _FFMPEG_CONVERT_EXT, _to_mp4_via_ffmpeg
+        tmp_converted = None
+        av_path = video_path
+        if ext in _FFMPEG_CONVERT_EXT:
+            tmp_converted = _to_mp4_via_ffmpeg(video_path)
+            av_path = tmp_converted
+
+        # Running aggregation: accumulate sum of (bit_preds * |bit_preds|) and count
+        # instead of storing all preds in memory
+        running_sum = None  # [K] tensor, accumulated on CPU
+        n_frames = 0
+        fps = 24.0
+        chunk_buf = []
+
+        try:
+            with av.open(av_path) as container:
+                stream = container.streams.video[0]
+                rate = stream.average_rate or stream.guessed_rate
+                if rate:
+                    fps = float(rate)
+                stream.thread_type = "AUTO"
+
+                for frame in container.decode(stream):
+                    # Keep as uint8 on CPU — 4× less RAM than float32
+                    rgb = frame.to_ndarray(format="rgb24")
+                    t = torch.from_numpy(rgb).permute(2, 0, 1)  # uint8 [3, H, W]
+                    chunk_buf.append(t)
+
+                    if len(chunk_buf) >= CHUNK_SIZE:
+                        preds = _extract_chunk(model, chunk_buf)  # [N, K] cpu; clears chunk_buf
+                        # Running aggregation: squared_avg
+                        chunk_sum = (preds * preds.abs()).sum(dim=0)  # [K]
+                        if running_sum is None:
+                            running_sum = chunk_sum
+                        else:
+                            running_sum.add_(chunk_sum)
+                        n_frames += preds.shape[0]
+                        del preds, chunk_sum
+
+                    if n_frames + len(chunk_buf) >= MAX_FRAMES:
+                        break
+
+                # Flush remaining frames
+                if chunk_buf:
+                    preds = _extract_chunk(model, chunk_buf)
+                    chunk_sum = (preds * preds.abs()).sum(dim=0)
+                    if running_sum is None:
+                        running_sum = chunk_sum
+                    else:
+                        running_sum.add_(chunk_sum)
+                    n_frames += preds.shape[0]
+                    del preds, chunk_sum
+        finally:
+            if tmp_converted and os.path.exists(tmp_converted):
+                os.unlink(tmp_converted)
+
+        if running_sum is None or n_frames == 0:
+            return jsonify({"error": "Không đọc được frame nào từ video"}), 400
+
+        # Final aggregation
+        decoded_msg = running_sum / n_frames  # [K]
+        msg = (decoded_msg > 0).unsqueeze(0)  # [1, K]
+        del running_sum
+
+        decode = msg_tensor_to_text_bch(msg)
         video_detected = decode["correctable"]
         db_match = _lookup_in_watcher_db(decode["bits_list"])
 

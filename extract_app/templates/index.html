@@ -210,7 +210,7 @@
         </div>
         <input type="file" id="fileInput" accept="video/*,.mxf" style="display:none">
 
-        <div class="or-divider">or enter server path</div>
+        <div class="or-divider">or enter server path (recommended for files &gt; 2GB)</div>
 
         <input type="text" class="path-input" id="videoPath"
                placeholder="D:\data\output\video.mxf">
@@ -321,9 +321,29 @@ function doExtract(formData) {
     showLoading(true);
 
     fetch('/api/extract', { method: 'POST', body: formData })
-        .then(r => r.json())
+        .then(r => {
+            if (!r.ok) {
+                // Try to parse JSON error, fallback to status text
+                return r.text().then(txt => {
+                    try {
+                        const j = JSON.parse(txt);
+                        throw new Error(j.error || 'Server error ' + r.status);
+                    } catch (e) {
+                        if (e.message && !e.message.startsWith('Unexpected'))
+                            throw e;
+                        throw new Error(
+                            r.status === 413
+                                ? 'File quá lớn. Hãy dùng đường dẫn server thay vì upload.'
+                                : 'Server error ' + r.status + ': ' + r.statusText
+                        );
+                    }
+                });
+            }
+            return r.json();
+        })
         .then(data => {
             showLoading(false);
+            if (!data) return;  // error already handled
             if (data.error) {
                 showError(data.error);
                 return;
@@ -332,7 +352,7 @@ function doExtract(formData) {
         })
         .catch(err => {
             showLoading(false);
-            showError('Connection error: ' + err.message);
+            showError(err.message || 'Connection error');
         });
 }
 

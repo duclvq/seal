@@ -375,14 +375,34 @@ def load_video_model(ckpt_path: str, device: torch.device):
 def load_audio_model(device: torch.device):
     """Load AudioSeal generator (16-bit). Returns None if unavailable."""
     import logging
+    import threading
     _log = logging.getLogger(__name__)
-    try:
-        from audioseal import AudioSeal
-        gen = AudioSeal.load_generator("audioseal_wm_16bits").eval().to(device)
-        return gen
-    except Exception as e:
-        _log.warning(f"AudioSeal load failed: {type(e).__name__}: {e}")
+
+    # Force offline mode to avoid hanging on machines without internet
+    os.environ.setdefault("HF_HUB_OFFLINE", "1")
+    os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
+    result = [None]
+    error = [None]
+
+    def _load():
+        try:
+            from audioseal import AudioSeal
+            result[0] = AudioSeal.load_generator("audioseal_wm_16bits").eval().to(device)
+        except Exception as e:
+            error[0] = e
+
+    t = threading.Thread(target=_load, daemon=True)
+    t.start()
+    t.join(timeout=15)  # 15s max — if no network, fail fast
+
+    if t.is_alive():
+        _log.warning("AudioSeal load timed out (15s) — likely no internet. Skipping audio watermark.")
         return None
+    if error[0]:
+        _log.warning(f"AudioSeal load failed: {type(error[0]).__name__}: {error[0]}")
+        return None
+    return result[0]
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -1044,9 +1064,11 @@ def _embed_pipelined(
                         _t_embed = _time.perf_counter() - _t0
 
                         # ── 5. Convert delta → YUV planes at 256×256 ──
+                        # NOTE: delta is in [0,1] float space (model operates on normalized images).
+                        # Must scale by 255 when blending into uint8 YUV space (0-255).
                         _t0 = _time.perf_counter()
                         scaling_w = float(video_model.blender.scaling_w)
-                        delta_256.mul_(scaling_w)
+                        delta_256.mul_(scaling_w * 255.0)  # scale to uint8 range for YUV blend
                         dC = delta_256.shape[1]  # 1 if model.embedder.yuv, 3 if RGB
 
                         if dC == 1:
@@ -1071,16 +1093,17 @@ def _embed_pipelined(
                         # ── 6. Resize_up delta YUV planes → full-res ──
                         _t0 = _time.perf_counter()
                         hh, hw = H // 2, W // 2
-                        _interp = dict(mode="bilinear", align_corners=False)
-                        dY_full  = F.interpolate(dY,  size=(H, W), **_interp)    # [N, 1, H, W]
+                        dY_full  = F.interpolate(dY,  size=(H, W), **_INTERP)    # [N, 1, H, W]
                         if dC > 1:
-                            dCb_full = F.interpolate(dCb, size=(hh, hw), **_interp)
-                            dCr_full = F.interpolate(dCr, size=(hh, hw), **_interp)
+                            dCb_full = F.interpolate(dCb, size=(hh, hw), **_INTERP)
+                            dCr_full = F.interpolate(dCr, size=(hh, hw), **_INTERP)
                         del dY, dCb, dCr
                         compute_stream.synchronize()
                         _t_resize_up = _time.perf_counter() - _t0
 
                         # ── 7. Blend delta onto original YUV full-res ──
+                        # Formula: Y_out = scaling_i * Y_orig + dY_full
+                        # (dY_full already includes scaling_w * 255 from step 5)
                         _t0 = _time.perf_counter()
                         scaling_i = float(video_model.blender.scaling_i)
 
@@ -1582,10 +1605,21 @@ def embed_to_file(
     msg_gpu   = msg_tensor.to(device)
     _filename = Path(input_path).name
 
-    # ── Probe source bitrate to match in output ──────────────────────────────
+    # ── Probe source bitrate & codec to match in output ─────────────────────
     bitrate_kbps = _probe_bitrate(av_path)
     if bitrate_kbps > 0:
-        _log.info(f"[BITRATE] {_filename}: source={bitrate_kbps} kbps, will use VBR to match")
+        # HEVC is ~40% more efficient than H.264 at same bitrate.
+        # When re-encoding HEVC→H.264, multiply bitrate to preserve quality.
+        src_info = _probe_video_info(av_path)
+        src_codec = src_info.get("codec", "").lower()
+        br_mult = float(os.getenv("BITRATE_MULT", "0"))  # 0=auto
+        if br_mult <= 0:
+            # Auto: 1.5x for HEVC/VP9→H.264, 1.0x for H.264→H.264
+            br_mult = 1.5 if src_codec in ("hevc", "h265", "vp9", "av1") else 1.0
+        orig_br = bitrate_kbps
+        bitrate_kbps = int(bitrate_kbps * br_mult)
+        _log.info(f"[BITRATE] {_filename}: source={orig_br}k ({src_codec}), "
+                   f"output={bitrate_kbps}k (x{br_mult:.1f})")
         mode_str += f"+VBR({bitrate_kbps}k)"
     else:
         _log.info(f"[BITRATE] {_filename}: could not detect, using CRF={CRF}")

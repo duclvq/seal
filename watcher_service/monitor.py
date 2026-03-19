@@ -87,6 +87,18 @@ HTML = """<!DOCTYPE html>
   .copy-btn { background: none; border: 1px solid #4a5568; border-radius: 4px; color: #718096;
               cursor: pointer; font-size: 0.7rem; padding: 1px 6px; line-height: 1.6; }
   .copy-btn:hover { border-color: #9f7aea; color: #9f7aea; }
+  .del-btn { background: none; border: 1px solid #4a5568; border-radius: 4px; color: #718096;
+             cursor: pointer; font-size: 0.7rem; padding: 1px 6px; line-height: 1.6; }
+  .del-btn:hover { border-color: #fc8181; color: #fc8181; }
+  .bulk-bar { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+  .bulk-btn { padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.78rem;
+              border: 1px solid #2d3748; color: #718096; background: #1a1d2e; transition: all .2s; }
+  .bulk-btn:hover { border-color: #fc8181; color: #fc8181; background: #1e1215; }
+  .bulk-btn.confirm { border-color: #fc8181; color: #fc8181; background: #3d1515; }
+  .toast { position: fixed; bottom: 24px; right: 24px; background: #2d3748; color: #e2e8f0;
+           padding: 10px 20px; border-radius: 8px; font-size: 0.85rem; z-index: 999;
+           opacity: 0; transition: opacity .3s; pointer-events: none; }
+  .toast.show { opacity: 1; }
 </style>
 </head>
 <body>
@@ -99,6 +111,7 @@ HTML = """<!DOCTYPE html>
   <div class="search-row">
     <input type="search" id="search" placeholder="Tìm tên file..." oninput="filterTable()">
   </div>
+  <div class="bulk-bar" id="bulk-bar"></div>
   <div class="tabs" id="tabs"></div>
   <div class="table-wrap">
     <table id="job-table">
@@ -108,6 +121,7 @@ HTML = """<!DOCTYPE html>
   </div>
 </div>
 
+<div id="toast" class="toast"></div>
 <script>
 let allData = {};
 let currentTab = 'all';
@@ -122,6 +136,7 @@ async function fetchData() {
 function render() {
   renderStats();
   renderTabs();
+  renderBulkBar();
   renderTable();
 }
 
@@ -137,7 +152,7 @@ function renderStats() {
   document.getElementById('stats-cards').innerHTML = cards.map(c => `
     <div class="card ${c.cls}">
       <div class="label">${c.label}</div>
-      <div class="value">${s[c.key] ?? 0}</div>
+      <div class="value">${s[c.key] || 0}</div>
       ${c.key === 'done' && s.avg_time ? `<div class="sub">avg ${s.avg_time}s/video</div>` : ''}
     </div>`).join('');
 
@@ -168,7 +183,7 @@ function renderTabs() {
   const s = allData.stats || {};
   document.getElementById('tabs').innerHTML = tabs.map(t => `
     <div class="tab ${t===currentTab?'active':''}" onclick="setTab('${t}')">
-      ${labels[t]} ${t!=='all' ? `(${s[t]??0})` : ''}
+      ${labels[t]} ${t!=='all' ? `(${s[t]||0})` : ''}
     </div>`).join('');
 }
 
@@ -187,7 +202,18 @@ function renderTable() {
   const cols = [
     {h:'#', f: j => j.id},
     {h:'File', f: j => `<span class="fname" title="${j.filename}">${j.filename}</span>`},
-    {h:'Trạng thái', f: j => `<span class="badge ${j.status}">${j.status}</span>`},
+    {h:'Trạng thái', f: j => {
+      let badge = `<span class="badge ${j.status}">${j.status}</span>`;
+      if (j.status === 'processing' && j.total_frames > 0 && j.processed_frames > 0) {
+        const pct = Math.min(100, Math.round(j.processed_frames / j.total_frames * 100));
+        badge += `<div style="margin-top:4px;background:#2d3748;border-radius:4px;height:6px;width:80px">
+          <div style="background:#63b3ed;height:100%;border-radius:4px;width:${pct}%"></div>
+        </div><span style="font-size:0.7rem;color:#63b3ed">${pct}% (${j.processed_frames}/${j.total_frames})</span>`;
+      } else if (j.status === 'done' && j.total_frames > 0) {
+        badge += `<span style="font-size:0.7rem;color:#48bb78;margin-left:4px">${j.total_frames}f</span>`;
+      }
+      return badge;
+    }},
     {h:'WM Key', f: j => j.watermark_text
       ? `<div class="wmkey-wrap"><span class="wmkey">${j.watermark_text}</span><button class="copy-btn" onclick="copyKey(event,'${j.watermark_text}')">copy</button></div>`
       : '<span style="color:#4a5568">—</span>'},
@@ -196,6 +222,7 @@ function renderTable() {
     {h:'Tạo lúc', f: j => `<span class="ts">${fmtTime(j.created_at)}</span>`},
     {h:'Xong lúc', f: j => `<span class="ts">${fmtTime(j.processed_at)}</span>`},
     {h:'Lỗi', f: j => j.error_msg ? `<span class="err-msg" title="${j.error_msg}">${j.error_msg.substring(0,80)}${j.error_msg.length>80?'…':''}</span>` : ''},
+    {h:'', f: j => `<button class="del-btn" onclick="deleteJob(${j.id},'${j.filename.replace(/'/g,"\\'")}')">xóa</button>`},
   ];
 
   document.getElementById('table-head').innerHTML =
@@ -228,6 +255,53 @@ function copyKey(e, key) {
   });
 }
 
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+async function deleteJob(id, fname) {
+  if (!confirm(`Xóa job #${id} (${fname})?`)) return;
+  const r = await fetch(`/api/delete_job/${id}`, {method:'POST'});
+  const d = await r.json();
+  showToast(d.msg);
+  fetchData();
+}
+
+let bulkConfirm = {};
+async function bulkDelete(status) {
+  if (!bulkConfirm[status]) {
+    bulkConfirm[status] = true;
+    renderBulkBar();
+    setTimeout(() => { bulkConfirm[status] = false; renderBulkBar(); }, 4000);
+    return;
+  }
+  bulkConfirm[status] = false;
+  const r = await fetch(`/api/delete_by_status/${status}`, {method:'POST'});
+  const d = await r.json();
+  showToast(d.msg);
+  fetchData();
+}
+
+function renderBulkBar() {
+  const s = allData.stats || {};
+  const btns = [];
+  for (const st of ['pending','processing','error']) {
+    const cnt = s[st] || 0;
+    if (cnt === 0) continue;
+    const labels = {pending:'Chờ', processing:'Đang chạy', error:'Lỗi'};
+    const isConfirm = bulkConfirm[st];
+    btns.push(`<button class="bulk-btn ${isConfirm?'confirm':''}" onclick="bulkDelete('${st}')">
+      ${isConfirm ? `⚠ Nhấn lần nữa để xóa ${cnt} ${labels[st]}` : `Xóa tất cả ${labels[st]} (${cnt})`}
+    </button>`);
+  }
+  document.getElementById('bulk-bar').innerHTML = btns.length
+    ? btns.join('')
+    : '';
+}
+
 fetchData();
 setInterval(fetchData, 10000);
 </script>
@@ -239,6 +313,34 @@ setInterval(fetchData, 10000);
 @app.route("/")
 def index():
     return render_template_string(HTML)
+
+
+@app.route("/api/delete_job/<int:job_id>", methods=["POST"])
+def api_delete_job(job_id):
+    """Delete a single job by ID."""
+    try:
+        with _conn() as c:
+            row = c.execute("SELECT status, filename FROM jobs WHERE id=?", (job_id,)).fetchone()
+            if not row:
+                return jsonify({"ok": False, "msg": f"Job #{job_id} không tồn tại"}), 404
+            c.execute("DELETE FROM jobs WHERE id=?", (job_id,))
+        return jsonify({"ok": True, "msg": f"Đã xóa job #{job_id} ({row[1]})"})
+    except Exception as e:
+        return jsonify({"ok": False, "msg": str(e)}), 500
+
+
+@app.route("/api/delete_by_status/<status>", methods=["POST"])
+def api_delete_by_status(status):
+    """Delete all jobs with given status."""
+    allowed = ("pending", "processing", "error", "done")
+    if status not in allowed:
+        return jsonify({"ok": False, "msg": f"Status '{status}' không hợp lệ"}), 400
+    try:
+        with _conn() as c:
+            n = c.execute("DELETE FROM jobs WHERE status=?", (status,)).rowcount
+        return jsonify({"ok": True, "msg": f"Đã xóa {n} job(s) status='{status}'"})
+    except Exception as e:
+        return jsonify({"ok": False, "msg": str(e)}), 500
 
 
 @app.route("/api/jobs")
