@@ -18867,3 +18867,129 @@ nload=0.000s  total=0.222s
 2026-03-19 17:43:32,818 [INFO    ] Done in 32.5s — {'fps': 50.0, 'total_frames': 3519, 'has_audio': True, 'resolution': '2688x1512', 'oom_splits': 0, 'mode': 'FAST+GPU-BLEND+NVENC+PIPE+VBR(26815k)'}
 2026-03-19 17:43:32,818 [INFO    ] Output size: 231.8MB
 2026-03-19 17:43:32,818 [INFO    ] Output saved: D:\py_source\videoseal\watcher_service\data\test_output\DJI_0152_wm.mp4
+2026-03-19 22:25:19,961 [INFO    ]   Test 4a: stable file (not changing)...
+2026-03-19 22:25:20,980 [INFO    ]     _is_file_stable = True (expected True)
+2026-03-19 22:25:20,981 [INFO    ]   Test 4b: empty file...
+2026-03-19 22:25:20,981 [INFO    ]     _is_file_stable = False (expected False)
+2026-03-19 22:25:20,982 [INFO    ]   Test 4c: growing file (simulated copy)...
+2026-03-19 22:25:22,984 [INFO    ]     _is_file_stable = False (expected False)
+2026-03-19 22:25:22,985 [INFO    ] 
+>>> Running: 5. No flicker
+2026-03-19 22:25:22,985 [INFO    ] ============================================================
+2026-03-19 22:25:22,985 [INFO    ] TEST 5: No flicker / frame jumping
+2026-03-19 22:25:22,986 [INFO    ] ============================================================
+2026-03-19 22:25:25,879 [INFO    ]   Test 4a: stable file (not changing)...
+2026-03-19 22:25:26,748 [INFO    ]   Analyzing 200 frames for flicker...
+2026-03-19 22:25:26,880 [INFO    ]     _is_file_stable = True (expected True)
+2026-03-19 22:25:26,881 [INFO    ]   Test 4b: empty file...
+2026-03-19 22:25:26,881 [INFO    ]     _is_file_stable = False (expected False)
+2026-03-19 22:25:26,882 [INFO    ]   Test 4c: growing file (simulated copy)...
+2026-03-19 22:25:28,883 [INFO    ]     _is_file_stable = False (expected False)
+2026-03-19 22:25:28,884 [INFO    ] 
+>>> Running: 5. No flicker
+2026-03-19 22:25:28,884 [INFO    ] ============================================================
+2026-03-19 22:25:28,885 [INFO    ] TEST 5: No flicker / frame jumping
+2026-03-19 22:25:28,885 [INFO    ] ============================================================
+2026-03-19 22:25:32,891 [INFO    ]   Analyzing 200 frames for flicker...
+2026-03-19 22:25:35,264 [INFO    ]   Mean frame-to-frame MAE: 7.532
+2026-03-19 22:25:35,264 [INFO    ]   Max frame-to-frame MAE:  11.343
+2026-03-19 22:25:35,265 [INFO    ]   Jumps detected:          0
+2026-03-19 22:25:35,380 [INFO    ] 
+>>> Running: 6. Frame count
+2026-03-19 22:25:35,380 [INFO    ] ============================================================
+2026-03-19 22:25:35,381 [INFO    ] TEST 6: Frame count preservation
+2026-03-19 22:25:35,381 [INFO    ] ============================================================
+2026-03-19 22:25:36,121 [INFO    ]   Input frames:  3519
+2026-03-19 22:25:36,121 [INFO    ]   Output frames: 3517
+2026-03-19 22:25:36,122 [INFO    ]   Difference:    2
+2026-03-19 22:25:36,122 [INFO    ]   Threshold:     ≤ 2
+2026-03-19 22:25:36,122 [INFO    ] 
+>>> Running: 7. File size
+2026-03-19 22:25:36,122 [INFO    ] ============================================================
+2026-03-19 22:25:36,122 [INFO    ] TEST 7: File size preservation
+2026-03-19 22:25:36,123 [INFO    ] ============================================================
+2026-03-19 22:25:36,123 [INFO    ]   Input size:  151.2 MB
+2026-03-19 22:25:36,123 [INFO    ]   Output size: 231.8 MB
+2026-03-19 22:25:36,124 [INFO    ]   Difference:  53.3%
+2026-03-19 22:25:36,124 [INFO    ]   Threshold:   ≤ 5%
+2026-03-19 22:25:36,124 [INFO    ] 
+>>> Running: 8. Params unchanged
+2026-03-19 22:25:36,124 [INFO    ] ============================================================
+2026-03-19 22:25:36,124 [INFO    ] TEST 8: Audio/video parameters preservation
+2026-03-19 22:25:36,125 [INFO    ] ============================================================
+2026-03-19 22:25:36,176 [INFO    ]   Resolution: 2688x1512 -> 2688x1512
+2026-03-19 22:25:36,176 [INFO    ]   FPS:        50.00 -> 50.00
+2026-03-19 22:25:36,176 [INFO    ]   Duration:   70.38s -> 70.34s
+2026-03-19 22:25:36,177 [INFO    ]   Video codec: hevc -> h264
+2026-03-19 22:25:36,177 [INFO    ]   Audio SR:   48000 -> 48000
+2026-03-19 22:25:36,177 [INFO    ]   Audio CH:   2 -> 2
+2026-03-19 22:25:36,177 [INFO    ]   Audio codec: aac -> aac
+2026-03-19 22:25:36,177 [INFO    ]   Audio dur:  70.38s -> 70.38s
+2026-03-19 22:25:36,178 [INFO    ] 
+======================================================================
+2026-03-19 22:25:36,178 [INFO    ]   TEST RESULTS SUMMARY
+2026-03-19 22:25:36,178 [INFO    ] ======================================================================
+2026-03-19 22:25:36,178 [INFO    ]   [PASS ✓] video_watermark: detected=True, text='test', match=True
+2026-03-19 22:25:36,178 [INFO    ]   [PASS ✓] audio_watermark: prob=1.000, text='te', match=True
+2026-03-19 22:25:36,179 [INFO    ]   [PASS ✓] video_quality: mean=36.94dB, min=36.15dB, max=38.70dB
+2026-03-19 22:25:36,179 [INFO    ]   [PASS ✓] file_stability: stable=True, empty=True, growing=True
+2026-03-19 22:25:36,179 [INFO    ]   [PASS ✓] no_flicker: jumps=0, mean_mae=7.532, max_mae=11.343
+2026-03-19 22:25:36,179 [INFO    ]   [PASS ✓] frame_count: input=3519, output=3517, diff=2
+2026-03-19 22:25:36,179 [INFO    ]   [FAIL ✗] file_size: input=151.2MB, output=231.8MB, diff=53.3%
+2026-03-19 22:25:36,179 [INFO    ]   [PASS ✓] params_unchanged: all params match
+2026-03-19 22:25:36,180 [INFO    ] ----------------------------------------------------------------------
+2026-03-19 22:25:36,180 [INFO    ]   Total: 8 tests, 7 passed, 1 failed
+2026-03-19 22:25:36,180 [INFO    ]   Time:  112.5s
+2026-03-19 22:25:36,180 [INFO    ] ======================================================================
+2026-03-19 22:25:36,184 [INFO    ]   Cleaned up: C:\Users\leduc\AppData\Local\Temp\tmp7ei2vu4y.mp4
+2026-03-19 22:25:41,009 [INFO    ]   Mean frame-to-frame MAE: 7.532
+2026-03-19 22:25:41,010 [INFO    ]   Max frame-to-frame MAE:  11.343
+2026-03-19 22:25:41,011 [INFO    ]   Jumps detected:          0
+2026-03-19 22:25:41,097 [INFO    ] 
+>>> Running: 6. Frame count
+2026-03-19 22:25:41,097 [INFO    ] ============================================================
+2026-03-19 22:25:41,098 [INFO    ] TEST 6: Frame count preservation
+2026-03-19 22:25:41,098 [INFO    ] ============================================================
+2026-03-19 22:25:41,145 [INFO    ]   Input frames:  3519
+2026-03-19 22:25:41,145 [INFO    ]   Output frames: 3517
+2026-03-19 22:25:41,146 [INFO    ]   Difference:    2
+2026-03-19 22:25:41,146 [INFO    ]   Threshold:     ≤ 2
+2026-03-19 22:25:41,146 [INFO    ] 
+>>> Running: 7. File size
+2026-03-19 22:25:41,146 [INFO    ] ============================================================
+2026-03-19 22:25:41,146 [INFO    ] TEST 7: File size preservation
+2026-03-19 22:25:41,147 [INFO    ] ============================================================
+2026-03-19 22:25:41,147 [INFO    ]   Input size:  151.2 MB
+2026-03-19 22:25:41,147 [INFO    ]   Output size: 231.8 MB
+2026-03-19 22:25:41,148 [INFO    ]   Difference:  53.3%
+2026-03-19 22:25:41,148 [INFO    ]   Threshold:   ≤ 5%
+2026-03-19 22:25:41,148 [INFO    ] 
+>>> Running: 8. Params unchanged
+2026-03-19 22:25:41,148 [INFO    ] ============================================================
+2026-03-19 22:25:41,148 [INFO    ] TEST 8: Audio/video parameters preservation
+2026-03-19 22:25:41,148 [INFO    ] ============================================================
+2026-03-19 22:25:41,194 [INFO    ]   Resolution: 2688x1512 -> 2688x1512
+2026-03-19 22:25:41,195 [INFO    ]   FPS:        50.00 -> 50.00
+2026-03-19 22:25:41,195 [INFO    ]   Duration:   70.38s -> 70.34s
+2026-03-19 22:25:41,195 [INFO    ]   Video codec: hevc -> h264
+2026-03-19 22:25:41,196 [INFO    ]   Audio SR:   48000 -> 48000
+2026-03-19 22:25:41,196 [INFO    ]   Audio CH:   2 -> 2
+2026-03-19 22:25:41,196 [INFO    ]   Audio codec: aac -> aac
+2026-03-19 22:25:41,196 [INFO    ]   Audio dur:  70.38s -> 70.38s
+2026-03-19 22:25:41,197 [INFO    ] 
+======================================================================
+2026-03-19 22:25:41,197 [INFO    ]   TEST RESULTS SUMMARY
+2026-03-19 22:25:41,198 [INFO    ] ======================================================================
+2026-03-19 22:25:41,198 [INFO    ]   [PASS ✓] video_watermark: detected=True, text='test', match=True
+2026-03-19 22:25:41,198 [INFO    ]   [PASS ✓] audio_watermark: prob=1.000, text='te', match=True
+2026-03-19 22:25:41,198 [INFO    ]   [PASS ✓] video_quality: mean=36.94dB, min=36.15dB, max=38.70dB
+2026-03-19 22:25:41,199 [INFO    ]   [PASS ✓] file_stability: stable=True, empty=True, growing=True
+2026-03-19 22:25:41,199 [INFO    ]   [PASS ✓] no_flicker: jumps=0, mean_mae=7.532, max_mae=11.343
+2026-03-19 22:25:41,199 [INFO    ]   [PASS ✓] frame_count: input=3519, output=3517, diff=2
+2026-03-19 22:25:41,200 [INFO    ]   [FAIL ✗] file_size: input=151.2MB, output=231.8MB, diff=53.3%
+2026-03-19 22:25:41,200 [INFO    ]   [PASS ✓] params_unchanged: all params match
+2026-03-19 22:25:41,200 [INFO    ] ----------------------------------------------------------------------
+2026-03-19 22:25:41,204 [INFO    ]   Total: 8 tests, 7 passed, 1 failed
+2026-03-19 22:25:41,204 [INFO    ]   Time:  97.6s
+2026-03-19 22:25:41,205 [INFO    ] ======================================================================
+2026-03-19 22:25:41,234 [INFO    ]   Cleaned up: C:\Users\leduc\AppData\Local\Temp\tmpdjirbk8j.mp4
