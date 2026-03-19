@@ -22731,3 +22731,528 @@ av.error.InvalidDataError: [Errno 1094995529] Invalid data found when processing
 2026-03-20 00:23:38,828 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 63660k -maxrate 76392k -bufsize 127320k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmpnj05u3aq.mp4
 2026-03-20 00:23:39,000 [INFO    ]   [test_clip.mxf] decode=60 embed=0 / 0f  (0.8s)  [alloc=765MB peak=2629MB]
 2026-03-20 00:23:39,070 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.043s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.047s
+2026-03-20 00:23:39,127 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.058s  pipe_write=0.235s  total=0.293s  (102.4f/s)
+2026-03-20 00:23:39,193 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.015s  resize_dn=0.004s  yuv2rgb=0.003s  embed=0.048s  d2yuv=0.000s  resize_up=0.008s  blend=0.023s  download=0.042s  iter=0.192s
+2026-03-20 00:23:39,357 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.067s  pipe_write=0.059s  total=0.133s  (225.3f/s)
+2026-03-20 00:23:39,513 [INFO    ]   [test_clip.mxf] decode=90 embed=60 / 0f  (1.3s)  [alloc=939MB peak=2803MB]
+2026-03-20 00:23:39,575 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.042s
+2026-03-20 00:23:39,650 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.043s  d2yuv=0.000s  resize_up=0.006s  blend=0.017s  download=0.013s  iter=0.137s
+2026-03-20 00:23:39,750 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.050s  pipe_write=0.042s  total=0.100s  (299.8f/s)
+2026-03-20 00:23:39,909 [INFO    ]   [test_clip.mxf] decode=120 embed=90 / 0f  (1.7s)  [alloc=939MB peak=2803MB]
+2026-03-20 00:23:39,971 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.041s
+2026-03-20 00:23:40,042 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.133s
+2026-03-20 00:23:40,138 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.049s  pipe_write=0.041s  total=0.096s  (314.0f/s)
+2026-03-20 00:23:40,299 [INFO    ]   [test_clip.mxf] decode=150 embed=120 / 0f  (2.1s)  [alloc=939MB peak=2803MB]
+2026-03-20 00:23:40,362 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.042s
+2026-03-20 00:23:40,430 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.043s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.130s
+2026-03-20 00:23:40,526 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.049s  pipe_write=0.040s  total=0.096s  (313.0f/s)
+2026-03-20 00:23:40,685 [INFO    ]   [test_clip.mxf] decode=180 embed=150 / 0f  (2.5s)  [alloc=939MB peak=2803MB]
+2026-03-20 00:23:40,749 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.040s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.043s
+2026-03-20 00:23:40,821 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.045s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.014s  iter=0.136s
+2026-03-20 00:23:40,922 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.051s  pipe_write=0.042s  total=0.101s  (297.9f/s)
+2026-03-20 00:23:41,080 [INFO    ]   [test_clip.mxf] decode=210 embed=180 / 0f  (2.9s)  [alloc=939MB peak=2803MB]
+2026-03-20 00:23:41,141 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.041s
+2026-03-20 00:23:41,208 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.128s
+2026-03-20 00:23:41,302 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.047s  pipe_write=0.041s  total=0.094s  (320.5f/s)
+2026-03-20 00:23:41,448 [INFO    ]   [test_clip.mxf] decode=240 embed=210 / 0f  (3.3s)  [alloc=939MB peak=2803MB]
+2026-03-20 00:23:41,510 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.041s
+2026-03-20 00:23:41,580 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.132s
+2026-03-20 00:23:41,686 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.057s  pipe_write=0.040s  total=0.105s  (285.6f/s)
+2026-03-20 00:23:41,692 [INFO    ]   [TIMING-DELTA] 11f 256x256  upload=0.000s  embedder=0.054s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.058s
+2026-03-20 00:23:41,730 [INFO    ]   [TIMING-PIPE-GPU] 11f  upload=0.006s  resize_dn=0.003s  yuv2rgb=0.001s  embed=0.061s  d2yuv=0.000s  resize_up=0.002s  blend=0.007s  download=0.014s  iter=0.109s
+2026-03-20 00:23:41,793 [INFO    ]   [TIMING-PIPE-ENC] 11f  tobytes=0.018s  pipe_write=0.011s  total=0.036s  (302.4f/s)
+2026-03-20 00:23:41,856 [INFO    ]   [ENC-PIPE] Closing stdin, waiting for FFmpeg to finish...
+2026-03-20 00:23:41,931 [INFO    ]   [ENC-PIPE] FFmpeg finished in 0.1s
+2026-03-20 00:23:41,936 [INFO    ] [TIMING] test_clip.mxf: video_embed=3.822s (251f, 65.7f/s)
+2026-03-20 00:23:42,062 [INFO    ] [TIMING] test_clip.mxf: mux=0.125s
+2026-03-20 00:23:42,123 [INFO    ] [DONE] test_clip.mxf [2688x1512]  →  test_clip.mxf  (4.2s, 251f, 59.2f/s, audio=yes)  GPU: 528/6658MB (peak 2803MB)
+2026-03-20 00:23:42,399 [INFO    ] [QUEUE] test_clip.webm (job #270)
+2026-03-20 00:23:42,594 [INFO    ] [TIMING] test_clip.webm: audio_extract+wm=0.136s (has_audio=True)
+2026-03-20 00:23:42,695 [INFO    ] [BITRATE] test_clip.webm: source=35311k (h264), output=35311k (x1.0)
+2026-03-20 00:23:42,706 [INFO    ] [WARMUP] test_clip.webm: GPU warmup=0.010s
+2026-03-20 00:23:42,776 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+FFDEC+VBR(35311k)+FFDEC] test_clip.webm: 2688x1512, ~245f, fps=50.0, chunk=30
+2026-03-20 00:23:42,921 [INFO    ]   [PREALLOC] decode buffers: 2x [30, 2268, 2688] pinned (349MB total)
+2026-03-20 00:23:43,263 [INFO    ]   [test_clip.webm] decode=30 embed=0 / 245f  (0.4s)  [alloc=528MB peak=595MB]
+2026-03-20 00:23:43,342 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.042s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.046s
+2026-03-20 00:23:43,457 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.017s  resize_dn=0.013s  yuv2rgb=0.002s  embed=0.047s  d2yuv=0.000s  resize_up=0.006s  blend=0.033s  download=0.041s  iter=0.194s
+2026-03-20 00:23:43,458 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 35311k -maxrate 42373k -bufsize 70622k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmp7w09thzp.mp4
+2026-03-20 00:23:43,731 [INFO    ]   [test_clip.webm] decode=60 embed=0 / 245f  (0.9s)  [alloc=773MB peak=2637MB]
+2026-03-20 00:23:43,743 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.053s  pipe_write=0.227s  total=0.279s  (107.4f/s)
+2026-03-20 00:23:43,792 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.046s
+2026-03-20 00:23:43,884 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.019s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.047s  d2yuv=0.000s  resize_up=0.006s  blend=0.019s  download=0.034s  iter=0.163s
+2026-03-20 00:23:44,049 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.051s  pipe_write=0.043s  total=0.101s  (296.8f/s)
+2026-03-20 00:23:44,273 [INFO    ]   [test_clip.webm] decode=90 embed=60 / 245f  (1.4s)  [alloc=947MB peak=2811MB]
+2026-03-20 00:23:44,333 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.040s
+2026-03-20 00:23:44,404 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.041s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.131s
+2026-03-20 00:23:44,501 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.051s  pipe_write=0.039s  total=0.096s  (312.5f/s)
+2026-03-20 00:23:44,753 [INFO    ]   [test_clip.webm] decode=120 embed=90 / 245f  (1.9s)  [alloc=947MB peak=2811MB]
+2026-03-20 00:23:44,813 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.041s
+2026-03-20 00:23:44,889 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.041s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.136s
+2026-03-20 00:23:45,016 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.062s  pipe_write=0.057s  total=0.126s  (238.9f/s)
+2026-03-20 00:23:45,306 [INFO    ] [QUEUE] test_clip.mov (job #271)
+2026-03-20 00:23:45,331 [INFO    ]   [test_clip.webm] decode=150 embed=120 / 245f  (2.5s)  [alloc=947MB peak=2811MB]
+2026-03-20 00:23:45,392 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.041s
+2026-03-20 00:23:45,462 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.131s
+2026-03-20 00:23:45,557 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.047s  pipe_write=0.040s  total=0.094s  (320.0f/s)
+2026-03-20 00:23:45,778 [INFO    ]   [test_clip.webm] decode=180 embed=150 / 245f  (2.9s)  [alloc=947MB peak=2811MB]
+2026-03-20 00:23:45,838 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.041s
+2026-03-20 00:23:45,911 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.041s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.132s
+2026-03-20 00:23:46,004 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.049s  pipe_write=0.037s  total=0.093s  (323.2f/s)
+2026-03-20 00:23:46,212 [INFO    ]   [test_clip.webm] decode=210 embed=180 / 245f  (3.4s)  [alloc=947MB peak=2811MB]
+2026-03-20 00:23:46,272 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.042s
+2026-03-20 00:23:46,340 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.013s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.128s
+2026-03-20 00:23:46,432 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.047s  pipe_write=0.039s  total=0.092s  (327.5f/s)
+2026-03-20 00:23:46,618 [INFO    ]   [test_clip.webm] decode=240 embed=210 / 245f  (3.8s)  [alloc=947MB peak=2811MB]
+2026-03-20 00:23:46,679 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.042s
+2026-03-20 00:23:46,754 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.043s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.136s
+2026-03-20 00:23:46,858 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.055s  pipe_write=0.041s  total=0.104s  (288.7f/s)
+2026-03-20 00:23:46,859 [INFO    ]   [TIMING-DELTA] 5f 256x256  upload=0.000s  embedder=0.067s  vidmode=0.000s  atten=0.008s  download=0.000s  total=0.075s
+2026-03-20 00:23:46,876 [INFO    ]   [TIMING-PIPE-GPU] 5f  upload=0.005s  resize_dn=0.001s  yuv2rgb=0.003s  embed=0.078s  d2yuv=0.000s  resize_up=0.001s  blend=0.005s  download=0.005s  iter=0.104s
+2026-03-20 00:23:46,953 [INFO    ]   [TIMING-PIPE-ENC] 5f  tobytes=0.009s  pipe_write=0.005s  total=0.022s  (225.9f/s)
+2026-03-20 00:23:47,014 [INFO    ]   [ENC-PIPE] Closing stdin, waiting for FFmpeg to finish...
+2026-03-20 00:23:47,072 [INFO    ] [QUEUE] test_clip.mkv (job #272)
+2026-03-20 00:23:47,088 [INFO    ]   [ENC-PIPE] FFmpeg finished in 0.1s
+2026-03-20 00:23:47,153 [INFO    ] [TIMING] test_clip.webm: video_embed=4.447s (245f, 55.1f/s)
+2026-03-20 00:23:47,321 [INFO    ] [TIMING] test_clip.webm: mux=0.168s
+2026-03-20 00:23:47,374 [INFO    ] [DONE] test_clip.webm [2688x1512]  →  test_clip.webm  (4.9s, 245f, 50.4f/s, audio=yes)  GPU: 536/6776MB (peak 2811MB)
+2026-03-20 00:23:47,617 [INFO    ] [TIMING] test_clip.mov: audio_extract+wm=0.157s (has_audio=True)
+2026-03-20 00:23:47,729 [INFO    ] [BITRATE] test_clip.mov: source=52493k (h264), output=52493k (x1.0)
+2026-03-20 00:23:47,740 [INFO    ] [WARMUP] test_clip.mov: GPU warmup=0.010s
+2026-03-20 00:23:47,780 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+VBR(52493k)] test_clip.mov: 2688x1512, ~241f, fps=50.0, chunk=30
+2026-03-20 00:23:47,995 [INFO    ]   [PREALLOC] decode buffers: 2x [30, 2268, 2688] pinned (349MB total)
+2026-03-20 00:23:48,152 [INFO    ]   [test_clip.mov] decode=30 embed=0 / 241f  (0.3s)  [alloc=536MB peak=592MB]
+2026-03-20 00:23:48,232 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.044s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.047s
+2026-03-20 00:23:48,352 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.017s  resize_dn=0.014s  yuv2rgb=0.002s  embed=0.048s  d2yuv=0.000s  resize_up=0.006s  blend=0.034s  download=0.041s  iter=0.200s
+2026-03-20 00:23:48,352 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 52493k -maxrate 62991k -bufsize 104986k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmpipigj0r3.mp4
+2026-03-20 00:23:48,379 [INFO    ]   [test_clip.mov] decode=60 embed=0 / 241f  (0.5s)  [alloc=781MB peak=2645MB]
+2026-03-20 00:23:48,446 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.040s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.042s
+2026-03-20 00:23:48,557 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.003s  embed=0.043s  d2yuv=0.000s  resize_up=0.006s  blend=0.021s  download=0.035s  iter=0.174s
+2026-03-20 00:23:48,605 [INFO    ]   [test_clip.mov] decode=90 embed=0 / 241f  (0.7s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:48,668 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.051s  pipe_write=0.258s  total=0.309s  (97.0f/s)
+2026-03-20 00:23:48,672 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.043s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.046s
+2026-03-20 00:23:48,754 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.015s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.047s  d2yuv=0.000s  resize_up=0.007s  blend=0.019s  download=0.016s  iter=0.148s
+2026-03-20 00:23:48,911 [INFO    ]   [test_clip.mov] decode=120 embed=30 / 241f  (1.0s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:48,926 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.066s  pipe_write=0.055s  total=0.128s  (234.8f/s)
+2026-03-20 00:23:48,977 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.043s
+2026-03-20 00:23:49,063 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.016s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.044s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.151s
+2026-03-20 00:23:49,159 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.065s  pipe_write=0.054s  total=0.128s  (233.6f/s)
+2026-03-20 00:23:49,160 [INFO    ]   [test_clip.mov] decode=150 embed=60 / 241f  (1.3s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:49,221 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.041s
+2026-03-20 00:23:49,285 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.041s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.124s
+2026-03-20 00:23:49,389 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.051s  pipe_write=0.042s  total=0.099s  (301.8f/s)
+2026-03-20 00:23:49,544 [INFO    ]   [test_clip.mov] decode=180 embed=120 / 241f  (1.6s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:49,560 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.059s  pipe_write=0.053s  total=0.120s  (250.2f/s)
+2026-03-20 00:23:49,610 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.043s
+2026-03-20 00:23:49,683 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.016s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.045s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.138s
+2026-03-20 00:23:49,791 [INFO    ]   [test_clip.mov] decode=210 embed=150 / 241f  (1.9s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:49,796 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.060s  pipe_write=0.046s  total=0.112s  (266.9f/s)
+2026-03-20 00:23:49,854 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.042s
+2026-03-20 00:23:49,929 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.015s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.043s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.138s
+2026-03-20 00:23:50,030 [INFO    ]   [test_clip.mov] decode=240 embed=180 / 241f  (2.1s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:50,036 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.054s  pipe_write=0.045s  total=0.107s  (281.0f/s)
+2026-03-20 00:23:50,095 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.042s
+2026-03-20 00:23:50,159 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.015s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.128s
+2026-03-20 00:23:50,219 [INFO    ]   [TIMING-DELTA] 1f 256x256  upload=0.000s  embedder=0.017s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.019s
+2026-03-20 00:23:50,223 [INFO    ]   [TIMING-PIPE-GPU] 1f  upload=0.001s  resize_dn=0.000s  yuv2rgb=0.000s  embed=0.020s  d2yuv=0.000s  resize_up=0.000s  blend=0.000s  download=0.001s  iter=0.025s
+2026-03-20 00:23:50,389 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.050s  pipe_write=0.034s  total=0.091s  (328.9f/s)
+2026-03-20 00:23:50,447 [INFO    ]   [TIMING-PIPE-ENC] 1f  tobytes=0.001s  pipe_write=0.001s  total=0.007s  (134.0f/s)
+2026-03-20 00:23:50,507 [INFO    ]   [ENC-PIPE] Closing stdin, waiting for FFmpeg to finish...
+2026-03-20 00:23:50,612 [INFO    ]   [ENC-PIPE] FFmpeg finished in 0.1s
+2026-03-20 00:23:50,679 [INFO    ] [TIMING] test_clip.mov: video_embed=2.940s (241f, 82.0f/s)
+2026-03-20 00:23:50,838 [INFO    ] [TIMING] test_clip.mov: mux=0.158s
+2026-03-20 00:23:50,890 [INFO    ] [DONE] test_clip.mov [2688x1512]  →  test_clip.mov  (3.4s, 241f, 71.3f/s, audio=yes)  GPU: 544/6830MB (peak 2819MB)
+2026-03-20 00:23:51,104 [INFO    ] [TIMING] test_clip.mkv: audio_extract+wm=0.146s (has_audio=True)
+2026-03-20 00:23:51,315 [INFO    ] [BITRATE] test_clip.mkv: source=41567k (h264), output=41567k (x1.0)
+2026-03-20 00:23:51,331 [INFO    ] [WARMUP] test_clip.mkv: GPU warmup=0.016s
+2026-03-20 00:23:51,373 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+VBR(41567k)] test_clip.mkv: 2688x1512, ~0f, fps=50.0, chunk=30
+2026-03-20 00:23:51,464 [INFO    ]   [PREALLOC] decode buffers: 2x [30, 2268, 2688] pinned (349MB total)
+2026-03-20 00:23:51,473 [INFO    ] [QUEUE] test_clip.mp4 (job #273)
+2026-03-20 00:23:51,611 [INFO    ]   [test_clip.mkv] decode=30 embed=0 / 0f  (0.2s)  [alloc=544MB peak=612MB]
+2026-03-20 00:23:51,704 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.056s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.060s
+2026-03-20 00:23:51,778 [INFO    ]   [test_clip.mkv] decode=60 embed=0 / 0f  (0.4s)  [alloc=781MB peak=2645MB]
+2026-03-20 00:23:51,826 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.018s  resize_dn=0.013s  yuv2rgb=0.002s  embed=0.062s  d2yuv=0.000s  resize_up=0.006s  blend=0.034s  download=0.040s  iter=0.215s
+2026-03-20 00:23:51,827 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 41567k -maxrate 49880k -bufsize 83134k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmp96kl01p7.mp4
+2026-03-20 00:23:51,898 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.012s  download=0.000s  total=0.051s
+2026-03-20 00:23:51,950 [INFO    ]   [test_clip.mkv] decode=90 embed=0 / 0f  (0.6s)  [alloc=1130MB peak=2819MB]
+2026-03-20 00:23:52,007 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.052s  d2yuv=0.002s  resize_up=0.006s  blend=0.021s  download=0.037s  iter=0.180s
+2026-03-20 00:23:52,073 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.040s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.044s
+2026-03-20 00:23:52,092 [INFO    ]   [test_clip.mkv] decode=120 embed=0 / 0f  (0.7s)  [alloc=1130MB peak=2819MB]
+2026-03-20 00:23:52,160 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.003s  embed=0.046s  d2yuv=0.000s  resize_up=0.007s  blend=0.017s  download=0.014s  iter=0.153s
+2026-03-20 00:23:52,185 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.058s  pipe_write=0.294s  total=0.352s  (85.3f/s)
+2026-03-20 00:23:52,234 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.044s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.047s
+2026-03-20 00:23:52,244 [INFO    ]   [test_clip.mkv] decode=150 embed=30 / 0f  (0.9s)  [alloc=1130MB peak=2819MB]
+2026-03-20 00:23:52,333 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.018s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.048s  d2yuv=0.000s  resize_up=0.006s  blend=0.021s  download=0.016s  iter=0.171s
+2026-03-20 00:23:52,387 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.065s  pipe_write=0.059s  total=0.131s  (228.7f/s)
+2026-03-20 00:23:52,421 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.055s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.059s
+2026-03-20 00:23:52,422 [INFO    ]   [test_clip.mkv] decode=180 embed=60 / 0f  (1.0s)  [alloc=978MB peak=2819MB]
+2026-03-20 00:23:52,519 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.016s  resize_dn=0.006s  yuv2rgb=0.003s  embed=0.061s  d2yuv=0.001s  resize_up=0.006s  blend=0.016s  download=0.019s  iter=0.183s
+2026-03-20 00:23:52,575 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.060s  pipe_write=0.052s  total=0.120s  (250.7f/s)
+2026-03-20 00:23:52,605 [INFO    ]   [test_clip.mkv] decode=210 embed=90 / 0f  (1.2s)  [alloc=1016MB peak=2819MB]
+2026-03-20 00:23:52,606 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.050s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.054s
+2026-03-20 00:23:52,707 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.018s  resize_dn=0.004s  yuv2rgb=0.007s  embed=0.056s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.020s  iter=0.186s
+2026-03-20 00:23:52,766 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.063s  pipe_write=0.055s  total=0.126s  (238.9f/s)
+2026-03-20 00:23:52,779 [INFO    ]   [test_clip.mkv] decode=240 embed=120 / 0f  (1.4s)  [alloc=986MB peak=2819MB]
+2026-03-20 00:23:52,786 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.048s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.051s
+2026-03-20 00:23:52,858 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.017s  resize_dn=0.005s  yuv2rgb=0.003s  embed=0.054s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.014s  iter=0.150s
+2026-03-20 00:23:53,046 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.047s  vidmode=0.000s  atten=0.007s  download=0.000s  total=0.054s
+2026-03-20 00:23:53,049 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.050s  pipe_write=0.036s  total=0.093s  (322.9f/s)
+2026-03-20 00:23:53,119 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.017s  resize_dn=0.004s  yuv2rgb=0.005s  embed=0.055s  d2yuv=0.000s  resize_up=0.007s  blend=0.018s  download=0.013s  iter=0.154s
+2026-03-20 00:23:53,188 [INFO    ]   [TIMING-DELTA] 10f 256x256  upload=0.000s  embedder=0.045s  vidmode=0.000s  atten=0.008s  download=0.000s  total=0.053s
+2026-03-20 00:23:53,189 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.049s  pipe_write=0.035s  total=0.091s  (328.7f/s)
+2026-03-20 00:23:53,218 [INFO    ]   [TIMING-PIPE-GPU] 10f  upload=0.006s  resize_dn=0.003s  yuv2rgb=0.001s  embed=0.056s  d2yuv=0.000s  resize_up=0.002s  blend=0.007s  download=0.009s  iter=0.097s
+2026-03-20 00:23:53,325 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.049s  pipe_write=0.030s  total=0.086s  (350.2f/s)
+2026-03-20 00:23:53,463 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.046s  pipe_write=0.030s  total=0.082s  (363.8f/s)
+2026-03-20 00:23:53,563 [INFO    ]   [TIMING-PIPE-ENC] 10f  tobytes=0.022s  pipe_write=0.019s  total=0.048s  (207.9f/s)
+2026-03-20 00:23:53,614 [INFO    ]   [ENC-PIPE] Closing stdin, waiting for FFmpeg to finish...
+2026-03-20 00:23:53,686 [INFO    ]   [ENC-PIPE] FFmpeg finished in 0.1s
+2026-03-20 00:23:53,700 [INFO    ] [TIMING] test_clip.mkv: video_embed=2.368s (250f, 105.6f/s)
+2026-03-20 00:23:53,879 [INFO    ] [TIMING] test_clip.mkv: mux=0.179s
+2026-03-20 00:23:53,991 [INFO    ] [DONE] test_clip.mkv [2688x1512]  →  test_clip.mkv  (2.9s, 250f, 85.5f/s, audio=yes)  GPU: 544/6992MB (peak 2819MB)
+2026-03-20 00:23:54,202 [INFO    ] [TIMING] test_clip.mp4: audio_extract+wm=0.127s (has_audio=True)
+2026-03-20 00:23:54,320 [INFO    ] [BITRATE] test_clip.mp4: source=43988k (h264), output=43988k (x1.0)
+2026-03-20 00:23:54,331 [INFO    ] [WARMUP] test_clip.mp4: GPU warmup=0.011s
+2026-03-20 00:23:54,371 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+VBR(43988k)] test_clip.mp4: 2688x1512, ~241f, fps=50.0, chunk=30
+2026-03-20 00:23:54,664 [INFO    ]   [PREALLOC] decode buffers: 2x [30, 2268, 2688] pinned (349MB total)
+2026-03-20 00:23:54,689 [INFO    ] [QUEUE] test_clip.mxf (job #274)
+2026-03-20 00:23:54,807 [INFO    ]   [test_clip.mp4] decode=30 embed=0 / 241f  (0.3s)  [alloc=544MB peak=612MB]
+2026-03-20 00:23:54,888 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.044s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.047s
+2026-03-20 00:23:55,021 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.017s  resize_dn=0.013s  yuv2rgb=0.002s  embed=0.049s  d2yuv=0.000s  resize_up=0.006s  blend=0.033s  download=0.045s  iter=0.213s
+2026-03-20 00:23:55,026 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 43988k -maxrate 52785k -bufsize 87976k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmpgholm3cv.mp4
+2026-03-20 00:23:55,048 [INFO    ]   [test_clip.mp4] decode=60 embed=0 / 241f  (0.5s)  [alloc=781MB peak=2645MB]
+2026-03-20 00:23:55,115 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.004s  atten=0.008s  download=0.000s  total=0.052s
+2026-03-20 00:23:55,258 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.057s  d2yuv=0.000s  resize_up=0.006s  blend=0.020s  download=0.037s  iter=0.215s
+2026-03-20 00:23:55,369 [INFO    ]   [test_clip.mp4] decode=90 embed=0 / 241f  (0.8s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:55,441 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.043s  vidmode=0.000s  atten=0.007s  download=0.000s  total=0.051s
+2026-03-20 00:23:55,441 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.062s  pipe_write=0.321s  total=0.383s  (78.2f/s)
+2026-03-20 00:23:55,523 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.015s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.052s  d2yuv=0.000s  resize_up=0.007s  blend=0.018s  download=0.016s  iter=0.154s
+2026-03-20 00:23:55,643 [INFO    ]   [test_clip.mp4] decode=120 embed=30 / 241f  (1.1s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:55,662 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.059s  pipe_write=0.048s  total=0.114s  (262.2f/s)
+2026-03-20 00:23:55,708 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.041s
+2026-03-20 00:23:55,800 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.017s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.157s
+2026-03-20 00:23:55,962 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.063s  pipe_write=0.059s  total=0.131s  (229.6f/s)
+2026-03-20 00:23:55,983 [INFO    ]   [test_clip.mp4] decode=150 embed=90 / 241f  (1.4s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:56,049 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.007s  download=0.000s  total=0.047s
+2026-03-20 00:23:56,128 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.056s  pipe_write=0.035s  total=0.097s  (310.6f/s)
+2026-03-20 00:23:56,140 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.048s  d2yuv=0.000s  resize_up=0.007s  blend=0.018s  download=0.016s  iter=0.157s
+2026-03-20 00:23:56,283 [INFO    ]   [test_clip.mp4] decode=180 embed=120 / 241f  (1.7s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:56,302 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.058s  pipe_write=0.048s  total=0.113s  (266.3f/s)
+2026-03-20 00:23:56,347 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.041s
+2026-03-20 00:23:56,418 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.016s  resize_dn=0.004s  yuv2rgb=0.003s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.135s
+2026-03-20 00:23:56,546 [INFO    ]   [test_clip.mp4] decode=210 embed=150 / 241f  (2.0s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:56,547 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.052s  pipe_write=0.048s  total=0.107s  (279.3f/s)
+2026-03-20 00:23:56,607 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.040s
+2026-03-20 00:23:56,669 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.041s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.123s
+2026-03-20 00:23:56,845 [INFO    ]   [test_clip.mp4] decode=240 embed=180 / 241f  (2.3s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:56,874 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.055s  pipe_write=0.047s  total=0.109s  (274.9f/s)
+2026-03-20 00:23:56,916 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.043s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.046s
+2026-03-20 00:23:56,981 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.016s  resize_dn=0.004s  yuv2rgb=0.004s  embed=0.048s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.136s
+2026-03-20 00:23:57,021 [INFO    ]   [TIMING-DELTA] 1f 256x256  upload=0.000s  embedder=0.029s  vidmode=0.000s  atten=0.008s  download=0.000s  total=0.038s
+2026-03-20 00:23:57,033 [INFO    ]   [TIMING-PIPE-GPU] 1f  upload=0.001s  resize_dn=0.000s  yuv2rgb=0.000s  embed=0.041s  d2yuv=0.000s  resize_up=0.000s  blend=0.002s  download=0.003s  iter=0.051s
+2026-03-20 00:23:57,087 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.048s  pipe_write=0.033s  total=0.089s  (336.9f/s)
+2026-03-20 00:23:57,156 [INFO    ]   [TIMING-PIPE-ENC] 1f  tobytes=0.001s  pipe_write=0.001s  total=0.009s  (112.7f/s)
+2026-03-20 00:23:57,206 [INFO    ]   [ENC-PIPE] Closing stdin, waiting for FFmpeg to finish...
+2026-03-20 00:23:57,277 [INFO    ]   [ENC-PIPE] FFmpeg finished in 0.1s
+2026-03-20 00:23:57,349 [INFO    ] [TIMING] test_clip.mp4: video_embed=3.018s (241f, 79.9f/s)
+2026-03-20 00:23:57,491 [INFO    ] [TIMING] test_clip.mp4: mux=0.141s
+2026-03-20 00:23:57,550 [INFO    ] [DONE] test_clip.mp4 [2688x1512]  →  test_clip.mp4  (3.4s, 241f, 70.5f/s, audio=yes)  GPU: 544/6994MB (peak 2819MB)
+2026-03-20 00:23:57,785 [INFO    ] [TIMING] test_clip.mxf: audio_extract+wm=0.157s (has_audio=True)
+2026-03-20 00:23:57,911 [INFO    ] [BITRATE] test_clip.mxf: source=77367k (h264), output=77367k (x1.0)
+2026-03-20 00:23:57,921 [INFO    ] [WARMUP] test_clip.mxf: GPU warmup=0.010s
+2026-03-20 00:23:57,998 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+FFDEC+VBR(77367k)+FFDEC] test_clip.mxf: 2688x1512, ~0f, fps=50.0, chunk=30
+2026-03-20 00:23:58,044 [INFO    ]   [PREALLOC] decode buffers: 2x [30, 2268, 2688] pinned (349MB total)
+2026-03-20 00:23:58,472 [INFO    ]   [test_clip.mxf] decode=30 embed=0 / 0f  (0.5s)  [alloc=544MB peak=612MB]
+2026-03-20 00:23:58,563 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.050s  vidmode=0.000s  atten=0.005s  download=0.000s  total=0.056s
+2026-03-20 00:23:58,690 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.018s  resize_dn=0.014s  yuv2rgb=0.003s  embed=0.057s  d2yuv=0.000s  resize_up=0.006s  blend=0.034s  download=0.041s  iter=0.218s
+2026-03-20 00:23:58,691 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 77367k -maxrate 92840k -bufsize 154734k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmpmqf_sd6s.mp4
+2026-03-20 00:23:58,863 [INFO    ]   [test_clip.mxf] decode=60 embed=0 / 0f  (0.9s)  [alloc=781MB peak=2645MB]
+2026-03-20 00:23:58,930 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.042s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.046s
+2026-03-20 00:23:58,973 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.048s  pipe_write=0.226s  total=0.274s  (109.5f/s)
+2026-03-20 00:23:59,050 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.015s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.048s  d2yuv=0.000s  resize_up=0.008s  blend=0.024s  download=0.039s  iter=0.187s
+2026-03-20 00:23:59,244 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.060s  pipe_write=0.045s  total=0.113s  (266.3f/s)
+2026-03-20 00:23:59,281 [INFO    ] [QUEUE] test_clip.mov (job #275)
+2026-03-20 00:23:59,341 [INFO    ]   [test_clip.mxf] decode=90 embed=60 / 0f  (1.3s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:59,403 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.041s
+2026-03-20 00:23:59,478 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.137s
+2026-03-20 00:23:59,583 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.052s  pipe_write=0.044s  total=0.104s  (289.3f/s)
+2026-03-20 00:23:59,741 [INFO    ]   [test_clip.mxf] decode=120 embed=90 / 0f  (1.7s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:23:59,803 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.042s
+2026-03-20 00:23:59,880 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.043s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.138s
+2026-03-20 00:23:59,978 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.051s  pipe_write=0.041s  total=0.098s  (307.2f/s)
+2026-03-20 00:24:00,136 [INFO    ]   [test_clip.mxf] decode=150 embed=120 / 0f  (2.1s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:00,197 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.041s
+2026-03-20 00:24:00,270 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.043s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.134s
+2026-03-20 00:24:00,369 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.051s  pipe_write=0.040s  total=0.098s  (305.7f/s)
+2026-03-20 00:24:00,536 [INFO    ]   [test_clip.mxf] decode=180 embed=150 / 0f  (2.5s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:00,597 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.042s
+2026-03-20 00:24:00,670 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.043s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.134s
+2026-03-20 00:24:00,765 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.048s  pipe_write=0.040s  total=0.094s  (318.4f/s)
+2026-03-20 00:24:00,930 [INFO    ]   [test_clip.mxf] decode=210 embed=180 / 0f  (2.9s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:00,994 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.044s
+2026-03-20 00:24:01,065 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.045s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.135s
+2026-03-20 00:24:01,163 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.052s  pipe_write=0.040s  total=0.098s  (306.9f/s)
+2026-03-20 00:24:01,323 [INFO    ]   [test_clip.mxf] decode=240 embed=210 / 0f  (3.3s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:01,386 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.043s
+2026-03-20 00:24:01,461 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.044s  d2yuv=0.000s  resize_up=0.006s  blend=0.017s  download=0.013s  iter=0.138s
+2026-03-20 00:24:01,558 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.054s  pipe_write=0.036s  total=0.097s  (309.1f/s)
+2026-03-20 00:24:01,565 [INFO    ]   [TIMING-DELTA] 11f 256x256  upload=0.000s  embedder=0.052s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.054s
+2026-03-20 00:24:01,596 [INFO    ]   [TIMING-PIPE-GPU] 11f  upload=0.007s  resize_dn=0.004s  yuv2rgb=0.003s  embed=0.056s  d2yuv=0.000s  resize_up=0.002s  blend=0.008s  download=0.010s  iter=0.101s
+2026-03-20 00:24:01,715 [INFO    ]   [TIMING-PIPE-ENC] 11f  tobytes=0.022s  pipe_write=0.014s  total=0.043s  (258.0f/s)
+2026-03-20 00:24:01,764 [INFO    ]   [ENC-PIPE] Closing stdin, waiting for FFmpeg to finish...
+2026-03-20 00:24:01,835 [INFO    ]   [ENC-PIPE] FFmpeg finished in 0.1s
+2026-03-20 00:24:01,841 [INFO    ] [TIMING] test_clip.mxf: video_embed=3.920s (251f, 64.0f/s)
+2026-03-20 00:24:01,969 [INFO    ] [TIMING] test_clip.mxf: mux=0.128s
+2026-03-20 00:24:02,066 [INFO    ] [DONE] test_clip.mxf [2688x1512]  →  test_clip.mxf  (4.3s, 251f, 57.8f/s, audio=yes)  GPU: 544/6992MB (peak 2819MB)
+2026-03-20 00:24:02,269 [INFO    ] [TIMING] test_clip.mov: audio_extract+wm=0.137s (has_audio=True)
+2026-03-20 00:24:02,391 [INFO    ] [BITRATE] test_clip.mov: source=61898k (h264), output=61898k (x1.0)
+2026-03-20 00:24:02,403 [INFO    ] [WARMUP] test_clip.mov: GPU warmup=0.010s
+2026-03-20 00:24:02,448 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+VBR(61898k)] test_clip.mov: 2688x1512, ~237f, fps=50.0, chunk=30
+2026-03-20 00:24:02,731 [INFO    ]   [PREALLOC] decode buffers: 2x [30, 2268, 2688] pinned (349MB total)
+2026-03-20 00:24:02,908 [INFO    ]   [test_clip.mov] decode=30 embed=0 / 237f  (0.3s)  [alloc=544MB peak=600MB]
+2026-03-20 00:24:02,988 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.044s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.048s
+2026-03-20 00:24:03,104 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.017s  resize_dn=0.013s  yuv2rgb=0.002s  embed=0.048s  d2yuv=0.000s  resize_up=0.006s  blend=0.032s  download=0.040s  iter=0.196s
+2026-03-20 00:24:03,104 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 61898k -maxrate 74277k -bufsize 123796k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmppr26vph0.mp4
+2026-03-20 00:24:03,195 [INFO    ]   [test_clip.mov] decode=60 embed=0 / 237f  (0.6s)  [alloc=781MB peak=2645MB]
+2026-03-20 00:24:03,259 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.041s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.044s
+2026-03-20 00:24:03,362 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.045s  d2yuv=0.000s  resize_up=0.007s  blend=0.020s  download=0.032s  iter=0.167s
+2026-03-20 00:24:03,442 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.051s  pipe_write=0.280s  total=0.331s  (90.6f/s)
+2026-03-20 00:24:03,462 [INFO    ]   [test_clip.mov] decode=90 embed=30 / 237f  (0.9s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:03,528 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.040s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.043s
+2026-03-20 00:24:03,624 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.017s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.044s  d2yuv=0.000s  resize_up=0.007s  blend=0.020s  download=0.015s  iter=0.162s
+2026-03-20 00:24:03,666 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.063s  pipe_write=0.048s  total=0.118s  (253.4f/s)
+2026-03-20 00:24:03,830 [INFO    ]   [test_clip.mov] decode=120 embed=60 / 237f  (1.2s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:03,852 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.067s  pipe_write=0.054s  total=0.129s  (232.1f/s)
+2026-03-20 00:24:03,898 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.040s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.043s
+2026-03-20 00:24:03,963 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.016s  resize_dn=0.004s  yuv2rgb=0.004s  embed=0.044s  d2yuv=0.000s  resize_up=0.006s  blend=0.017s  download=0.013s  iter=0.133s
+2026-03-20 00:24:04,230 [INFO    ]   [test_clip.mov] decode=150 embed=90 / 237f  (1.6s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:04,293 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.043s
+2026-03-20 00:24:04,410 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.044s  d2yuv=0.000s  resize_up=0.013s  blend=0.020s  download=0.019s  iter=0.179s
+2026-03-20 00:24:04,418 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.066s  pipe_write=0.048s  total=0.120s  (250.6f/s)
+2026-03-20 00:24:04,448 [INFO    ] [QUEUE] test_clip.webm (job #276)
+2026-03-20 00:24:04,561 [INFO    ]   [test_clip.mov] decode=180 embed=120 / 237f  (2.0s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:04,615 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.058s  pipe_write=0.045s  total=0.109s  (275.5f/s)
+2026-03-20 00:24:04,636 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.046s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.048s
+2026-03-20 00:24:04,710 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.016s  resize_dn=0.004s  yuv2rgb=0.005s  embed=0.050s  d2yuv=0.000s  resize_up=0.007s  blend=0.016s  download=0.013s  iter=0.148s
+2026-03-20 00:24:04,827 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.057s  pipe_write=0.052s  total=0.116s  (257.5f/s)
+2026-03-20 00:24:04,828 [INFO    ]   [test_clip.mov] decode=210 embed=150 / 237f  (2.2s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:04,889 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.041s
+2026-03-20 00:24:04,963 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.007s  blend=0.017s  download=0.013s  iter=0.134s
+2026-03-20 00:24:05,104 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.074s  pipe_write=0.057s  total=0.140s  (214.1f/s)
+2026-03-20 00:24:05,322 [INFO    ]   [TIMING-DELTA] 27f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.005s  download=0.000s  total=0.044s
+2026-03-20 00:24:05,488 [INFO    ]   [TIMING-PIPE-GPU] 27f  upload=0.012s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.045s  d2yuv=0.000s  resize_up=0.005s  blend=0.015s  download=0.107s  iter=0.228s
+2026-03-20 00:24:05,607 [INFO    ]   [TIMING-PIPE-ENC] 27f  tobytes=0.076s  pipe_write=0.035s  total=0.119s  (227.8f/s)
+2026-03-20 00:24:05,739 [INFO    ]   [ENC-PIPE] Closing stdin, waiting for FFmpeg to finish...
+2026-03-20 00:24:05,847 [INFO    ]   [ENC-PIPE] FFmpeg finished in 0.1s
+2026-03-20 00:24:05,945 [INFO    ] [TIMING] test_clip.mov: video_embed=3.542s (237f, 66.9f/s)
+2026-03-20 00:24:06,142 [INFO    ] [TIMING] test_clip.mov: mux=0.196s
+2026-03-20 00:24:06,215 [INFO    ] [DONE] test_clip.mov [2688x1512]  →  test_clip.mov  (4.0s, 237f, 59.1f/s, audio=yes)  GPU: 544/6924MB (peak 2819MB)
+2026-03-20 00:24:06,477 [INFO    ] [TIMING] test_clip.webm: audio_extract+wm=0.162s (has_audio=True)
+2026-03-20 00:24:06,619 [INFO    ] [BITRATE] test_clip.webm: source=42286k (h264), output=42286k (x1.0)
+2026-03-20 00:24:06,648 [INFO    ] [WARMUP] test_clip.webm: GPU warmup=0.028s
+2026-03-20 00:24:06,742 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+FFDEC+VBR(42286k)+FFDEC] test_clip.webm: 2688x1512, ~245f, fps=50.0, chunk=30
+2026-03-20 00:24:06,885 [INFO    ]   [PREALLOC] decode buffers: 2x [30, 2268, 2688] pinned (349MB total)
+2026-03-20 00:24:07,372 [INFO    ]   [test_clip.webm] decode=30 embed=0 / 245f  (0.6s)  [alloc=544MB peak=612MB]
+2026-03-20 00:24:07,459 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.049s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.053s
+2026-03-20 00:24:07,653 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.018s  resize_dn=0.014s  yuv2rgb=0.002s  embed=0.054s  d2yuv=0.000s  resize_up=0.006s  blend=0.057s  download=0.045s  iter=0.281s
+2026-03-20 00:24:07,653 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 42286k -maxrate 50743k -bufsize 84572k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmp0zvnvkk6.mp4
+2026-03-20 00:24:07,951 [INFO    ]   [test_clip.webm] decode=60 embed=0 / 245f  (1.1s)  [alloc=781MB peak=2645MB]
+2026-03-20 00:24:08,018 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.061s  pipe_write=0.297s  total=0.358s  (83.8f/s)
+2026-03-20 00:24:08,060 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.069s  vidmode=0.000s  atten=0.017s  download=0.000s  total=0.086s
+2026-03-20 00:24:08,210 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.015s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.088s  d2yuv=0.003s  resize_up=0.011s  blend=0.024s  download=0.051s  iter=0.258s
+2026-03-20 00:24:08,340 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.077s  pipe_write=0.044s  total=0.130s  (231.6f/s)
+2026-03-20 00:24:08,532 [INFO    ]   [test_clip.webm] decode=90 embed=60 / 245f  (1.7s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:08,615 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.051s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.057s
+2026-03-20 00:24:08,693 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.007s  yuv2rgb=0.004s  embed=0.058s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.161s
+2026-03-20 00:24:08,828 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.069s  pipe_write=0.055s  total=0.135s  (223.0f/s)
+2026-03-20 00:24:09,065 [INFO    ] [QUEUE] test_clip.mkv (job #277)
+2026-03-20 00:24:09,080 [INFO    ]   [test_clip.webm] decode=120 embed=90 / 245f  (2.3s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:09,174 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.059s  vidmode=0.000s  atten=0.013s  download=0.000s  total=0.073s
+2026-03-20 00:24:09,286 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.015s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.074s  d2yuv=0.001s  resize_up=0.015s  blend=0.025s  download=0.014s  iter=0.206s
+2026-03-20 00:24:09,399 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.056s  pipe_write=0.048s  total=0.112s  (266.7f/s)
+2026-03-20 00:24:09,603 [INFO    ]   [test_clip.webm] decode=150 embed=120 / 245f  (2.8s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:09,681 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.001s  embedder=0.044s  vidmode=0.000s  atten=0.005s  download=0.000s  total=0.050s
+2026-03-20 00:24:09,762 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.007s  yuv2rgb=0.006s  embed=0.052s  d2yuv=0.000s  resize_up=0.006s  blend=0.017s  download=0.015s  iter=0.159s
+2026-03-20 00:24:09,889 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.065s  pipe_write=0.051s  total=0.126s  (238.1f/s)
+2026-03-20 00:24:10,152 [INFO    ]   [test_clip.webm] decode=180 embed=150 / 245f  (3.3s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:10,219 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.042s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.045s
+2026-03-20 00:24:10,298 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.003s  embed=0.046s  d2yuv=0.000s  resize_up=0.006s  blend=0.018s  download=0.013s  iter=0.146s
+2026-03-20 00:24:10,421 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.058s  pipe_write=0.057s  total=0.122s  (245.5f/s)
+2026-03-20 00:24:10,663 [INFO    ]   [test_clip.webm] decode=210 embed=180 / 245f  (3.9s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:10,724 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.041s
+2026-03-20 00:24:10,788 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.125s
+2026-03-20 00:24:10,893 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.056s  pipe_write=0.042s  total=0.105s  (284.7f/s)
+2026-03-20 00:24:11,217 [INFO    ]   [test_clip.webm] decode=240 embed=210 / 245f  (4.4s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:11,284 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.042s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.046s
+2026-03-20 00:24:11,357 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.048s  d2yuv=0.000s  resize_up=0.007s  blend=0.016s  download=0.013s  iter=0.139s
+2026-03-20 00:24:11,488 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.062s  pipe_write=0.061s  total=0.130s  (230.1f/s)
+2026-03-20 00:24:11,592 [INFO    ]   [TIMING-DELTA] 5f 256x256  upload=0.000s  embedder=0.020s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.023s
+2026-03-20 00:24:11,609 [INFO    ]   [TIMING-PIPE-GPU] 5f  upload=0.002s  resize_dn=0.001s  yuv2rgb=0.001s  embed=0.024s  d2yuv=0.000s  resize_up=0.001s  blend=0.004s  download=0.005s  iter=0.044s
+2026-03-20 00:24:11,635 [INFO    ]   [TIMING-PIPE-ENC] 5f  tobytes=0.008s  pipe_write=0.010s  total=0.026s  (189.1f/s)
+2026-03-20 00:24:11,798 [INFO    ]   [ENC-PIPE] Closing stdin, waiting for FFmpeg to finish...
+2026-03-20 00:24:11,881 [INFO    ]   [ENC-PIPE] FFmpeg finished in 0.1s
+2026-03-20 00:24:12,009 [INFO    ] [TIMING] test_clip.webm: video_embed=5.361s (245f, 45.7f/s)
+2026-03-20 00:24:12,186 [INFO    ] [TIMING] test_clip.webm: mux=0.177s
+2026-03-20 00:24:12,440 [INFO    ] [DONE] test_clip.webm [2688x1512]  →  test_clip.webm  (5.9s, 245f, 41.7f/s, audio=yes)  GPU: 544/6992MB (peak 2819MB)
+2026-03-20 00:24:12,641 [INFO    ] [TIMING] test_clip.mkv: audio_extract+wm=0.134s (has_audio=True)
+2026-03-20 00:24:12,828 [INFO    ] [BITRATE] test_clip.mkv: source=50287k (h264), output=50287k (x1.0)
+2026-03-20 00:24:12,839 [INFO    ] [WARMUP] test_clip.mkv: GPU warmup=0.010s
+2026-03-20 00:24:12,877 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+VBR(50287k)] test_clip.mkv: 2688x1512, ~0f, fps=50.0, chunk=30
+2026-03-20 00:24:12,968 [INFO    ]   [PREALLOC] decode buffers: 2x [30, 2268, 2688] pinned (349MB total)
+2026-03-20 00:24:13,127 [INFO    ]   [test_clip.mkv] decode=30 embed=0 / 0f  (0.2s)  [alloc=544MB peak=612MB]
+2026-03-20 00:24:13,212 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.048s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.051s
+2026-03-20 00:24:13,313 [INFO    ]   [test_clip.mkv] decode=60 embed=0 / 0f  (0.4s)  [alloc=781MB peak=2645MB]
+2026-03-20 00:24:13,333 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.018s  resize_dn=0.014s  yuv2rgb=0.002s  embed=0.052s  d2yuv=0.000s  resize_up=0.006s  blend=0.034s  download=0.043s  iter=0.206s
+2026-03-20 00:24:13,334 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 50287k -maxrate 60344k -bufsize 100574k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmpkdnuz5q6.mp4
+2026-03-20 00:24:13,404 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.040s  vidmode=0.000s  atten=0.009s  download=0.000s  total=0.049s
+2026-03-20 00:24:13,488 [INFO    ]   [test_clip.mkv] decode=90 embed=0 / 0f  (0.6s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:13,512 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.003s  embed=0.050s  d2yuv=0.000s  resize_up=0.006s  blend=0.020s  download=0.035s  iter=0.178s
+2026-03-20 00:24:13,584 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.040s  vidmode=0.000s  atten=0.007s  download=0.000s  total=0.047s
+2026-03-20 00:24:13,682 [INFO    ]   [test_clip.mkv] decode=120 embed=0 / 0f  (0.8s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:13,690 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.003s  embed=0.050s  d2yuv=0.000s  resize_up=0.007s  blend=0.017s  download=0.014s  iter=0.176s
+2026-03-20 00:24:13,707 [INFO    ] [QUEUE] test_clip.mxf (job #278)
+2026-03-20 00:24:13,720 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.064s  pipe_write=0.315s  total=0.379s  (79.2f/s)
+2026-03-20 00:24:13,773 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.003s  embedder=0.045s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.051s
+2026-03-20 00:24:13,889 [INFO    ]   [test_clip.mkv] decode=150 embed=30 / 0f  (1.0s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:13,898 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.019s  resize_dn=0.004s  yuv2rgb=0.003s  embed=0.053s  d2yuv=0.001s  resize_up=0.006s  blend=0.017s  download=0.018s  iter=0.202s
+2026-03-20 00:24:13,932 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.073s  pipe_write=0.069s  total=0.151s  (199.2f/s)
+2026-03-20 00:24:13,974 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.044s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.048s
+2026-03-20 00:24:14,078 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.016s  resize_dn=0.005s  yuv2rgb=0.005s  embed=0.050s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.016s  iter=0.179s
+2026-03-20 00:24:14,106 [INFO    ]   [test_clip.mkv] decode=180 embed=60 / 0f  (1.2s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:14,142 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.070s  pipe_write=0.061s  total=0.143s  (209.8f/s)
+2026-03-20 00:24:14,182 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.042s  vidmode=0.001s  atten=0.003s  download=0.000s  total=0.046s
+2026-03-20 00:24:14,263 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.016s  resize_dn=0.006s  yuv2rgb=0.005s  embed=0.050s  d2yuv=0.000s  resize_up=0.007s  blend=0.016s  download=0.013s  iter=0.157s
+2026-03-20 00:24:14,265 [INFO    ]   [test_clip.mkv] decode=210 embed=90 / 0f  (1.4s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:14,370 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.050s  vidmode=0.001s  atten=0.009s  download=0.000s  total=0.061s
+2026-03-20 00:24:14,411 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.066s  pipe_write=0.067s  total=0.146s  (206.1f/s)
+2026-03-20 00:24:14,462 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.016s  resize_dn=0.006s  yuv2rgb=0.005s  embed=0.064s  d2yuv=0.003s  resize_up=0.007s  blend=0.020s  download=0.016s  iter=0.183s
+2026-03-20 00:24:14,467 [INFO    ]   [test_clip.mkv] decode=240 embed=120 / 0f  (1.6s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:14,590 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.055s  vidmode=0.000s  atten=0.007s  download=0.000s  total=0.063s
+2026-03-20 00:24:14,611 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.061s  pipe_write=0.054s  total=0.122s  (245.7f/s)
+2026-03-20 00:24:14,669 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.018s  resize_dn=0.004s  yuv2rgb=0.006s  embed=0.067s  d2yuv=0.000s  resize_up=0.008s  blend=0.018s  download=0.013s  iter=0.171s
+2026-03-20 00:24:14,776 [INFO    ]   [TIMING-DELTA] 10f 256x256  upload=0.000s  embedder=0.068s  vidmode=0.000s  atten=0.008s  download=0.000s  total=0.076s
+2026-03-20 00:24:14,788 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.056s  pipe_write=0.044s  total=0.107s  (279.9f/s)
+2026-03-20 00:24:14,811 [INFO    ]   [TIMING-PIPE-GPU] 10f  upload=0.005s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.079s  d2yuv=0.000s  resize_up=0.002s  blend=0.007s  download=0.011s  iter=0.122s
+2026-03-20 00:24:14,928 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.050s  pipe_write=0.032s  total=0.089s  (337.3f/s)
+2026-03-20 00:24:15,081 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.054s  pipe_write=0.039s  total=0.100s  (299.1f/s)
+2026-03-20 00:24:15,171 [INFO    ]   [TIMING-PIPE-ENC] 10f  tobytes=0.015s  pipe_write=0.011s  total=0.039s  (258.9f/s)
+2026-03-20 00:24:15,223 [INFO    ]   [ENC-PIPE] Closing stdin, waiting for FFmpeg to finish...
+2026-03-20 00:24:15,295 [INFO    ]   [ENC-PIPE] FFmpeg finished in 0.1s
+2026-03-20 00:24:15,309 [INFO    ] [TIMING] test_clip.mkv: video_embed=2.470s (250f, 101.2f/s)
+2026-03-20 00:24:15,495 [INFO    ] [TIMING] test_clip.mkv: mux=0.186s
+2026-03-20 00:24:15,565 [INFO    ] [DONE] test_clip.mkv [2688x1512]  →  test_clip.mkv  (3.0s, 250f, 83.6f/s, audio=yes)  GPU: 544/6992MB (peak 2819MB)
+2026-03-20 00:24:15,810 [INFO    ] [TIMING] test_clip.mxf: audio_extract+wm=0.166s (has_audio=True)
+2026-03-20 00:24:15,940 [INFO    ] [BITRATE] test_clip.mxf: source=91014k (h264), output=91014k (x1.0)
+2026-03-20 00:24:15,950 [INFO    ] [WARMUP] test_clip.mxf: GPU warmup=0.010s
+2026-03-20 00:24:16,028 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+FFDEC+VBR(91014k)+FFDEC] test_clip.mxf: 2688x1512, ~0f, fps=50.0, chunk=30
+2026-03-20 00:24:16,072 [INFO    ]   [PREALLOC] decode buffers: 2x [30, 2268, 2688] pinned (349MB total)
+2026-03-20 00:24:16,471 [INFO    ]   [test_clip.mxf] decode=30 embed=0 / 0f  (0.4s)  [alloc=544MB peak=612MB]
+2026-03-20 00:24:16,559 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.049s  vidmode=0.000s  atten=0.004s  download=0.000s  total=0.053s
+2026-03-20 00:24:16,685 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.017s  resize_dn=0.013s  yuv2rgb=0.002s  embed=0.054s  d2yuv=0.000s  resize_up=0.006s  blend=0.034s  download=0.044s  iter=0.213s
+2026-03-20 00:24:16,685 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 91014k -maxrate 109216k -bufsize 182028k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmpwbd4gh7l.mp4
+2026-03-20 00:24:16,892 [INFO    ]   [test_clip.mxf] decode=60 embed=0 / 0f  (0.9s)  [alloc=781MB peak=2645MB]
+2026-03-20 00:24:16,969 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.045s  vidmode=0.000s  atten=0.010s  download=0.000s  total=0.055s
+2026-03-20 00:24:16,974 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.052s  pipe_write=0.229s  total=0.281s  (106.7f/s)
+2026-03-20 00:24:17,071 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.015s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.059s  d2yuv=0.000s  resize_up=0.007s  blend=0.020s  download=0.035s  iter=0.179s
+2026-03-20 00:24:17,173 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.055s  pipe_write=0.039s  total=0.101s  (298.1f/s)
+2026-03-20 00:24:17,340 [INFO    ]   [test_clip.mxf] decode=90 embed=60 / 0f  (1.3s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:17,399 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.040s
+2026-03-20 00:24:17,467 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.041s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.128s
+2026-03-20 00:24:17,560 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.048s  pipe_write=0.038s  total=0.092s  (326.8f/s)
+2026-03-20 00:24:17,714 [INFO    ]   [test_clip.mxf] decode=120 embed=90 / 0f  (1.7s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:17,775 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.041s
+2026-03-20 00:24:17,848 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.014s  iter=0.134s
+2026-03-20 00:24:17,947 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.051s  pipe_write=0.040s  total=0.099s  (303.5f/s)
+2026-03-20 00:24:18,113 [INFO    ]   [test_clip.mxf] decode=150 embed=120 / 0f  (2.1s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:18,178 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.041s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.044s
+2026-03-20 00:24:18,253 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.046s  d2yuv=0.000s  resize_up=0.006s  blend=0.017s  download=0.013s  iter=0.140s
+2026-03-20 00:24:18,375 [INFO    ] [QUEUE] test_clip.mp4 (job #279)
+2026-03-20 00:24:18,376 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.061s  pipe_write=0.053s  total=0.122s  (245.4f/s)
+2026-03-20 00:24:18,557 [INFO    ]   [test_clip.mxf] decode=180 embed=150 / 0f  (2.5s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:18,620 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.043s
+2026-03-20 00:24:18,693 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.044s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.136s
+2026-03-20 00:24:18,787 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.047s  pipe_write=0.040s  total=0.094s  (319.9f/s)
+2026-03-20 00:24:18,945 [INFO    ]   [test_clip.mxf] decode=210 embed=180 / 0f  (2.9s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:19,007 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.041s
+2026-03-20 00:24:19,076 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.017s  download=0.013s  iter=0.131s
+2026-03-20 00:24:19,169 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.047s  pipe_write=0.039s  total=0.093s  (323.6f/s)
+2026-03-20 00:24:19,312 [INFO    ]   [test_clip.mxf] decode=240 embed=210 / 0f  (3.3s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:19,375 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.039s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.043s
+2026-03-20 00:24:19,451 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.044s  d2yuv=0.000s  resize_up=0.006s  blend=0.017s  download=0.013s  iter=0.139s
+2026-03-20 00:24:19,552 [INFO    ]   [TIMING-DELTA] 11f 256x256  upload=0.000s  embedder=0.057s  vidmode=0.000s  atten=0.006s  download=0.000s  total=0.064s
+2026-03-20 00:24:19,552 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.053s  pipe_write=0.040s  total=0.100s  (298.8f/s)
+2026-03-20 00:24:19,585 [INFO    ]   [TIMING-PIPE-GPU] 11f  upload=0.006s  resize_dn=0.002s  yuv2rgb=0.001s  embed=0.067s  d2yuv=0.000s  resize_up=0.003s  blend=0.008s  download=0.010s  iter=0.110s
+2026-03-20 00:24:19,659 [INFO    ]   [TIMING-PIPE-ENC] 11f  tobytes=0.018s  pipe_write=0.011s  total=0.036s  (305.0f/s)
+2026-03-20 00:24:19,714 [INFO    ]   [ENC-PIPE] Closing stdin, waiting for FFmpeg to finish...
+2026-03-20 00:24:19,789 [INFO    ]   [ENC-PIPE] FFmpeg finished in 0.1s
+2026-03-20 00:24:19,794 [INFO    ] [TIMING] test_clip.mxf: video_embed=3.844s (251f, 65.3f/s)
+2026-03-20 00:24:19,940 [INFO    ] [TIMING] test_clip.mxf: mux=0.146s
+2026-03-20 00:24:20,006 [INFO    ] [DONE] test_clip.mxf [2688x1512]  →  test_clip.mxf  (4.3s, 251f, 58.4f/s, audio=yes)  GPU: 544/6992MB (peak 2819MB)
+2026-03-20 00:24:20,209 [INFO    ] [TIMING] test_clip.mp4: audio_extract+wm=0.128s (has_audio=True)
+2026-03-20 00:24:20,334 [INFO    ] [BITRATE] test_clip.mp4: source=52493k (h264), output=52493k (x1.0)
+2026-03-20 00:24:20,349 [INFO    ] [WARMUP] test_clip.mp4: GPU warmup=0.014s
+2026-03-20 00:24:20,396 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+VBR(52493k)] test_clip.mp4: 2688x1512, ~241f, fps=50.0, chunk=30
+2026-03-20 00:24:20,562 [INFO    ]   [PREALLOC] decode buffers: 2x [30, 2268, 2688] pinned (349MB total)
+2026-03-20 00:24:20,732 [INFO    ]   [test_clip.mp4] decode=30 embed=0 / 241f  (0.3s)  [alloc=544MB peak=600MB]
+2026-03-20 00:24:20,817 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.044s  vidmode=0.000s  atten=0.008s  download=0.000s  total=0.052s
+2026-03-20 00:24:20,946 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.017s  resize_dn=0.013s  yuv2rgb=0.002s  embed=0.054s  d2yuv=0.000s  resize_up=0.006s  blend=0.034s  download=0.042s  iter=0.214s
+2026-03-20 00:24:20,947 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 52493k -maxrate 62991k -bufsize 104986k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmp__ecuwp0.mp4
+2026-03-20 00:24:20,982 [INFO    ]   [test_clip.mp4] decode=60 embed=0 / 241f  (0.5s)  [alloc=781MB peak=2645MB]
+2026-03-20 00:24:21,054 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.045s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.049s
+2026-03-20 00:24:21,157 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.015s  resize_dn=0.004s  yuv2rgb=0.004s  embed=0.050s  d2yuv=0.000s  resize_up=0.007s  blend=0.021s  download=0.032s  iter=0.175s
+2026-03-20 00:24:21,200 [INFO    ]   [test_clip.mp4] decode=90 embed=0 / 241f  (0.7s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:21,259 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.051s  pipe_write=0.255s  total=0.306s  (98.0f/s)
+2026-03-20 00:24:21,270 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.046s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.049s
+2026-03-20 00:24:21,357 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.015s  resize_dn=0.004s  yuv2rgb=0.002s  embed=0.050s  d2yuv=0.000s  resize_up=0.007s  blend=0.018s  download=0.016s  iter=0.158s
+2026-03-20 00:24:21,445 [INFO    ]   [test_clip.mp4] decode=120 embed=30 / 241f  (1.0s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:21,445 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.055s  pipe_write=0.049s  total=0.113s  (264.6f/s)
+2026-03-20 00:24:21,505 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.041s
+2026-03-20 00:24:21,570 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.041s  d2yuv=0.000s  resize_up=0.006s  blend=0.017s  download=0.013s  iter=0.125s
+2026-03-20 00:24:21,697 [INFO    ]   [test_clip.mp4] decode=150 embed=60 / 241f  (1.2s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:21,766 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.042s  vidmode=0.001s  atten=0.007s  download=0.000s  total=0.050s
+2026-03-20 00:24:21,834 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.056s  pipe_write=0.039s  total=0.103s  (292.6f/s)
+2026-03-20 00:24:21,855 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.052s  d2yuv=0.000s  resize_up=0.008s  blend=0.019s  download=0.019s  iter=0.158s
+2026-03-20 00:24:22,021 [INFO    ]   [test_clip.mp4] decode=180 embed=90 / 241f  (1.6s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:22,103 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.046s  vidmode=0.001s  atten=0.008s  download=0.000s  total=0.055s
+2026-03-20 00:24:22,141 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.059s  pipe_write=0.044s  total=0.110s  (272.3f/s)
+2026-03-20 00:24:22,188 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.019s  resize_dn=0.005s  yuv2rgb=0.003s  embed=0.060s  d2yuv=0.000s  resize_up=0.007s  blend=0.018s  download=0.016s  iter=0.166s
+2026-03-20 00:24:22,294 [INFO    ]   [test_clip.mp4] decode=210 embed=120 / 241f  (1.8s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:22,359 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.063s  pipe_write=0.048s  total=0.119s  (251.1f/s)
+2026-03-20 00:24:22,372 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.047s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.050s
+2026-03-20 00:24:22,437 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.016s  resize_dn=0.004s  yuv2rgb=0.007s  embed=0.051s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.143s
+2026-03-20 00:24:22,594 [INFO    ]   [test_clip.mp4] decode=240 embed=150 / 241f  (2.1s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:22,684 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.052s  vidmode=0.000s  atten=0.007s  download=0.000s  total=0.060s
+2026-03-20 00:24:22,702 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.052s  pipe_write=0.037s  total=0.096s  (312.9f/s)
+2026-03-20 00:24:22,757 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.021s  resize_dn=0.004s  yuv2rgb=0.005s  embed=0.063s  d2yuv=0.000s  resize_up=0.008s  blend=0.018s  download=0.014s  iter=0.163s
+2026-03-20 00:24:22,817 [INFO    ]   [TIMING-DELTA] 1f 256x256  upload=0.000s  embedder=0.020s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.022s
+2026-03-20 00:24:22,820 [INFO    ]   [TIMING-PIPE-GPU] 1f  upload=0.001s  resize_dn=0.000s  yuv2rgb=0.000s  embed=0.023s  d2yuv=0.000s  resize_up=0.000s  blend=0.000s  download=0.001s  iter=0.028s
+2026-03-20 00:24:23,046 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.054s  pipe_write=0.038s  total=0.100s  (299.4f/s)
+2026-03-20 00:24:23,200 [INFO    ] [QUEUE] test_clip.mov (job #280)
+2026-03-20 00:24:23,584 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.053s  pipe_write=0.041s  total=0.101s  (297.3f/s)
+2026-03-20 00:24:23,782 [INFO    ]   [TIMING-PIPE-ENC] 1f  tobytes=0.001s  pipe_write=0.001s  total=0.016s  (61.2f/s)
+2026-03-20 00:24:24,022 [INFO    ]   [ENC-PIPE] Closing stdin, waiting for FFmpeg to finish...
+2026-03-20 00:24:24,093 [INFO    ]   [ENC-PIPE] FFmpeg finished in 0.1s
+2026-03-20 00:24:24,419 [INFO    ] [TIMING] test_clip.mp4: video_embed=4.070s (241f, 59.2f/s)
+2026-03-20 00:24:24,671 [INFO    ] [TIMING] test_clip.mp4: mux=0.251s
+2026-03-20 00:24:24,898 [INFO    ] [DONE] test_clip.mp4 [2688x1512]  →  test_clip.mp4  (4.6s, 241f, 52.5f/s, audio=yes)  GPU: 544/6928MB (peak 2819MB)
+2026-03-20 00:24:25,297 [INFO    ] [TIMING] test_clip.mov: audio_extract+wm=0.170s (has_audio=True)
+2026-03-20 00:24:25,430 [INFO    ] [BITRATE] test_clip.mov: source=73454k (h264), output=73454k (x1.0)
+2026-03-20 00:24:25,441 [INFO    ] [WARMUP] test_clip.mov: GPU warmup=0.010s
+2026-03-20 00:24:25,490 [INFO    ] [EMBED-FAST+GPU-BLEND+NVENC+PIPE+VBR(73454k)] test_clip.mov: 2688x1512, ~237f, fps=50.0, chunk=30
+2026-03-20 00:24:25,709 [INFO    ]   [PREALLOC] decode buffers: 2x [30, 2268, 2688] pinned (349MB total)
+2026-03-20 00:24:25,905 [INFO    ]   [test_clip.mov] decode=30 embed=0 / 237f  (0.3s)  [alloc=544MB peak=600MB]
+2026-03-20 00:24:25,985 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.044s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.046s
+2026-03-20 00:24:26,092 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.017s  resize_dn=0.013s  yuv2rgb=0.002s  embed=0.047s  d2yuv=0.000s  resize_up=0.006s  blend=0.033s  download=0.038s  iter=0.187s
+2026-03-20 00:24:26,093 [INFO    ]   [ENC-PIPE] Starting FFmpeg: ffmpeg -y -hide_banner -loglevel warning -f rawvideo -pix_fmt yuv420p -s 2688x1512 -r 50 -i pipe:0 -c:v h264_nvenc -rc vbr -b:v 73454k -maxrate 88144k -bufsize 146908k -preset p4 -pix_fmt yuv420p C:\Users\leduc\AppData\Local\Temp\tmpr870zgu8.mp4
+2026-03-20 00:24:26,323 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.049s  pipe_write=0.177s  total=0.225s  (133.1f/s)
+2026-03-20 00:24:26,487 [INFO    ]   [test_clip.mov] decode=60 embed=30 / 237f  (0.9s)  [alloc=781MB peak=2645MB]
+2026-03-20 00:24:26,547 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.040s
+2026-03-20 00:24:26,629 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.041s  d2yuv=0.000s  resize_up=0.006s  blend=0.019s  download=0.027s  iter=0.142s
+2026-03-20 00:24:26,724 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.053s  pipe_write=0.036s  total=0.095s  (315.6f/s)
+2026-03-20 00:24:27,027 [INFO    ]   [test_clip.mov] decode=90 embed=60 / 237f  (1.4s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:27,087 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.002s  download=0.000s  total=0.041s
+2026-03-20 00:24:27,151 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.041s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.124s
+2026-03-20 00:24:27,471 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.051s  pipe_write=0.035s  total=0.098s  (305.7f/s)
+2026-03-20 00:24:28,019 [INFO    ]   [test_clip.mov] decode=120 embed=90 / 237f  (2.4s)  [alloc=955MB peak=2819MB]
+2026-03-20 00:24:28,080 [INFO    ]   [TIMING-DELTA] 30f 256x256  upload=0.000s  embedder=0.038s  vidmode=0.000s  atten=0.003s  download=0.000s  total=0.041s
+2026-03-20 00:24:28,153 [INFO    ]   [TIMING-PIPE-GPU] 30f  upload=0.014s  resize_dn=0.003s  yuv2rgb=0.002s  embed=0.042s  d2yuv=0.000s  resize_up=0.006s  blend=0.016s  download=0.013s  iter=0.133s
+2026-03-20 00:24:28,253 [INFO    ]   [TIMING-PIPE-ENC] 30f  tobytes=0.053s  pipe_write=0.039s  total=0.099s  (301.7f/s)
+2026-03-20 00:24:28,331 [INFO    ] [QUEUE] test_clip.webm (job #281)
