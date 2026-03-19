@@ -51,15 +51,16 @@ import torch
 from worker import load_video_model, embed_to_file
 
 CKPT  = "output/run2_video/checkpoint350.pth"
-INPUT = r"D:\samu_videos_gpu\DJI_20260104092139_0153_D_gpu_hevc.mp4"
+INPUT = r"D:\samu_videos_gpu\DJI_20260104091947_0152_D_gpu_hevc.mp4"
 
 device = torch.device("cuda")
 log.info("Loading model...")
 model = load_video_model(CKPT, device)
 log.info("Model loaded.")
 
-out_fd, out_path = tempfile.mkstemp(suffix=".mp4")
-os.close(out_fd)
+OUT_DIR = _SERVICE_DIR / "data" / "test_output"
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+out_path = str(OUT_DIR / "DJI_0152_wm.mp4")
 
 log.info(f"Embedding: {INPUT} -> {out_path}")
 t0 = time.time()
@@ -75,9 +76,8 @@ elapsed = time.time() - t0
 
 log.info(f"Done in {elapsed:.1f}s — {result}")
 log.info(f"Output size: {os.path.getsize(out_path)/1024/1024:.1f}MB")
+log.info(f"Output saved: {out_path}")
 
-# Cleanup
-os.unlink(out_path)
 torch.cuda.empty_cache()
 
 print(f"\n{'='*60}")

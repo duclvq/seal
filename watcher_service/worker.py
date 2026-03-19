@@ -42,7 +42,7 @@ from web_demo.core.video_io import (
 )
 
 MSG_BITS    = 256
-CHUNK_SIZE  = int(os.getenv("CHUNK_SIZE", "30"))
+CHUNK_SIZE  = int(os.getenv("CHUNK_SIZE", "32"))
 FAST_EMBED  = os.getenv("FAST_EMBED", "true").lower() == "true"
 GPU_BLEND   = os.getenv("GPU_BLEND", "true").lower() == "true"   # GPU blend (2x faster)
 PIPELINE    = os.getenv("PIPELINE", "true").lower() == "true"    # 3-stage parallel pipeline
@@ -77,6 +77,44 @@ def _auto_chunk_size(base_chunk: int, device: torch.device) -> int:
     except Exception:
         pass
     return base_chunk
+
+# ── GPU warmup: pre-compile all CUDA kernels before real pipeline ─────────
+def _warmup_gpu(model, msg_gpu, device):
+    """Run a dummy batch through the full GPU path to JIT-compile all CUDA kernels.
+    This eliminates the 0.5s+ stutter on the first real chunk."""
+    img_size = model.img_size  # 256
+    chunk_size = model.chunk_size  # e.g. 32
+    # Small dummy: 4 frames is enough to trigger all kernels
+    n = min(4, chunk_size)
+    dummy_rgb = torch.rand(n, 3, img_size, img_size, device=device)
+    msgs = msg_gpu[:1].repeat(n, 1)
+    step_size = model.step_size
+
+    with torch.no_grad():
+        # Embedder warmup
+        key = dummy_rgb[::step_size]
+        if model.embedder.yuv:
+            key = model.rgb2yuv(key)[:, 0:1]
+        if USE_FP16:
+            with torch.amp.autocast("cuda"):
+                _ = model.embedder(key, msgs[:key.shape[0]])
+        else:
+            _ = model.embedder(key, msgs[:key.shape[0]])
+
+        # Attenuation warmup
+        if model.attenuation is not None:
+            model.attenuation.to(device)
+            _ = model.attenuation.heatmaps(dummy_rgb)
+
+    # YUV conversion kernels warmup (simulate full pipeline path)
+    H, W = 64, 64  # tiny resolution, just to compile kernels
+    dummy_yuv = torch.randint(0, 255, (n, H * 3 // 2, W), dtype=torch.uint8, device=device)
+    _ = _yuv420p_to_rgb_gpu(dummy_yuv, device)
+    dummy_delta = torch.rand(n, 1, 1, 1, device=device)  # trigger interpolate
+    _ = F.interpolate(dummy_delta, size=(H, W), mode="bilinear", align_corners=False)
+
+    torch.cuda.synchronize(device)
+    del dummy_rgb, dummy_yuv, dummy_delta
 
 # ── Thread safety for multi-worker GPU access ────────────────────────────
 import threading as _threading
@@ -1000,7 +1038,14 @@ def _embed_pipelined(
             compute_stream = torch.cuda.Stream(device) if device.type == "cuda" else None
             _gpu_yuv_buf = [None, None]
             _gpu_buf_idx = 0
-            _pinned_buf = None
+            _pinned_bufs = [None, None]  # double-buffer to avoid race with encode thread
+            _pin_buf_idx = 0
+
+            # Cross-fade state: store last step_size frames' delta from previous chunk
+            _prev_dY_tail = None   # [step_size, 1, H, W] full-res Y delta
+            _prev_dCb_tail = None  # [step_size, 1, hh, hw] (only if dC > 1)
+            _prev_dCr_tail = None
+            step_size = video_model.step_size  # e.g. 4
 
             # Cache BT.709 forward matrix on device
             global _BT709_FWD
@@ -1101,6 +1146,28 @@ def _embed_pipelined(
                         compute_stream.synchronize()
                         _t_resize_up = _time.perf_counter() - _t0
 
+                        # ── 6b. Cross-fade delta at chunk boundary ──
+                        # Prevents flicker: blend last step_size frames of prev chunk
+                        # with first step_size frames of current chunk using linear ramp.
+                        if _prev_dY_tail is not None:
+                            fade_n = min(step_size, N, _prev_dY_tail.shape[0])
+                            # Linear ramp: alpha goes 0→1 over fade_n frames
+                            # Frame 0: mostly prev delta, Frame fade_n-1: mostly current delta
+                            alpha = torch.linspace(0, 1, fade_n, device=device).view(fade_n, 1, 1, 1)
+                            dY_full[:fade_n] = (1 - alpha) * _prev_dY_tail[:fade_n] + alpha * dY_full[:fade_n]
+                            if dC > 1 and _prev_dCb_tail is not None:
+                                dCb_full[:fade_n] = (1 - alpha) * _prev_dCb_tail[:fade_n] + alpha * dCb_full[:fade_n]
+                                dCr_full[:fade_n] = (1 - alpha) * _prev_dCr_tail[:fade_n] + alpha * dCr_full[:fade_n]
+
+                        # Save tail of current chunk for next cross-fade
+                        _prev_dY_tail = dY_full[-step_size:].clone()
+                        if dC > 1:
+                            _prev_dCb_tail = dCb_full[-step_size:].clone()
+                            _prev_dCr_tail = dCr_full[-step_size:].clone()
+                        else:
+                            _prev_dCb_tail = None
+                            _prev_dCr_tail = None
+
                         # ── 7. Blend delta onto original YUV full-res ──
                         # Formula: Y_out = scaling_i * Y_orig + dY_full
                         # (dY_full already includes scaling_w * 255 from step 5)
@@ -1131,19 +1198,25 @@ def _embed_pipelined(
                         _t_blend = _time.perf_counter() - _t0
 
                         # ── 8. Download YUV packed → CPU ──
+                        # Use double pinned buffer to avoid race with encode thread:
+                        # encode thread may still be reading the previous buffer
+                        # while GPU writes to the current one.
                         _t0 = _time.perf_counter()
-                        if _pinned_buf is None or _pinned_buf.shape != out_packed.shape:
-                            _pinned_buf = torch.empty(
+                        cur_pin = _pinned_bufs[_pin_buf_idx]
+                        if cur_pin is None or cur_pin.shape != out_packed.shape:
+                            cur_pin = torch.empty(
                                 out_packed.shape, dtype=torch.uint8, device='cpu',
                             ).pin_memory()
-                        _pinned_buf.copy_(out_packed, non_blocking=True)
+                            _pinned_bufs[_pin_buf_idx] = cur_pin
+                        cur_pin.copy_(out_packed, non_blocking=True)
                         del out_packed
                         compute_stream.synchronize()
                         _t_download = _time.perf_counter() - _t0
 
-                    # Convert to numpy list for encoder
-                    packed_np = _pinned_buf[:n_frames].numpy()
+                    # Convert to numpy list for encoder (copy to avoid race with next GPU write)
+                    packed_np = cur_pin[:n_frames].numpy().copy()
                     np_list = [packed_np[i] for i in range(n_frames)]
+                    _pin_buf_idx = 1 - _pin_buf_idx  # swap for next iteration
 
                 else:
                     # No CUDA — fallback to old path
@@ -1275,6 +1348,9 @@ def _embed_pipelined(
                     stderr_thread.start()
 
                 # Write raw YUV bytes to FFmpeg stdin
+                # PyAV yuv420p to_ndarray returns [H*3//2, W] packed layout.
+                # tobytes() on this array produces the correct byte sequence for
+                # FFmpeg rawvideo -pix_fmt yuv420p (verified empirically).
                 _t0_all = _time.perf_counter()
                 _t_tobytes = 0.0
                 _t_write = 0.0
@@ -1634,6 +1710,12 @@ def embed_to_file(
         _worker_mod.CHUNK_SIZE = effective_chunk
     else:
         _orig_chunk = None
+
+    # ── GPU warmup: compile all CUDA kernels before real pipeline ────────────
+    if device.type == "cuda":
+        _t0_warmup = _time.time()
+        _warmup_gpu(video_model, msg_gpu, device)
+        _log.info(f"[WARMUP] {_filename}: GPU warmup={_time.time()-_t0_warmup:.3f}s")
 
     try:
         _t0_video = _time.time()
