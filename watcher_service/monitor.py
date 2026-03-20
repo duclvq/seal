@@ -10,6 +10,8 @@ from pathlib import Path
 from flask import Flask, jsonify, render_template_string
 
 DB_PATH = os.getenv("DB_PATH", r"D:\vtv_setup\seal_1603\seal_1603\watcher_service\data\db\watermarks.db")
+INPUT_FOLDER = os.getenv("INPUT_FOLDER", "")
+OUTPUT_FOLDER = os.getenv("OUTPUT_FOLDER", "")
 # Chạy trực tiếp (không Docker): set DB_PATH=<path> trước khi chạy
 
 app = Flask(__name__)
@@ -51,6 +53,20 @@ HTML = """<!DOCTYPE html>
   .card.error .value  { color: #fc8181; }
   .card.total .value  { color: #e2e8f0; }
   .card .sub  { font-size: 0.75rem; color: #718096; margin-top: 4px; }
+  .folder-bar { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .folder-card { background: #1a1d2e; border: 1px solid #2d3748; border-radius: 10px; padding: 12px 18px;
+                 flex: 1; min-width: 280px; display: flex; align-items: center; gap: 10px; }
+  .folder-card .icon { font-size: 1.3rem; }
+  .folder-card .info { flex: 1; overflow: hidden; }
+  .folder-card .lbl { font-size: 0.7rem; color: #718096; text-transform: uppercase; letter-spacing: .04em; }
+  .folder-card .path { font-family: monospace; font-size: 0.8rem; color: #e2e8f0;
+                       overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .folder-card .open-btn { background: none; border: 1px solid #4a5568; border-radius: 6px; color: #718096;
+                           cursor: pointer; font-size: 0.75rem; padding: 4px 10px; white-space: nowrap; }
+  .folder-card .open-btn:hover { border-color: #7c84ff; color: #7c84ff; }
+  .fpath { font-family: monospace; font-size: 0.72rem; color: #718096; max-width: 200px;
+           overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+  .fpath:hover { color: #7c84ff; text-decoration: underline; }
 
   /* Tabs */
   .tabs { display: flex; gap: 4px; margin-bottom: 16px; }
@@ -107,6 +123,7 @@ HTML = """<!DOCTYPE html>
   <span class="refresh-info">Tự refresh mỗi 10 giây &nbsp;|&nbsp; <span id="last-update">—</span></span>
 </header>
 <div class="container">
+  <div class="folder-bar" id="folder-bar"></div>
   <div class="stats" id="stats-cards"></div>
   <div class="search-row">
     <input type="search" id="search" placeholder="Tìm tên file..." oninput="filterTable()">
@@ -134,10 +151,21 @@ async function fetchData() {
 }
 
 function render() {
+  renderFolders();
   renderStats();
   renderTabs();
   renderBulkBar();
   renderTable();
+}
+
+function renderFolders() {
+  const inp = allData.input_folder || '';
+  const out = allData.output_folder || '';
+  if (!inp && !out) { document.getElementById('folder-bar').innerHTML = ''; return; }
+  document.getElementById('folder-bar').innerHTML = [
+    inp ? `<div class="folder-card"><span class="icon">📂</span><div class="info"><div class="lbl">Input</div><div class="path" title="${inp}">${inp}</div></div><button class="open-btn" onclick="openFolder('${inp.replace(/\\/g,'\\\\\\\\')}')">Mở</button></div>` : '',
+    out ? `<div class="folder-card"><span class="icon">📁</span><div class="info"><div class="lbl">Output</div><div class="path" title="${out}">${out}</div></div><button class="open-btn" onclick="openFolder('${out.replace(/\\/g,'\\\\\\\\')}')">Mở</button></div>` : '',
+  ].join('');
 }
 
 function renderStats() {
@@ -202,6 +230,12 @@ function renderTable() {
   const cols = [
     {h:'#', f: j => j.id},
     {h:'File', f: j => `<span class="fname" title="${j.filename}">${j.filename}</span>`},
+    {h:'Path', f: j => {
+      const p = j.output_path || j.input_path || '';
+      if (!p) return '<span style="color:#4a5568">—</span>';
+      const dir = p.replace(/[\\/][^\\/]*$/, '');
+      return `<span class="fpath" title="${p}" onclick="openFolder('${dir.replace(/\\/g,'\\\\')}')">${p}</span>`;
+    }},
     {h:'Trạng thái', f: j => {
       let badge = `<span class="badge ${j.status}">${j.status}</span>`;
       if (j.status === 'processing' && j.total_frames > 0 && j.processed_frames > 0) {
@@ -302,6 +336,10 @@ function renderBulkBar() {
     : '';
 }
 
+async function openFolder(path) {
+  await fetch('/api/open_folder', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({path})});
+}
+
 fetchData();
 setInterval(fetchData, 10000);
 </script>
@@ -339,6 +377,21 @@ def api_delete_by_status(status):
         with _conn() as c:
             n = c.execute("DELETE FROM jobs WHERE status=?", (status,)).rowcount
         return jsonify({"ok": True, "msg": f"Đã xóa {n} job(s) status='{status}'"})
+    except Exception as e:
+        return jsonify({"ok": False, "msg": str(e)}), 500
+
+
+@app.route("/api/open_folder", methods=["POST"])
+def api_open_folder():
+    """Open a folder in the system file explorer."""
+    import subprocess
+    data = __import__("flask").request.get_json(silent=True) or {}
+    folder = data.get("path", "")
+    if not folder or not os.path.isdir(folder):
+        return jsonify({"ok": False, "msg": f"Folder không tồn tại: {folder}"}), 400
+    try:
+        subprocess.Popen(["explorer", os.path.normpath(folder)])
+        return jsonify({"ok": True})
     except Exception as e:
         return jsonify({"ok": False, "msg": str(e)}), 500
 
@@ -384,7 +437,8 @@ def api_jobs():
     except Exception:
         pass
 
-    return jsonify({"jobs": jobs, "stats": stats})
+    return jsonify({"jobs": jobs, "stats": stats,
+                    "input_folder": INPUT_FOLDER, "output_folder": OUTPUT_FOLDER})
 
 
 if __name__ == "__main__":
