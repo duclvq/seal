@@ -408,7 +408,7 @@ function formatTime(iso) {
         const d = new Date(iso);
         if (isNaN(d)) return iso;
         return d.toLocaleString('vi-VN');
-    } catch { return iso; }
+    } catch(e) { return iso; }
 }
 
 function hideResult() {
